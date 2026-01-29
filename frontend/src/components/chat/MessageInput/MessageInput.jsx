@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './MessageInput.css';
 import chatService from '../../../services/chat/chatServicio'; // Chat service
 
-const MessageInput = ({ language, onSendMessage }) => {
+const MessageInput = ({ onSendMessage }) => {
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -52,7 +52,7 @@ const MessageInput = ({ language, onSendMessage }) => {
                         type="text"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder={language === 'es' ? '💡 Examples: "What stacks do you use?", "Do you work with startups?"' : '💡 Examples: "Which stacks do you use?" "Do you work with startups?"'}
+                        placeholder='💡 Ask: "Tell me about your latest project" | "Which cloud platforms do you use?" | "Describe your tech stack"'
                         className="message-input"
                         disabled={isLoading}
                     />
@@ -61,7 +61,7 @@ const MessageInput = ({ language, onSendMessage }) => {
                             type="submit"
                             className="action-button send-button"
                             disabled={!message.trim() || isLoading}
-                            title={language === 'es' ? 'Send message' : 'Send message'}
+                            title="Send message"
                         >
                             {isLoading ? (
                                 <div className="loading-spinner">⏳</div>
@@ -87,7 +87,7 @@ const MessageInput = ({ language, onSendMessage }) => {
             {/* Micro-animation "Heily is thinking..." */}
             {isLoading && (
                 <div className="heily-typing-indicator">
-                    <span>{language === 'es' ? 'Heily is thinking' : 'Heily is thinking'}</span>
+                    <span>Heily is thinking</span>
                     <span className="typing-dots">
                         <span>.</span><span>.</span><span>.</span>
                     </span>
@@ -96,10 +96,7 @@ const MessageInput = ({ language, onSendMessage }) => {
 
             <div className="input-footer">
                 <p className="disclaimer">
-                    {language === 'es'
-                        ? 'Simulation with real data from my portfolio'
-                        : 'Simulation with real data from my portfolio'
-                    }
+                    Simulation with real data from my portfolio
                 </p>
             </div>
         </div>

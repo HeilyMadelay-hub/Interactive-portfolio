@@ -10,9 +10,7 @@ import {
     achievementWrapper,
     achievementLine,
     achievementStyle,
-    taglineWrapper,
-    lineStyle,
-    specialtyStyle,
+    // containerStyle duplicado removido
     badgeContainer,
     statusDot,
     badgeText,
@@ -32,15 +30,22 @@ function Hero() {
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
-    const scrollToNext = () => {
-        window.scrollTo({
-            top: window.innerHeight,
-            behavior: 'smooth'
-        });
-    };
+    const highlights = [
+        "Construí sistemas con 1000+ usuarios concurrentes",
+        "Integré IA en flujos legales reales",
+        "Automaticé procesos que ahorran 70% del tiempo",
+    ];
+
+    const [currentHighlight, setCurrentHighlight] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentHighlight((prev) => (prev + 1) % highlights.length);
+        }, 3500);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
-
         <section style={containerStyle}>
             {/* GRID ANIMADO */}
             <div style={gridBackground}></div>
@@ -61,24 +66,33 @@ function Hero() {
                         '0 0 8px rgba(37, 99, 235, 0.3), 0 0 16px rgba(37, 99, 235, 0.15)')
                     }
                 >
-                    Heily Tandazo<span style={{ color: '#2563EB' }}>.</span>
+                    Heily Madelay Tandazo<span style={{ color: '#3b82f6' }}>.</span>
                 </h1>
 
                 <p style={roleStyle}>Full Stack & Multicloud Developer</p>
 
                 <p style={descriptionStyle}>
-                    Construyo aplicaciones escalables con .NET, Angular y Docker
+                    Construyo aplicaciones escalables con .NET, React y Docker
                 </p>
 
                 {/* LOGRO DESTACADO */}
                 <div style={achievementWrapper}>
                     <div style={achievementLine}></div>
-                    <p style={achievementStyle}>
-                        Reduje tiempos de testing de modelos IA en 30% mediante optimización backend
+                    <p
+                        style={achievementStyle}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-4px)';
+                            e.currentTarget.style.boxShadow = '0 12px 40px rgba(100,255,218,0.35)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 8px 32px rgba(100,255,218,0.2)';
+                        }}
+                    >
+                        {highlights[currentHighlight]}
                     </p>
                     <div style={achievementLine}></div>
                 </div>
-
 
                 {/* BADGE */}
                 <div
@@ -95,18 +109,14 @@ function Hero() {
                     <span style={badgeText}>DISPONIBLE PARA PROYECTOS</span>
                 </div>
 
-                {/*Flecha */}
+                {/* Flecha */}
                 <ScrollIndicator
-                    label="EXPLORAR TRABAJO"
-                    target="#about"   
+                    label="DESCUBRE MÁS"
+                    target="#about"
                 />
-
             </div>
-
-            
         </section>
     );
 }
-
 
 export default Hero;

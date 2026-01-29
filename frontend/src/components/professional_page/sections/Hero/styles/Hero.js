@@ -1,25 +1,27 @@
-﻿import { useEffect } from 'react';
+﻿// Corrección del archivo de estilos Hero.js
+// Añade el export que faltaba
 
 export const containerStyle = {
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        position: 'relative',
-        overflow: 'hidden',
-        padding: '0 20px',
-        cursor: 'crosshair',
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
+    position: 'relative',
+    overflow: 'hidden',
+    padding: '0 20px',
+    cursor: 'crosshair',
 };
 
 export const contentWrapper = {
     zIndex: 10,
     textAlign: 'center',
-    maxWidth: '1200px',
+    maxWidth: '1000px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    padding: '20px 0', // Padding vertical para móviles
 };
 
 export const gridBackground = {
@@ -36,8 +38,8 @@ export const gridBackground = {
 
 export const radialGlow = (pos) => ({
     position: 'absolute',
-    width: '1000px',
-    height: '1000px',
+    width: '900px',
+    height: '900px',
     top: pos.y - 800,
     left: pos.x - 800,
     background: `
@@ -47,67 +49,78 @@ export const radialGlow = (pos) => ({
     borderRadius: '50%',
     pointerEvents: 'none',
     zIndex: 1,
-    transition: 'top 0.10s ease-out, left 0.10s ease-out',  
+    transition: 'top 0.10s ease-out, left 0.10s ease-out',
     filter: 'blur(70px)',
     opacity: 0.95,
     animation: 'pulseGlow 10s ease-in-out infinite',
 });
 
 export const titleStyle = {
-    fontSize: 'clamp(3.5rem, 12vw, 8.5rem)',
+    fontSize: 'clamp(2.2rem, 6vw, 5rem)', // REDUCIDO significativamente
     color: '#0F172A',
     fontWeight: '900',
     margin: '0',
-    lineHeight: '1',
-    letterSpacing: '-0.025em',
+    lineHeight: '1.15',
+    letterSpacing: '-0.02em',
     fontFamily: 'Inter, system-ui, sans-serif',
     transition: 'all 0.3s ease',
     textShadow: '0 0 8px rgba(37, 99, 235, 0.3), 0 0 16px rgba(37, 99, 235, 0.15)',
+    wordBreak: 'break-word',
+    maxWidth: '95%', // CRÍTICO: Evita que se desborde
 };
 
 export const roleStyle = {
-    fontSize: 'clamp(1rem, 2.5vw, 1.4rem)',
-    color: '#475569',
+    fontSize: 'clamp(0.7rem, 1.6vw, 1rem)', // MÁS PEQUEÑO
+    color: '#64ffda',
     fontWeight: '600',
     letterSpacing: '0.12em',
-    margin: '32px 0 16px',
+    margin: 'clamp(14px, 2.5vh, 20px) 0 clamp(8px, 1.5vh, 10px)',
     textTransform: 'uppercase',
 };
 
 export const descriptionStyle = {
-    fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+    fontSize: 'clamp(0.8rem, 1.4vw, 0.95rem)', // MÁS PEQUEÑO
     fontWeight: '500',
-    color: '#1E293B',
-    margin: '0 0 24px',
-    maxWidth: '800px',
+    color: '#f1f5f9',
+    margin: '0 0 clamp(14px, 2.5vh, 18px)',
+    maxWidth: '700px', // Reducido
+    padding: '0 15px',
 };
 
 export const achievementWrapper = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '20px',
-    margin: '24px 0',
+    gap: 'clamp(12px, 3vw, 20px)', // Gap responsive
+    margin: 'clamp(16px, 3vh, 24px) 0',
     maxWidth: '900px',
+    width: '100%',
+    padding: '0 10px', // Padding en móvil
+    flexWrap: 'wrap', // Permite que las líneas se envuelvan en móvil
 };
 
 export const achievementLine = {
-    width: '50px',
+    width: 'clamp(30px, 8vw, 50px)', // Líneas más cortas en móvil
     height: '2px',
     background: 'linear-gradient(to right, transparent, #2563EB, transparent)',
+    flexShrink: 0, // No se encogen
 };
 
 export const achievementStyle = {
-    fontSize: 'clamp(0.9rem, 1.8vw, 1.05rem)',
-    color: '#2563EB',
+    fontSize: 'clamp(0.75rem, 1.3vw, 0.9rem)', // MÁS PEQUEÑO
+    color: '#64ffda',
     fontWeight: '600',
     margin: 0,
-    letterSpacing: '0.02em',
     lineHeight: '1.5',
-    padding: '12px 24px',
-    backgroundColor: 'rgba(37, 99, 235, 0.05)',
-    borderRadius: '8px',
-    border: '1px solid rgba(37, 99, 235, 0.1)',
+    padding: 'clamp(10px, 1.8vh, 12px) clamp(14px, 3.5vw, 20px)',
+    background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(100,255,218,0.1))',
+    borderRadius: '12px',
+    border: '1px solid rgba(100,255,218,0.3)',
+    boxShadow: '0 8px 32px rgba(100,255,218,0.2)',
+    backdropFilter: 'blur(8px)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    maxWidth: '100%',
+    textAlign: 'center',
 };
 
 export const taglineWrapper = {
@@ -136,30 +149,29 @@ export const specialtyStyle = {
 export const badgeContainer = {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '4px',
-    padding: '4px 12px',
-    border: '1px solid #E2E8F0',
+    gap: '5px',
+    padding: 'clamp(4px, 0.8vh, 5px) clamp(10px, 2.5vw, 14px)',
     borderRadius: '9999px',
-    backgroundColor: 'rgba(248, 250, 252, 0.95)',
-    marginTop: '14px',
+    background: 'rgba(34, 197, 94, 0.1)',
+    border: '1px solid rgba(34, 197, 94, 0.3)',
+    marginTop: 'clamp(10px, 1.5vh, 14px)',
+    marginBottom: 'clamp(50px, 8vh, 70px)',
     transition: 'all 0.25s ease',
-    boxShadow: '0 0 0.05px rgba(0,0,0,0.03)', // mitad del blur anterior
 };
 
 export const statusDot = {
-    width: '5px',
-    height: '5px',
+    width: '4px',
+    height: '4px',
     backgroundColor: '#10B981',
     borderRadius: '50%',
-    boxShadow: '0 0 0.25px #10B981', // mitad del blur anterior
+    boxShadow: '0 0 0.2px #10B981',
+    flexShrink: 0,
 };
 
-
-
 export const badgeText = {
-    fontSize: '0.70rem',       
-    fontWeight: '900',        
-    letterSpacing: '0.8px',    
-    color: '#64748B',
+    fontSize: 'clamp(0.58rem, 1.1vw, 0.65rem)',
+    letterSpacing: '0.7px',
+    color: '#22c55e',
+    fontWeight: '700',
     whiteSpace: 'nowrap',
 };

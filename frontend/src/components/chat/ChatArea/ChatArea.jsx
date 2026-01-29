@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ChatArea.css';
+import logo from "../../../assets/profesional_view/images/profile/logo.jpg";
 import MessageList from './MessageList/MessageList';
 
 const ChatArea = ({ language, setLanguage, messages = [], onSendMessage, onSectionClick }) => {
@@ -58,7 +59,7 @@ const ChatArea = ({ language, setLanguage, messages = [], onSendMessage, onSecti
                             >
                                 <div className="chat-logo-circle">
                                     <img
-                                        src="/logo.png"
+                                        src={logo}
                                         alt="Heily Madelay Tandazo"
                                         onError={(e) => {
                                             e.target.style.display = 'none';

@@ -1,9 +1,5 @@
-// Es un componente independiente, reusable en cualquier sección
-// Es fácil de mantener y estilizar
-// Se puede parametrizar(texto, target scroll)
-// src/components/ui/ScrollIndicator.jsx
 import React from 'react';
-import { scrollContainer, scrollLabel, arrowIcon } from '../ui/styles/ScrollIndicatorStyle.js';
+import { scrollContainer, scrollLabel, arrowIcon } from './styles/ScrollIndicatorStyle.js';
 
 export default function ScrollIndicator({ label = "VER MÁS", target = null }) {
     const scrollToNext = () => {
@@ -18,8 +14,12 @@ export default function ScrollIndicator({ label = "VER MÁS", target = null }) {
         <div
             style={scrollContainer}
             onClick={scrollToNext}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-5px)')}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) translateY(-5px)';
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateX(-50%) translateY(0)';
+            }}
         >
             <p style={scrollLabel}>{label}</p>
 

@@ -1,16 +1,20 @@
+// src/components/ui/styles/ScrollIndicatorStyle.js
+
 export const scrollContainer = {
     position: 'absolute',
-    bottom: '40px',
+    bottom: 'clamp(10px, 2vh, 15px)',
+    left: 'calc(50% - 30px)', // Desplazado 30px a la izquierda del centro
+    transform: 'translateX(-50%)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '8px',
+    gap: 'clamp(4px, 1vh, 6px)',
     cursor: 'pointer',
     transition: 'transform 0.3s ease',
 };
 
 export const scrollLabel = {
-    fontSize: '0.75rem',
+    fontSize: 'clamp(0.55rem, 1.2vw, 0.65rem)', // Más pequeño en móvil
     color: '#2563EB',
     fontWeight: '700',
     letterSpacing: '0.15em',
@@ -19,9 +23,8 @@ export const scrollLabel = {
 };
 
 export const arrowIcon = {
-    width: '28px',
-    height: '28px',
+    width: 'clamp(20px, 4vw, 24px)', // Responsive size
+    height: 'clamp(20px, 4vw, 24px)',
     color: '#2563EB',
     animation: 'bounce 2s infinite',
 };
-

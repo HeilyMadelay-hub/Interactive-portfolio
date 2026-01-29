@@ -7,6 +7,7 @@ import Hero from "../../components/professional_page/sections/Hero/Hero";
 import AboutMe from '../../components/professional_page/sections/About/AboutMe';
 import Projects from '../../components/professional_page/sections/Projects/Projects';
 import Contact from '../../components/professional_page/sections/Contact/Contact';
+import Articles from '../../components/professional_page/sections/Articles/Articles';
 
 
 function ProfessionalPage() {
@@ -31,6 +32,10 @@ function ProfessionalPage() {
 
             <section id="projects">
                 <Projects />
+            </section>
+
+            <section id="articles">
+                <Articles />
             </section>
 
             <section id="contact">

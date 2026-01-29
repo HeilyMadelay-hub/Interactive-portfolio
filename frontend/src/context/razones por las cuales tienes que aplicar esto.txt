@@ -1,0 +1,509 @@
+﻿**Tienes razón al 90%.**
+
+**NO necesitas Context si:**
+- ✅ Solo tienes componentes de presentación estáticos
+- ✅ No hay estado global compartido
+- ✅ No tienes autenticación
+- ✅ No hay carrito de compras, favoritos, etc.
+
+**PERO podrías necesitar Context para:**
+
+1. **Idioma/Internacionalización** ⚠️
+   - Veo que tienes ES | EN | FR en tu navbar
+   - Si cambias idioma, TODOS los componentes necesitan saber el idioma actual
+   - **Esto SÍ justifica un Context**
+
+2. **Tema (Dark/Light mode)** ⚠️
+   - Si en el futuro añades toggle de tema
+   - Pero si solo tienes tema oscuro fijo, no lo necesitas
+
+**Para tu portfolio actual:**
+
+```jsx
+// Si tienes multi-idioma, SÍ necesitas:
+<LanguageContext.Provider value={{ language, setLanguage }}>
+  <App />
+</LanguageContext.Provider>
+
+// Si NO tienes multi-idioma funcional, NO necesitas Context
+```
+
+**Mi análisis de tu código:**
+
+Si tu cambio de idioma (ES/EN/FR) **realmente funciona**, entonces **SÍ deberías tener** un `LanguageContext` para evitar prop drilling.
+
+Si esos botones ES/EN/FR son solo decorativos y aún no funcionan, entonces **NO necesitas Context todavía**.
+
+**Pregunta directa:**
+¿Tu portfolio cambia de idioma cuando haces clic en ES/EN/FR? Si sí → necesitas Context. Si no → no lo necesitas.
+
+¿Cuál es tu caso?
+
+**Entonces SÍ necesitas Context. Totalmente justificado.**
+
+**Razón:**
+Si tienes componentes en diferentes niveles de profundidad (Hero, About, Skills, Projects, Contact, Footer) que todos necesitan saber el idioma actual, **Context evita prop drilling** (pasar `language` y `setLanguage` por 5+ niveles de componentes).
+
+**Arquitectura correcta para tu portfolio:**
+
+```jsx
+// src/context/LanguageContext.jsx
+import { createContext, useContext, useState } from 'react';
+
+const LanguageContext = createContext();
+
+export const LanguageProvider = ({ children }) => {
+    const [language, setLanguage] = useState('es'); // o detectar navegador
+
+    return (
+        <LanguageContext.Provider value={{ language, setLanguage }}>
+            {children}
+        </LanguageContext.Provider>
+    );
+};
+
+export const useLanguage = () => {
+    const context = useContext(LanguageContext);
+    if (!context) {
+        throw new Error('useLanguage debe usarse dentro de LanguageProvider');
+    }
+    return context;
+};
+```
+
+```jsx
+// main.jsx o App.jsx
+import { LanguageProvider } from './context/LanguageContext';
+
+<LanguageProvider>
+    <App />
+</LanguageProvider>
+```
+
+```jsx
+// En cualquier componente
+import { useLanguage } from '../context/LanguageContext';
+
+const Hero = () => {
+    const { language } = useLanguage();
+    
+    return <h1>{translations[language].title}</h1>;
+};
+```
+
+**¿Lo tienes así implementado o lo estás pasando por props?**
+
+Si lo estás pasando por props en cada componente, **deberías refactorizar a Context** para mantener el código limpio.
+
+¿Quieres que te ayude a refactorizar a Context?
+
+**Espera. Hazlo todo en español primero.**
+
+**Razones:**
+
+1. **Enfoque y velocidad:**
+   - Terminar el portfolio funcional en español es MÁS IMPORTANTE que tener multi-idioma
+   - Refactorizar a Context ahora te va a distraer del objetivo principal
+
+2. **Validación antes de optimizar:**
+   - Primero asegúrate de que el contenido, diseño y estructura funcionen bien
+   - Luego refactoriza con Context cuando sepas exactamente qué textos necesitas traducir
+
+3. **Evitar trabajo duplicado:**
+   - Si haces Context ahora y luego cambias secciones/contenido, tendrás que rehacer traducciones
+   - Mejor: contenido final en español → después implementas multi-idioma de una vez
+
+4. **Prioridades correctas:**
+   - Portfolio funcional en español > Multi-idioma
+   - Proyectos bien descritos > Traducciones
+   - Deploy y publicación > Perfeccionismo técnico
+
+**Plan recomendado:**
+
+**Fase 1 (AHORA):** ✅
+- Termina TODO el contenido en español
+- Asegúrate de que el diseño, proyectos y textos están perfectos
+- Publica la versión español
+- Consigue primeras entrevistas
+
+**Fase 2 (DESPUÉS):**
+- Refactoriza a Context
+- Crea archivo de traducciones (es.js, en.js, fr.js)
+- Implementa multi-idioma
+- Re-deploy
+
+**Consejo de mentor:**
+
+Los reclutadores españoles/latinos no esperan que tu portfolio esté en inglés. Tener un portfolio excelente en español es **infinitamente mejor** que tener uno mediocre en 3 idiomas.
+
+**Quita los botones ES/EN/FR por ahora** (o déjalos disabled) y enfócate en terminar el contenido.
+
+¿De acuerdo? ¿Qué más falta del portfolio en español?
+
+**Exacto. Solo necesitas UN archivo de traducciones.**
+
+**Estructura simple:**
+
+```jsx
+// src/data/translations.js
+export const translations = {
+    es: {
+        hero: {
+            greeting: "Hola, soy Heily",
+            title: "Desarrolladora Full Stack",
+            subtitle: "Especializada en backend, cloud e integración de IA",
+            cta: "Ver Proyectos"
+        },
+        about: {
+            title: "Sobre Mí",
+            description: "Desarrolladora Full Stack en Madrid..."
+        },
+        skills: {
+            title: "Stack Tecnológico",
+            backend: "Backend",
+            frontend: "Frontend",
+            // etc
+        },
+        projects: {
+            title: "Proyectos",
+            viewProject: "Ver Proyecto",
+            // etc
+        },
+        contact: {
+            title: "Contacto",
+            // etc
+        }
+    },
+    en: {
+        hero: {
+            greeting: "Hi, I'm Heily",
+            title: "Full Stack Developer",
+            subtitle: "Specialized in backend, cloud and AI integration",
+            cta: "View Projects"
+        },
+        // ... resto en inglés
+    },
+    fr: {
+        // ... francés
+    }
+};
+```
+
+**Uso en componentes:**
+
+```jsx
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../data/translations';
+
+const Hero = () => {
+    const { language } = useLanguage();
+    const t = translations[language];
+    
+    return (
+        <h1>{t.hero.greeting}</h1>
+    );
+};
+```
+
+**PERO REPITO:** Haz esto **DESPUÉS** de terminar el portfolio en español.
+
+Por ahora, deja los textos hardcodeados en español. Cuando esté todo perfecto, haces la refactorización en 1-2 horas.
+
+¿Seguimos con otra parte del portfolio en español o ya está casi listo?
+
+
+**Archivos que necesitarías crear (estructura lista para cuando la implementes):**
+
+```
+src/
+├── context/
+│   └── LanguageContext.jsx
+├── data/
+│   └── translations.js
+└── hooks/
+    └── useLanguage.js (opcional, si quieres separar el hook)
+```
+
+**Te doy el código de cada archivo:**
+
+---
+
+**1. `src/context/LanguageContext.jsx`**
+```jsx
+import { createContext, useContext, useState } from 'react';
+
+const LanguageContext = createContext();
+
+export const LanguageProvider = ({ children }) => {
+    const [language, setLanguage] = useState('es');
+
+    return (
+        <LanguageContext.Provider value={{ language, setLanguage }}>
+            {children}
+        </LanguageContext.Provider>
+    );
+};
+
+export const useLanguage = () => {
+    const context = useContext(LanguageContext);
+    if (!context) {
+        throw new Error('useLanguage must be used within LanguageProvider');
+    }
+    return context;
+};
+```
+
+---
+
+**2. `src/data/translations.js`**
+```js
+export const translations = {
+    es: {
+        nav: {
+            about: "Sobre Mí",
+            projects: "Proyectos",
+            contact: "Contacto",
+            downloadCV: "Descargar CV (PDF)"
+        },
+        hero: {
+            greeting: "Hola, soy Heily",
+            title: "Desarrolladora Full Stack",
+            subtitle: "Especializada en backend, cloud e integración de IA aplicada a productos reales",
+            cta: "Ver Proyectos",
+            available: "Disponible para proyectos"
+        },
+        about: {
+            title: "Sobre Mí",
+            description: "Desarrolladora Full Stack en Madrid, con experiencia en desarrollo de MVPs, sistemas backend y soluciones de IA para automatización y entornos legales."
+        },
+        skills: {
+            title: "Stack Tecnológico",
+            backend: "Backend",
+            frontend: "Frontend",
+            cloudDevops: "Cloud & DevOps",
+            databases: "Databases"
+        },
+        projects: {
+            title: "Proyectos",
+            viewDemo: "Ver Demo",
+            viewCode: "Ver Código"
+        },
+        contact: {
+            title: "Contacto",
+            subtitle: "¿Tienes un proyecto en mente?",
+            email: "Email",
+            linkedin: "LinkedIn",
+            github: "GitHub"
+        },
+        footer: {
+            rights: "Todos los derechos reservados",
+            madeWith: "Hecho con"
+        }
+    },
+    en: {
+        nav: {
+            about: "About",
+            projects: "Projects",
+            contact: "Contact",
+            downloadCV: "Download CV (PDF)"
+        },
+        hero: {
+            greeting: "Hi, I'm Heily",
+            title: "Full Stack Developer",
+            subtitle: "Specialized in backend, cloud and AI integration applied to real products",
+            cta: "View Projects",
+            available: "Available for projects"
+        },
+        about: {
+            title: "About Me",
+            description: "Full Stack Developer in Madrid, with experience in MVP development, backend systems and AI solutions for automation and legal environments."
+        },
+        skills: {
+            title: "Tech Stack",
+            backend: "Backend",
+            frontend: "Frontend",
+            cloudDevops: "Cloud & DevOps",
+            databases: "Databases"
+        },
+        projects: {
+            title: "Projects",
+            viewDemo: "View Demo",
+            viewCode: "View Code"
+        },
+        contact: {
+            title: "Contact",
+            subtitle: "Have a project in mind?",
+            email: "Email",
+            linkedin: "LinkedIn",
+            github: "GitHub"
+        },
+        footer: {
+            rights: "All rights reserved",
+            madeWith: "Made with"
+        }
+    },
+    fr: {
+        nav: {
+            about: "À Propos",
+            projects: "Projets",
+            contact: "Contact",
+            downloadCV: "Télécharger CV (PDF)"
+        },
+        hero: {
+            greeting: "Salut, je suis Heily",
+            title: "Développeuse Full Stack",
+            subtitle: "Spécialisée en backend, cloud et intégration IA appliquée aux produits réels",
+            cta: "Voir Projets",
+            available: "Disponible pour projets"
+        },
+        about: {
+            title: "À Propos",
+            description: "Développeuse Full Stack à Madrid, avec expérience en développement de MVPs, systèmes backend et solutions IA pour automatisation et environnements juridiques."
+        },
+        skills: {
+            title: "Stack Technique",
+            backend: "Backend",
+            frontend: "Frontend",
+            cloudDevops: "Cloud & DevOps",
+            databases: "Bases de Données"
+        },
+        projects: {
+            title: "Projets",
+            viewDemo: "Voir Démo",
+            viewCode: "Voir Code"
+        },
+        contact: {
+            title: "Contact",
+            subtitle: "Vous avez un projet?",
+            email: "Email",
+            linkedin: "LinkedIn",
+            github: "GitHub"
+        },
+        footer: {
+            rights: "Tous droits réservés",
+            madeWith: "Fait avec"
+        }
+    }
+};
+```
+
+---
+
+**Crea estos 2 archivos ahora** y déjalos ahí. Cuando termines el portfolio en español, solo tienes que:
+
+1. Wrappear tu App con `<LanguageProvider>`
+2. Cambiar textos hardcodeados por `translations[language].section.key`
+
+**¿Los creo yo o los creas tú?**
+
+**Perfecto, entendido.** 
+
+Era solo una duda conceptual sobre cuándo crear hooks. Quedó claro:
+
+✅ `useLanguage()` va dentro de `LanguageContext.jsx` (no necesita archivo separado)
+✅ Solo creas hooks separados cuando la lógica es reutilizable en múltiples contextos diferentes
+
+**Resumen de lo que tienes que crear:**
+
+```
+src/
+├── context/
+│   └── LanguageContext.jsx  (incluye useLanguage dentro)
+└── data/
+    └── translations.js
+```
+
+**Solo 2 archivos.** Ya te di el código de ambos arriba.
+
+---
+
+**¿Qué sigue?** ¿Revisamos otra sección del portfolio o hay algo más que quieras pulir antes de publicar? 🚀
+
+**Tienes razón en cuestionarlo. Déjame explicar las dos opciones:**
+
+---
+
+## **Opción 1: Hook DENTRO del Context (lo que te recomendé)**
+
+```
+src/
+└── context/
+    └── LanguageContext.jsx  (Context + hook en el mismo archivo)
+```
+
+**Razón:**
+- El hook `useLanguage()` está **100% acoplado** al `LanguageContext`
+- No tiene sentido usar ese hook fuera del contexto de idiomas
+- Es el patrón más común en React (ej: React Router hace `export const useNavigate` desde el mismo archivo del Provider)
+
+---
+
+## **Opción 2: Hook en archivo SEPARADO**
+
+```
+src/
+├── context/
+│   └── LanguageContext.jsx  (solo el Context)
+└── hooks/
+    └── useLanguage.js  (solo el hook)
+```
+
+**Razón:**
+- Separación más estricta de responsabilidades
+- Más fácil de encontrar si tienes muchos hooks custom
+- Algunos equipos prefieren TODOS los hooks en `/hooks`
+
+---
+
+## **¿Cuál es mejor?**
+
+**Para tu caso específico:** 
+
+**Opción 1 (en el mismo archivo)** es más práctica porque:
+- Solo tienes 1 hook relacionado con idiomas
+- Reduces 1 import innecesario
+- Es más cohesivo (Context y su hook juntos)
+
+**PERO si prefieres Opción 2 (archivo separado):**
+
+```jsx
+// src/hooks/useLanguage.js
+import { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
+
+export const useLanguage = () => {
+    const context = useContext(LanguageContext);
+    if (!context) {
+        throw new Error('useLanguage must be used within LanguageProvider');
+    }
+    return context;
+};
+```
+
+```jsx
+// src/context/LanguageContext.jsx
+import { createContext, useState } from 'react';
+
+export const LanguageContext = createContext();
+
+export const LanguageProvider = ({ children }) => {
+    const [language, setLanguage] = useState('es');
+    return (
+        <LanguageContext.Provider value={{ language, setLanguage }}>
+            {children}
+        </LanguageContext.Provider>
+    );
+};
+```
+
+---
+
+## **Mi recomendación:**
+
+**Si solo vas a tener 1-3 hooks custom en todo el portfolio** → Déjalo en el Context
+
+**Si vas a tener 5+ hooks custom** → Crea carpeta `/hooks` y sepáralos
+
+**Para tu portfolio:** Probablemente solo tengas `useLanguage`, así que **Opción 1** (mismo archivo) es más simple.
+
+**¿Cuál prefieres?**

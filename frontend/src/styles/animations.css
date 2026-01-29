@@ -1,11 +1,24 @@
 /*Animaciones globales param Hero y ScrollIndicator */
+
 @keyframes moveGrid {
     0% {
-        background-position: 0 0, 0 0;
+        transform: translate(0, 0);
     }
 
     100% {
-        background-position: 800px 800px, 800px 800px;
+        transform: translate(40px, 40px);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        opacity: 0.95;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
     }
 }
 
@@ -16,18 +29,6 @@
 
     50% {
         transform: translateY(-10px);
-    }
-}
-
-@keyframes pulseGlow {
-    0%, 100% {
-        opacity: 0.92;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 1.00;
-        transform: scale(1.06);
     }
 }
 
@@ -45,3 +46,23 @@
     }
 }
 
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}

@@ -25,7 +25,7 @@ function Header() {
             
 
             <nav style={navStyle}>
-                {['about', 'projects', 'contact'].map(item => (
+                {['about', 'projects', 'articles', 'contact'].map(item => (
                     <a
                         key={item}
                         style={navLinkStyle}

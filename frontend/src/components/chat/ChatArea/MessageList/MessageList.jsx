@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import logo from "../../../../assets/profesional_view/images/profile/logo.jpg";
 import './MessageList.css';
 
 const MessageList = ({ messages = [], language }) => {
@@ -24,7 +25,7 @@ const MessageList = ({ messages = [], language }) => {
                 <div className="welcome-chat-message">
                     <div className="message-avatar bot-avatar">
                         <img
-                            src="/logo.png"
+                            src={logo}
                             alt="Heily"
                             onError={(e) => {
                                 e.target.style.display = 'none';
@@ -36,7 +37,9 @@ const MessageList = ({ messages = [], language }) => {
                     <div className="welcome-bubble">
                         <p>Hi 👋 I am Heily.</p>
                         <p>
-                            I am a Full Stack & MultiCloud developer. Feel free to ask me anything about my work, projects or experience.
+                            Ask me anything about my experience, tech stack, or projects.
+                            This is an English-only chatbot to demonstrate my technical
+                            communication skills.
                         </p>
                         <p className="welcome-cta">
                             What would you like to know?

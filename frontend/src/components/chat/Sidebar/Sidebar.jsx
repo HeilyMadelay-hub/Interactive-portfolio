@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Modal from '../Modal/Modal';
 import './Sidebar.css';
 
 const Sidebar = ({ language, setLanguage, activeSection: externalActiveSection, onSectionChange }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [internalActiveSection, setInternalActiveSection] = useState('nueva');
 
-    // Use external section if exists, otherwise internal
+    // Modal states
+    const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedConvId, setSelectedConvId] = useState(null);
+    const [newConvName, setNewConvName] = useState('');
+
     const activeSection = externalActiveSection || internalActiveSection;
 
     const handleSectionClick = (sectionId) => {
@@ -32,41 +38,57 @@ const Sidebar = ({ language, setLanguage, activeSection: externalActiveSection, 
     ];
 
     const toggleSidebar = () => {
-        console.log('Toggle sidebar clicked!', !isCollapsed);
         setIsCollapsed(!isCollapsed);
     };
 
     const handleFloatingClick = (e) => {
-        console.log('Floating button clicked!');
         e.preventDefault();
         e.stopPropagation();
         setIsCollapsed(false);
     };
 
+    // Rename handlers
     const handleRename = (e, convId) => {
         e.stopPropagation();
-        console.log('Rename conversation:', convId);
-        // Add your rename logic here
-        const newName = prompt('Enter new name for this conversation:');
-        if (newName && newName.trim()) {
-            console.log('New name:', newName);
-            // Update conversation name logic here
+        const conv = conversacionesRecientes.find(c => c.id === convId);
+        setSelectedConvId(convId);
+        setNewConvName(conv?.nombre || '');
+        setIsRenameModalOpen(true);
+    };
+
+    const confirmRename = () => {
+        if (newConvName.trim()) {
+            console.log('Renaming conversation:', selectedConvId, 'to:', newConvName);
+            // TODO: Update conversation name logic here
+            setIsRenameModalOpen(false);
+            setNewConvName('');
+            setSelectedConvId(null);
         }
     };
 
+    // Delete handlers
+    const handleDelete = (e, convId) => {
+        e.stopPropagation();
+        setSelectedConvId(convId);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        console.log('Deleting conversation:', selectedConvId);
+        // TODO: Delete conversation logic here
+        setIsDeleteModalOpen(false);
+        setSelectedConvId(null);
+    };
+
+    // Pin handler
     const handlePin = (e, convId) => {
         e.stopPropagation();
         console.log('Pin conversation:', convId);
         // Add your pin logic here
     };
 
-    const handleDelete = (e, convId) => {
-        e.stopPropagation();
-        console.log('Delete conversation:', convId);
-        // Add your delete logic here
-        if (confirm('Are you sure you want to delete this conversation?')) {
-            console.log('Conversation deleted:', convId);
-        }
+    const getConvName = (convId) => {
+        return conversacionesRecientes.find(c => c.id === convId)?.nombre || '';
     };
 
     return (
@@ -86,7 +108,6 @@ const Sidebar = ({ language, setLanguage, activeSection: externalActiveSection, 
                     </button>
                 </div>
 
-                {/* New Conversation Button */}
                 <div className="new-conversation-wrapper">
                     <button className="new-conversation-btn" onClick={() => handleSectionClick('nueva')}>
                         <span className="new-conv-icon">➕</span>
@@ -142,12 +163,8 @@ const Sidebar = ({ language, setLanguage, activeSection: externalActiveSection, 
                         </div>
                     ))}
                 </div>
-
-               
-
             </div>
 
-            {/* Floating button ALWAYS CLICKABLE */}
             {isCollapsed && (
                 <div
                     className="floating-menu-btn"
@@ -162,6 +179,49 @@ const Sidebar = ({ language, setLanguage, activeSection: externalActiveSection, 
                     </svg>
                 </div>
             )}
+
+            {/* Rename Modal */}
+            <Modal
+                isOpen={isRenameModalOpen}
+                onClose={() => {
+                    setIsRenameModalOpen(false);
+                    setNewConvName('');
+                }}
+                title="Rename conversation"
+                confirmText="Rename"
+                onConfirm={confirmRename}
+            >
+                <input
+                    type="text"
+                    value={newConvName}
+                    onChange={(e) => setNewConvName(e.target.value)}
+                    placeholder="Enter new name..."
+                    autoFocus
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') confirmRename();
+                        if (e.key === 'Escape') setIsRenameModalOpen(false);
+                    }}
+                />
+            </Modal>
+
+            {/* Delete Modal */}
+            <Modal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false);
+                    setSelectedConvId(null);
+                }}
+                title="Delete conversation"
+                confirmText="Delete"
+                cancelText="Cancel"
+                confirmVariant="danger"
+                onConfirm={confirmDelete}
+            >
+                <p>
+                    Are you sure you want to delete "<strong>{getConvName(selectedConvId)}</strong>"?
+                    This action cannot be undone.
+                </p>
+            </Modal>
         </>
     );
 };

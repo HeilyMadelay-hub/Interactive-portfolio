@@ -1,6 +1,4 @@
-/* ========================================
-   APP.CSS - VERSIÓN LIMPIA FINAL
-   ======================================== */
+
 @import './styles/animations.css';
 * {
   margin: 0;
@@ -278,3 +276,4 @@ a:hover {
 html {
   background-color: #0A0A0F;
 }
+
