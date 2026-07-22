@@ -1,0 +1,49 @@
+/* Botón de tema: mismo lenguaje que los controles del header (transparente,
+   gris apagado, índigo en hover). Vive junto al selector de idiomas en ambas
+   vistas, así que solo usa tokens que existen en los dos temas. */
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted-light);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent-text);
+  background-color: var(--accent-tint);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* Mismo truco que .hero-lang-btn: el botón mide 28px, pero el área pulsable
+   se estira en vertical hasta los 44px recomendados para táctil sin cambiar
+   nada de lo que se ve. Solo en vertical: a su derecha está el selector de
+   idiomas y ensanchar solaparía las zonas de toque. */
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+}

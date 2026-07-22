@@ -1,0 +1,315 @@
+.chat-header {
+  background-color: var(--chat-header-bg);
+  border-bottom: 1px solid var(--chat-border);
+  flex-shrink: 0;
+}
+
+.chat-header-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 140px;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   PHOTO
+   ======================================== */
+
+.hero-photo {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--chat-border);
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--surface-light);
+}
+
+/* ========================================
+   INFO BLOCK
+   ======================================== */
+
+/* El ritmo vertical se lleva con márgenes por bloque en vez de un `gap` uniforme:
+   con el gap, nombre / cargo / stack / estado / enlaces quedaban todos a la misma
+   distancia y se leían como una lista plana. Agrupando nombre+cargo pegados y
+   separando estado y enlaces, la jerarquía se ve sin necesidad de más adornos. */
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-name {
+  margin: 0 0 2px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.hero-role {
+  margin: 0 0 8px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.35;
+}
+
+/* Cargo: el segundo nivel de lectura, después del nombre */
+.hero-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Especialización: tercer nivel. El interletrado da aire a los separadores «•»
+   para que se lea como una lista de tecnologías y no como una frase apretada. */
+.hero-stack {
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-muted-light);
+}
+
+/* Insignia de estado, no una línea de texto suelta: encerrarla le da el peso de
+   un estado de producto (como el "Beta" de cualquier SaaS) en vez de parecer una
+   nota más del bloque. margin-bottom generoso para separar del bloque de enlaces. */
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  background-color: rgba(34, 197, 94, 0.08);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+}
+
+/* El punto solo ya estaba, pero a 6px pelado se leía como una viñeta cualquiera.
+   El halo es el recurso que usan las páginas de estado (GitHub, Vercel, Linear):
+   duplica el tamaño aparente sin engordar el punto, y lo convierte en "indicador
+   de estado del sistema" de un vistazo. */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--chat-success);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.20);
+  animation: statusPulse 2.4s ease-in-out infinite;
+}
+
+/* Modo demo: índigo de marca, no ámbar. El ámbar es el color de "atención, algo
+   falla"; aquí el backend duerme a propósito para no gastar cloud. */
+.hero-status.offline {
+  border-color: rgba(79, 70, 229, 0.22);
+  background-color: rgba(79, 70, 229, 0.07);
+  color: var(--text-muted);
+}
+
+.hero-status.offline .status-dot {
+  background-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.20);
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.hero-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 0;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted-light);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+/* --accent-text y no --primary: en claro son el mismo índigo, pero en oscuro
+   el acento de texto sube a #818CF8 para no perder contraste sobre #111827. */
+.hero-link:hover,
+.hero-link:focus-visible {
+  color: var(--accent-text);
+}
+
+/* El icono sube un pelo y gana opacidad al pasar por encima. Es el gesto que
+   separa un enlace de una interfaz de producto: se nota, pero no se ve venir. */
+.hero-link-icon {
+  flex-shrink: 0;
+  opacity: 0.75;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.hero-link:hover .hero-link-icon,
+.hero-link:focus-visible .hero-link-icon {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Subrayado solo bajo el texto, nunca bajo el icono — por eso la etiqueta va en
+   su propio span. El borde existe siempre en transparente: así aparece con una
+   transición limpia y no descuadra el alto al entrar. */
+.hero-link-label {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 180ms ease;
+}
+
+.hero-link:hover .hero-link-label,
+.hero-link:focus-visible .hero-link-label {
+  border-bottom-color: currentColor;
+}
+
+/* ========================================
+   TOP-RIGHT CONTROLS (theme + language)
+   ======================================== */
+
+/* margin-left:auto empuja el grupo al extremo derecho de la cabecera;
+   align-self lo sube a la altura del nombre en vez de centrarlo. */
+.hero-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+.hero-lang {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--chat-border);
+  border-radius: 999px;
+  background: var(--surface-light);
+}
+
+.hero-lang-btn {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* Aquí no vale el gris apagado general: estos botones van sobre la píldora
+     (--surface-light), más oscura que la página, y ahí el mismo gris se queda en
+     4.28:1. Con --text-muted sube a 5.47:1 y cumple AA también sobre ese fondo. */
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+/* La píldora mide 21px de alto: bonita con el ratón, pero el objetivo táctil más
+   pequeño de la pantalla con el pulgar. Este pseudo-elemento estira SOLO el área
+   pulsable hasta los 44px que recomienda Apple, sin cambiar nada de lo que se ve.
+   Se estira en vertical y no en horizontal a propósito: los tres botones están
+   pegados, y ensanchar haría que las zonas se solapasen entre sí — fallar dejaría
+   de ser inofensivo y te cambiaría al idioma de al lado. */
+.hero-lang-btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+}
+
+.hero-lang-btn:hover {
+  color: var(--accent-text);
+}
+
+.hero-lang-btn.active {
+  color: #FFFFFF;
+  background-color: var(--primary);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 600px) {
+  .chat-header-inner {
+    padding: 16px;
+    gap: 16px;
+    min-height: 0;
+  }
+
+  .hero-photo {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+  }
+
+  .hero-name {
+    font-size: 17px;
+  }
+
+  .hero-title {
+    font-size: 12px;
+  }
+
+  .hero-stack {
+    font-size: 11px;
+  }
+
+  /* En móvil el ancho es lo escaso: el switcher se aprieta para no
+     empujar el nombre ni forzar scroll horizontal. */
+  .chat-header-inner {
+    gap: 10px;
+  }
+
+  .hero-lang-btn {
+    padding: 4px 6px;
+    font-size: 10.5px;
+  }
+}

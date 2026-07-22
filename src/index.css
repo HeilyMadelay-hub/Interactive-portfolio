@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+@import './styles/animations.css';
+
+/* ============================================================
+   DESIGN TOKENS — tema claro (diseño original, sin cambios)
+   El tema oscuro solo redefine variables en [data-theme="dark"]:
+   ningún componente declara colores propios por tema.
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  /* Tipografías — Space Grotesk para nombre/titulares, Inter para cuerpo e interfaz */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-code: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Marca — el índigo es idéntico en ambos temas (identidad corporativa) */
+  --primary: #4F46E5;           /* Índigo primario */
+  --primary-light: #6366F1;     /* Índigo claro (hover) */
+  --primary-lighter: #818CF8;   /* Índigo tenue — acentos sobre superficies oscuras */
+  --secondary: #4338CA;         /* Índigo profundo */
+  --coral: #FF6B6B;             /* Coral — acento puntual (Available / hover) */
+  --accent: var(--primary);     /* Acento de marca (antes apuntaba al coral) */
+  --accent-hover: var(--primary-light);
+
+  /* Índigo COMO TEXTO/BORDE sobre el fondo de página. En claro coincide con
+     --primary; en oscuro sube a --primary-lighter para conservar contraste AA.
+     Regla: rellenos → --primary · texto/outline/borde → --accent-text. */
+  --accent-text: #4F46E5;
+  --accent-text-hover: #6366F1;
+
+  /* Colores secundarios (legacy → alineados a la paleta) */
+  --electric-blue: #4F46E5;
+  --matrix-green: #4F46E5;
+  --solar-yellow: #FF6B6B;
+
+  /* Backgrounds y superficies */
+  --background: #FAFAF9;            /* Fondo principal */
+  --surface: #FFFFFF;               /* Tarjetas y modales */
+  --surface-secondary: #F1F1EF;     /* Superficie hundida (inputs de modal) */
+  --background-dark: var(--surface-secondary); /* alias legacy */
+  --surface-light: #E7E7F0;         /* Píldoras, separadores de fecha, rellenos suaves */
+  --sidebar: #14161C;               /* Panel lateral (carbón) */
+  /* En claro el sidebar es carbón sobre papel: se recorta solo y no lleva borde.
+     En oscuro pasa a ser oscuro sobre oscuro, así que necesita una línea que lo
+     separe del área de conversación. Transparente aquí = cero cambio en claro. */
+  --sidebar-border: transparent;
+  /* Carcasa oscura del portfolio (ConsolePanel: "Enfoque actual", "Contacto
+     directo"). En claro es el carbón que contrasta con el papel; en oscuro no
+     puede ser "más oscuro que el fondo" sin desaparecer, así que se invierte a
+     superficie elevada + borde, como las tarjetas de Linear o Vercel. */
+  --panel: #14161C;
+  --panel-border: transparent;
+  --border: #E7E7EA;                /* Separadores estándar */
+  --border-strong: #DADAE2;         /* Bordes de inputs y chips */
+  --line: rgba(26, 27, 35, 0.08);   /* Línea editorial de la vista profesional */
+  --input-background: #FFFFFF;      /* Caja de escritura del chat */
+  --scrollbar-thumb: #E7E7F0;
+
+  /* Textos */
+  --text: #1A1B23;                  /* Texto principal */
+  --text-primary: var(--text);
+  --text-secondary: #5A5B66;        /* Texto secundario */
+  --text-muted: var(--text-secondary);
+  /* Gris apagado. A #9A9AA5 daba 2.67:1 sobre el fondo de página, muy por debajo
+     del 4.5:1 que pide WCAG AA para texto normal: los enlaces del header, el
+     stack, las horas de los mensajes y el selector de idioma eran ilegibles con
+     poca luz o vista cansada. #6B6B76 sube a 5.04:1 y sigue leyéndose como gris
+     secundario. Solo se usa sobre fondos claros, nunca en el sidebar oscuro. */
+  --text-muted-light: #6B6B76;
+
+  /* Chat: jerarquía cromática */
+  --chat-sidebar: var(--sidebar);
+  --chat-header-bg: #FAFAF9;
+  --chat-conversation-bg: #FFFFFF;
+  --chat-input-area-bg: #FAFAF9;
+  --chat-border: var(--border);
+  --chat-input-border: var(--border-strong);
+  --chat-success: #22C55E;      /* verde: estado "en línea / disponible" */
+  --chat-warning: #F59E0B;      /* ámbar: estado "offline / respuestas de reserva" */
+  --chat-user: var(--primary);          /* burbuja del visitante — índigo en ambos temas */
+  --chat-assistant: #EEF0FF;            /* burbuja del asistente (índigo muy claro) */
+  --chat-bot-bubble: var(--chat-assistant); /* alias legacy */
+  --chat-chip-bg: #FFFFFF;      /* chip de sugerencia (quick prompt) */
+  --chat-chip-border: var(--border-strong);
+  --chat-chip-hover-bg: #F5F3FF;
+
+  /* Tintes de acento — fondos/bordes índigo translúcidos (avisos, hovers, code) */
+  --accent-tint-weak: rgba(79, 70, 229, 0.05);
+  --accent-tint: rgba(79, 70, 229, 0.08);
+  --accent-tint-border: rgba(79, 70, 229, 0.16);
+
+  /* Feedback y estados */
+  --danger: #DC2626;
+  --danger-text: #B91C1C;
+  --danger-bg: rgba(220, 38, 38, 0.06);
+  --danger-border: rgba(220, 38, 38, 0.25);
+  --focus-ring: rgba(79, 70, 229, 0.12);
+  --selection-bg: rgba(79, 70, 229, 0.2);
+}
+
+/* ============================================================
+   TEMA OSCURO — grises elegantes, nunca negro puro.
+   Inspirado en ChatGPT / Claude / Linear / Vercel / Notion.
+   Solo cambian variables: mismo layout, misma jerarquía.
+   ============================================================ */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* El índigo de marca (--primary) no se toca. Los acentos que viven como
+     TEXTO suben un paso de luminosidad para cumplir AA sobre #111827. */
+  --accent-text: #818CF8;
+  --accent-text-hover: #A5B4FC;
+
+  --background: #111827;
+  --surface: #1F2937;
+  --surface-secondary: #0F172A;
+  --surface-light: #1F2937;
+  --sidebar: #0F172A;
+  --sidebar-border: #374151;
+  /* Elevada, no hundida: a #0F172A sobre un fondo #111827 el panel daba 1.01:1
+     contra la página — literalmente invisible. */
+  --panel: #1F2937;
+  --panel-border: #374151;
+  --border: #374151;
+  --border-strong: #374151;
+  --line: rgba(248, 250, 252, 0.10);
+  --input-background: #111827;
+  --scrollbar-thumb: #374151;
+
+  --text: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted-light: #94A3B8;
+
+  --chat-header-bg: #111827;
+  --chat-conversation-bg: #111827;
+  --chat-input-area-bg: #111827;
+  --chat-assistant: #1E293B;
+  --chat-chip-bg: #1F2937;
+  --chat-chip-hover-bg: rgba(129, 140, 248, 0.12);
+
+  --accent-tint-weak: rgba(129, 140, 248, 0.08);
+  --accent-tint: rgba(129, 140, 248, 0.12);
+  --accent-tint-border: rgba(129, 140, 248, 0.25);
+
+  --danger: #F87171;
+  --danger-text: #FCA5A5;
+  --danger-bg: rgba(248, 113, 113, 0.08);
+  --danger-border: rgba(248, 113, 113, 0.30);
+  --focus-ring: rgba(129, 140, 248, 0.25);
+  --selection-bg: rgba(129, 140, 248, 0.30);
+}
+
+/* Transición suave SOLO durante el cambio de tema: ThemeContext añade esta
+   clase a <html> y la retira a los 300 ms. Así el cambio se funde sin que
+   cada hover de la aplicación herede una transición de color permanente.
+   El !important hace falta para ganar a los `transition` inline de la vista
+   profesional durante ese instante. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition: background-color 250ms ease, color 250ms ease,
+      border-color 250ms ease, fill 250ms ease, stroke 250ms ease,
+      outline-color 250ms ease, box-shadow 250ms ease !important;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  overflow: hidden;
+}

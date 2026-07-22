@@ -1,0 +1,388 @@
+.sidebar {
+  width: 272px;
+  height: 100vh;
+  background-color: var(--chat-sidebar);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  /* Transparente en claro (el carbón ya se recorta contra el chat blanco) y
+     gris en oscuro, donde si no el sidebar y la conversación se funden. El
+     box-sizing global es border-box, así que el borde va dentro de los 272px
+     y no mueve el layout. */
+  border-right: 1px solid var(--sidebar-border);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: 1000;
+  transform-origin: left center;
+  transform: translateX(0);
+  opacity: 1;
+  will-change: transform, opacity, width;
+}
+
+.sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
+  border-right: none;  /* plegado no debe dejar una línea suelta */
+  opacity: 0;
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+.sidebar-header {
+  padding: 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 64px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: -0.01em;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.menu-btn svg {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+/* ========================================
+   NEW CONVERSATION
+   ======================================== */
+
+.new-conversation-wrapper {
+  padding: 16px;
+}
+
+.new-conversation-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.new-conversation-btn:hover {
+  background-color: var(--primary-light);
+}
+
+.new-conversation-btn:active {
+  background-color: var(--primary);
+}
+
+.new-conv-icon {
+  flex-shrink: 0;
+}
+
+.new-conv-text {
+  white-space: nowrap;
+}
+
+/* ========================================
+   CONVERSATION LIST
+   ======================================== */
+
+.sidebar-sections {
+  padding: 8px 8px 16px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-sections::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-sections::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-sections::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.sidebar-sections {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* ========================================
+   EMPTY STATE (no conversations yet)
+   ======================================== */
+
+.sidebar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.sidebar-empty-icon {
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 6px;
+}
+
+.sidebar-empty-title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar-empty-hint {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.sidebar-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.sidebar-section:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-section.active {
+  background-color: rgba(79, 70, 229, 0.2);
+}
+
+.sidebar-section.active .section-name {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.sidebar-section.highlight {
+  animation: highlightFlash 1.2s ease-out;
+}
+
+@keyframes highlightFlash {
+  0% { background-color: rgba(79, 70, 229, 0.35); }
+  100% { background-color: transparent; }
+}
+
+.section-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.65);
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-section:hover .section-name {
+  color: #FFFFFF;
+}
+
+.sidebar-section.pinned {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.pinned-indicator {
+  flex-shrink: 0;
+  margin-right: 8px;
+  color: var(--primary-light);
+}
+
+.action-btn.pin-btn.pinned {
+  color: var(--primary-light);
+}
+
+/* ========================================
+   CONVERSATION ACTIONS
+   ======================================== */
+
+.conversation-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-section.hovered .conversation-actions,
+.sidebar-section:hover .conversation-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.delete-btn:hover {
+  background-color: rgba(220, 38, 38, 0.2);
+  color: #F87171;
+}
+
+/* ========================================
+   FLOATING TOGGLE (sidebar collapsed)
+   ======================================== */
+
+.floating-menu-btn {
+  position: fixed !important;
+  top: 16px !important;
+  left: 16px !important;
+  background-color: var(--chat-header-bg) !important;
+  border: 1px solid var(--chat-border) !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+  width: 40px !important;
+  height: 40px !important;
+  z-index: 900 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08) !important;
+  pointer-events: auto !important;
+}
+
+.floating-menu-btn:hover {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+.floating-menu-btn svg {
+  width: 20px !important;
+  height: 20px !important;
+  pointer-events: none !important;
+}
+
+/* ========================================
+   SIDEBAR SCROLLBAR
+   ======================================== */
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* --accent-text: sobre el sidebar oscuro, el índigo primario a pelo se queda
+   corto de contraste; el acento de texto sube a #818CF8 en modo oscuro. */
+.sidebar-section:focus-visible,
+.menu-btn:focus-visible,
+.floating-menu-btn:focus-visible,
+.action-btn:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: -2px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 272px;
+    height: 100vh;
+    box-shadow: 2px 0 12px rgba(15, 23, 42, 0.24);
+  }
+
+  .sidebar.collapsed {
+    box-shadow: none;
+  }
+}
