@@ -36,6 +36,7 @@ export function ImageSlot({ caption, aspectRatio }) {
 export function CtaRow({ links, cta }) {
     return (
         <div style={ctaRowStyle}>
+            {/* Temporarily hidden — project not yet deployed publicly
             <a
                 href={links.demo}
                 target="_blank"
@@ -59,15 +60,29 @@ export function CtaRow({ links, cta }) {
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             </a>
+            */}
             <a
                 href={links.code}
                 target="_blank"
                 rel="noreferrer"
-                style={ctaSecondaryStyle}
-                onMouseEnter={e => (e.currentTarget.style.color = colors.teal)}
-                onMouseLeave={e => (e.currentTarget.style.color = colors.muted)}
+                style={ctaPrimaryStyle}
+                onMouseEnter={e => {
+                    e.currentTarget.style.color = colors.teal;
+                    e.currentTarget.style.borderColor = colors.teal;
+                    const arrow = e.currentTarget.querySelector('svg');
+                    if (arrow) arrow.style.transform = 'translateX(3px)';
+                }}
+                onMouseLeave={e => {
+                    e.currentTarget.style.color = colors.ink;
+                    e.currentTarget.style.borderColor = colors.ink;
+                    const arrow = e.currentTarget.querySelector('svg');
+                    if (arrow) arrow.style.transform = 'translateX(0)';
+                }}
             >
                 {cta.code}
+                <svg style={ctaArrowStyle} width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
             </a>
         </div>
     );
