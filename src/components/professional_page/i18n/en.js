@@ -335,7 +335,7 @@ const en = {
         heading: 'Projects',
         lede: "A selection of backend systems, AI solutions and cloud architectures I've designed and taken to production.",
         labels: { challenge: 'The challenge', approach: 'The approach', architecture: 'Architecture', stack: 'Stack' },
-        cta: { view: 'View project', code: 'View code →' },
+        cta: { view: 'View project', code: 'View code' },
         items: [
 
             {
@@ -346,7 +346,7 @@ const en = {
                 summary: 'A conversation analysis engine that interprets intent and subtext, and only answers when it finds documentary evidence to support the interpretation.',
                 problema: 'Ask an LLM "what did this person really mean" and it always answers, with the same confidence, whether it has grounds or not. In a domain where the answer shapes real personal decisions, that unearned confidence is the problem — not the model\'s capability.',
                 solucion: 'I designed a cascading governance pipeline that wraps the model: it validates policies before invoking it, requires retrieved evidence in order to generate, and blocks the response when that evidence falls below a calibrated threshold. Every response is reconstructible by trace_id.',
-                arquitectura: 'FastAPI orchestrates with LangGraph: policy validation → crisis classifier running in parallel with hybrid search (pgvector HNSW + tsvector/GIN fused via RRF) → cross-encoder reranking acting as the confidence gate → analysis → traceability. Inference and embeddings run through OpenRouter (GPT-4.1 + text-embedding-3-large), deployed on AWS (App Runner, RDS, ElastiCache, S3, IAM).',
+                arquitectura: 'FastAPI orchestrates with LangGraph: policy validation → crisis classifier running in parallel with hybrid search (pgvector HNSW + tsvector/GIN fused via RRF) → cross-encoder reranking acting as the confidence gate → analysis → traceability. Inference and embeddings run through OpenRouter (GPT-4.1 + text-embedding-3-large), deployed on AWS (EC2 t3.micro · Docker Compose: FastAPI + PostgreSQL/pgvector + Redis + Nginx · Amplify Hosting · S3 · Secrets Manager · IAM instance profile · Cognito).',
                 resultados: [
                     { value: '~1.6-2.3s', label: 'generation via OpenRouter (GPT-4.1)' },
                     { value: '1', label: 'external credential — OpenRouter, in Secrets Manager; everything else via IAM' },
