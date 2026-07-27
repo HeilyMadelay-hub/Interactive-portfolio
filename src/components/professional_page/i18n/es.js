@@ -7,6 +7,12 @@ const es = {
         message: 'Ha ocurrido un error inesperado. Recargar la página suele bastar.',
         retry: 'Recargar la página',
     },
+    // Pantalla para cualquier URL que no exista (ruta no registrada en App.jsx).
+    notFound: {
+        title: 'Esta página no existe',
+        message: 'La URL a la que has llegado no corresponde a ninguna sección de este sitio.',
+        back: 'Volver al inicio',
+    },
     // Botón de tema del header (chat y portfolio). Solo icono en pantalla:
     // estas frases son el aria-label/title para lectores de pantalla y tooltip.
     themeToggle: {
@@ -123,10 +129,10 @@ const es = {
         categories: [
             { category: 'Backend', skills: ['C#', 'ASP.NET Core', 'Python', 'FastAPI', 'Java', 'Spring Boot', 'Node.js', 'APIs REST'] },
             { category: 'Frontend', skills: ['Angular', 'React', 'TypeScript', 'HTML/CSS', 'JavaScript'] },
-            { category: 'IA y Automatización', skills: ['RAG Pipelines', 'LangChain', 'OpenAI API', 'Gemini API', 'ChromaDB', 'Ollama', 'OCR', 'MediaPipe', 'TensorFlow.js', 'Streamlit', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'n8n'] },
+            { category: 'IA y Automatización', skills: ['RAG Pipelines', 'LangGraph', 'LangChain', 'OpenAI API', 'Gemini API', 'Hugging Face', 'ChromaDB', 'pgvector', 'Ollama', 'OCR', 'MediaPipe', 'TensorFlow.js', 'Streamlit', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'n8n'] },
             { category: 'Tiempo Real', skills: ['WebSockets', 'SignalR', 'Socket.io'] },
-            { category: 'Cloud y DevOps', skills: ['Azure', 'AWS', 'Docker'] },
-            { category: 'Bases de Datos', skills: ['PostgreSQL', 'MySQL', 'SQL Server', 'MongoDB', 'Supabase'] },
+            { category: 'Cloud y DevOps', skills: ['Azure', 'AWS', 'Docker', 'Git/GitHub'] },
+            { category: 'Bases de Datos', skills: ['PostgreSQL', 'pgvector', 'MySQL', 'MariaDB', 'SQL Server', 'MongoDB', 'Supabase'] },
         ],
     },
 
@@ -273,32 +279,35 @@ const es = {
                 environment: 'Presencial',
                 team: '12 personas en total',
                 methodology: 'Agile',
-                summary: 'Trabajé en un equipo de tres becarios desarrollando aplicaciones de IA, servicios backend y soluciones de automatización para procesamiento de documentos legales y optimización de flujos internos.',
+                summary: 'Trabajé desarrollando aplicaciones de IA, servicios backend y soluciones de automatización para el procesamiento de convenios colectivos oficiales y la optimización de flujos internos.',
                 highlights: [
-                    'Reduje el tiempo de procesamiento legal de ~2 horas a 10 minutos en más de 70 regiones mediante automatización a gran escala.',
+                    'Reduje el tiempo de procesamiento de convenios colectivos de ~2 horas a 10 minutos en más de 70 regiones, generando automáticamente resúmenes y tablas salariales estructuradas.',
                     'Construí chatbots de IA con FastAPI + Flutter (Gemini) y Flask + Streamlit (OpenAI), ambos Dockerizados.',
-                    'Diseñé arquitecturas RAG con OpenAI API y ChromaDB para procesamiento de documentos legales.',
+                    'Reduje un 30% el tiempo de testing de modelos de IA mejorando el flujo de pruebas.',
+                    'Diseñé arquitecturas RAG con OpenAI API y ChromaDB para procesamiento documental.',
                     'Desarrollé pipelines de scraping con Selenium y BeautifulSoup e ingesta de BOE/BOA con PyPDF2, pdfplumber y pandas.',
-                    'Analicé el portal legacy en PHP (CodeIgniter) y documenté la arquitectura con MySQL (HeidiSQL, Workbench).',
+                    'Analicé el portal legacy en PHP (CodeIgniter, MVC) y documenté la estructura de la base de datos con HeidiSQL y Workbench.',
                 ],
-                tech: ['Python', 'FastAPI', 'Flask', 'Streamlit', 'Docker', 'OpenAI API', 'Ollama', 'ChromaDB', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'MySQL', 'PHP (CodeIgniter)', 'n8n', 'Flutter'],
+                tech: ['Python', 'FastAPI', 'Flask', 'Streamlit', 'Docker', 'OpenAI API', 'Gemini API', 'Ollama', 'Hugging Face', 'ChromaDB', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'MariaDB', 'PHP (CodeIgniter)', 'n8n', 'Flutter', 'Git/GitHub'],
                 details: [
-                    { label: 'Overview', text: 'Desarrollé sistemas backend, aplicaciones de IA y pipelines de automatización para el procesamiento de documentos legales, extracción de datos estructurados y optimización de flujos de trabajo internos.' },
+                    { label: 'Overview', text: 'Desarrollé sistemas backend, aplicaciones de IA y pipelines de automatización para el procesamiento de convenios colectivos oficiales, extracción de datos estructurados y optimización de flujos de trabajo internos.' },
                     {
                         label: 'Sistemas de IA (RAG y Chatbots)',
                         items: [
                             'Diseñé arquitecturas backend y modelos de datos para sistemas de IA basados en RAG usando OpenAI APIs y ChromaDB.',
-                            'Construí chatbots de IA con APIs REST en FastAPI y Flask: FastAPI + Flutter (integración Gemini, despliegue HTTPS seguro, mejora de flujos de testing) y Flask + Streamlit (integración OpenAI, Dockerizado para reproducibilidad y estabilidad).',
+                            'Construí chatbots de IA con APIs REST en FastAPI y Flask: FastAPI + Flutter (integración Gemini, despliegue HTTPS seguro) y Flask + Streamlit (integración OpenAI, Dockerizado para reproducibilidad y estabilidad).',
+                            'Reduje un 30% el tiempo de testing de modelos de IA mejorando el flujo de pruebas.',
                             'Evalué pipelines de OCR y LLMs locales (Hugging Face, Ollama) para extracción de documentos y pruebas de viabilidad.',
                             'Configuré entornos Docker y Ollama para experimentación y testing local con LLMs.',
                         ],
                     },
                     {
-                        label: 'Automatización de Datos Legales',
+                        label: 'Automatización de Convenios Colectivos',
                         items: [
-                            'Reduje el tiempo de procesamiento legal de ~2 horas a 10 minutos en más de 70 regiones mediante automatización a gran escala.',
-                            'Construí pipelines de automatización en Python para el procesamiento masivo de boletines legales.',
-                            'Integré APIs del BOE/BOA para la ingesta estructurada de datos legales.',
+                            'Reduje el tiempo de procesamiento de ~2 horas a 10 minutos en más de 70 regiones automatizando la extracción de los convenios colectivos publicados en boletines oficiales.',
+                            'Generé automáticamente resúmenes y tablas salariales estructuradas, sustituyendo una revisión manual documento a documento.',
+                            'Construí pipelines de automatización en Python para el procesamiento masivo de boletines oficiales.',
+                            'Integré APIs del BOE/BOA para la ingesta estructurada de datos.',
                             'Procesé y analicé datasets de PDFs a gran escala usando PyPDF2, pdfplumber y pandas.',
                             'Desarrollé sistemas de web scraping con Selenium y BeautifulSoup.',
                         ],
@@ -313,8 +322,8 @@ const es = {
                     {
                         label: 'Sistemas y Arquitectura',
                         items: [
-                            'Analicé la arquitectura del portal de empleados legacy en PHP (CodeIgniter) y sus flujos de datos.',
-                            'Documenté la estructura del sistema usando herramientas de MySQL (HeidiSQL, Workbench).',
+                            'Analicé la arquitectura del portal de empleados legacy en PHP (CodeIgniter, MVC) y sus flujos de datos.',
+                            'Documenté la estructura de la base de datos (MariaDB) usando HeidiSQL y Workbench.',
                             'Identifiqué oportunidades de mejora arquitectónica y de rendimiento en los sistemas existentes.',
                         ],
                     },
@@ -332,24 +341,24 @@ const es = {
         items: [
 
             {
-                id: 'rag-legal',
+                id: 'subtextai',
                 layout: 'image-right',
-                category: ['Backend', 'IA', 'Cloud'],
-                title: 'Asistente legal con RAG',
-                summary: 'Un chatbot que lee miles de páginas de jurisprudencia y responde citando la cláusula exacta, no una suposición.',
-                problema: 'Los equipos legales dedicaban horas a localizar cláusulas concretas dentro de contratos extensos, con riesgo real de pasar por alto información crítica en una revisión manual.',
-                solucion: 'Diseñé un pipeline de recuperación aumentada (RAG) que indexa los documentos por cláusula, responde en streaming y cita la página exacta de cada afirmación, eliminando la revisión repetitiva.',
-                arquitectura: 'FastAPI expone el pipeline sobre un vector store en ChromaDB. LangChain orquesta la recuperación y el modelo genera la respuesta con citas verificables sobre el documento original.',
+                category: ['Backend', 'IA', 'En desarrollo'],
+                title: 'SubtextAI',
+                summary: 'Un motor de análisis de conversaciones que interpreta intención y subtexto, y que solo responde cuando encuentra evidencia documental que lo respalde.',
+                problema: 'Un LLM al que le preguntas "qué quiso decir esta persona" responde siempre, con la misma seguridad, tenga base o no. En un dominio donde la respuesta influye en decisiones personales reales, esa confianza injustificada es el problema, no la falta de capacidad del modelo.',
+                solucion: 'Diseñé un pipeline de gobernanza en cascada que envuelve al modelo: valida políticas antes de invocarlo, exige evidencia recuperada para poder generar, y bloquea la respuesta si la evidencia no supera un umbral calibrado. Cada respuesta queda reconstruible por trace_id.',
+                arquitectura: 'FastAPI orquesta con LangGraph: validación de políticas → clasificador de crisis en paralelo con búsqueda híbrida (pgvector HNSW + tsvector/GIN fusionados con RRF) → reranking cross-encoder que actúa como puerta de confianza → análisis → trazabilidad. Inferencia y embeddings vía OpenRouter (GPT-4.1 + text-embedding-3-large), desplegado en AWS (App Runner, RDS, ElastiCache, S3, IAM).',
                 resultados: [
-                    { value: '-30%', label: 'tiempo de revisión documental' },
-                    { value: '70+', label: 'provincias con jurisprudencia indexada' },
-                    { value: '<2s', label: 'latencia media de respuesta' },
+                    { value: '~1.6-2.3s', label: 'generación vía OpenRouter (GPT-4.1)' },
+                    { value: '1', label: 'credencial externa — OpenRouter, en Secrets Manager; el resto vía IAM' },
+                    { value: '3072', label: 'dimensiones de embedding (text-embedding-3-large)' },
                 ],
-                stack: ['Python', 'FastAPI', 'LangChain', 'OpenAI API', 'ChromaDB', 'Docker'],
-                imageCaption: 'Aquí irá la grabación de una consulta en tiempo real al asistente',
-                links: { demo: '#', code: '#' },
+                stack: ['Python', 'FastAPI', 'LangGraph', 'AWS', 'OpenRouter', 'PostgreSQL', 'pgvector', 'React 19', 'Docker'],
+                imageCaption: 'Mockup de la vista de análisis — proyecto en desarrollo activo',
+                links: { demo: '#', code: 'https://github.com/HeilyMadelay-hub/SubtextAI' },
             }
-            
+
         ],
     },
 
@@ -411,6 +420,9 @@ const es = {
             rename: 'Renombrar conversación',
             pin: 'Fijar conversación',
             unpin: 'Soltar conversación',
+            pinnedGroup: 'Anclado',
+            pinnedCollapse: 'Plegar ancladas',
+            pinnedExpand: 'Desplegar ancladas',
             delete: 'Eliminar conversación',
             emptyTitle: 'Aún no hay conversaciones',
             emptyHint: 'Escribe algo abajo para empezar una.',
