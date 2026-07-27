@@ -337,7 +337,7 @@ const fr = {
         heading: 'Projets',
         lede: "Une sélection de systèmes backend, de solutions d'IA et d'architectures cloud que j'ai conçus et mis en production.",
         labels: { challenge: 'Le défi', approach: "L'approche", architecture: 'Architecture', stack: 'Stack' },
-        cta: { view: 'Voir le projet', code: 'Voir le code →' },
+        cta: { view: 'Voir le projet', code: 'Voir le code' },
         items: [
 
             {
@@ -348,7 +348,7 @@ const fr = {
                 summary: "Un moteur d'analyse de conversations qui interprète l'intention et le sous-texte, et ne répond que lorsqu'il trouve des preuves documentaires pour étayer son interprétation.",
                 problema: "Demandez à un LLM « qu'a vraiment voulu dire cette personne » et il répond toujours, avec la même assurance, qu'il ait des fondements ou non. Dans un domaine où la réponse influence de vraies décisions personnelles, cette confiance injustifiée est le problème — pas la capacité du modèle.",
                 solucion: "J'ai conçu un pipeline de gouvernance en cascade qui encadre le modèle : il valide les politiques avant de l'invoquer, exige des preuves récupérées pour pouvoir générer, et bloque la réponse lorsque ces preuves n'atteignent pas un seuil calibré. Chaque réponse est reconstructible par trace_id.",
-                arquitectura: "FastAPI orchestre avec LangGraph : validation des politiques → classificateur de crise en parallèle avec la recherche hybride (pgvector HNSW + tsvector/GIN fusionnés par RRF) → reranking cross-encoder servant de porte de confiance → analyse → traçabilité. Inférence et embeddings via OpenRouter (GPT-4.1 + text-embedding-3-large), déployé sur AWS (App Runner, RDS, ElastiCache, S3, IAM).",
+                arquitectura: "FastAPI orchestre avec LangGraph : validation des politiques → classificateur de crise en parallèle avec la recherche hybride (pgvector HNSW + tsvector/GIN fusionnés par RRF) → reranking cross-encoder servant de porte de confiance → analyse → traçabilité. Inférence et embeddings via OpenRouter (GPT-4.1 + text-embedding-3-large), déployé sur AWS (EC2 t3.micro · Docker Compose : FastAPI + PostgreSQL/pgvector + Redis + Nginx · Amplify Hosting · S3 · Secrets Manager · profil d'instance IAM · Cognito).",
                 resultados: [
                     { value: '~1,6-2,3s', label: 'génération via OpenRouter (GPT-4.1)' },
                     { value: '1', label: "identifiant externe — OpenRouter, dans Secrets Manager ; le reste via IAM" },
