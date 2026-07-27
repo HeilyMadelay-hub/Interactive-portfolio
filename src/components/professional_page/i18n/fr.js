@@ -7,6 +7,12 @@ const fr = {
         message: "Une erreur inattendue s'est produite. Recharger la page suffit en général.",
         retry: 'Recharger la page',
     },
+    // Écran pour toute URL qui n'existe pas (route non enregistrée dans App.jsx).
+    notFound: {
+        title: "Cette page n'existe pas",
+        message: "L'URL sur laquelle vous êtes arrivé ne correspond à aucune section de ce site.",
+        back: "Retour à l'accueil",
+    },
     // Bouton de thème du header (chat et portfolio). Icône seule à l'écran :
     // ces libellés servent d'aria-label/title pour les lecteurs d'écran.
     themeToggle: {
@@ -123,10 +129,10 @@ const fr = {
         categories: [
             { category: 'Backend', skills: ['C#', 'ASP.NET Core', 'Python', 'FastAPI', 'Java', 'Spring Boot', 'Node.js', 'API REST'] },
             { category: 'Frontend', skills: ['Angular', 'React', 'TypeScript', 'HTML/CSS', 'JavaScript'] },
-            { category: 'IA et Automatisation', skills: ['RAG Pipelines', 'LangChain', 'OpenAI API', 'Gemini API', 'ChromaDB', 'Ollama', 'OCR', 'MediaPipe', 'TensorFlow.js', 'Streamlit', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'n8n'] },
+            { category: 'IA et Automatisation', skills: ['RAG Pipelines', 'LangGraph', 'LangChain', 'OpenAI API', 'Gemini API', 'Hugging Face', 'ChromaDB', 'pgvector', 'Ollama', 'OCR', 'MediaPipe', 'TensorFlow.js', 'Streamlit', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'n8n'] },
             { category: 'Temps Réel', skills: ['WebSockets', 'SignalR', 'Socket.io'] },
-            { category: 'Cloud et DevOps', skills: ['Azure', 'AWS', 'Docker'] },
-            { category: 'Bases de Données', skills: ['PostgreSQL', 'MySQL', 'SQL Server', 'MongoDB', 'Supabase'] },
+            { category: 'Cloud et DevOps', skills: ['Azure', 'AWS', 'Docker', 'Git/GitHub'] },
+            { category: 'Bases de Données', skills: ['PostgreSQL', 'pgvector', 'MySQL', 'MariaDB', 'SQL Server', 'MongoDB', 'Supabase'] },
         ],
     },
 
@@ -272,32 +278,35 @@ const fr = {
                 environment: 'Sur site',
                 team: '12 personnes au total',
                 methodology: 'Agile',
-                summary: "J'ai travaillé dans une équipe de trois stagiaires à développer des applications d'IA, des services backend et des solutions d'automatisation pour le traitement de documents juridiques et l'optimisation des flux internes.",
+                summary: "J'ai travaillé à développer des applications d'IA, des services backend et des solutions d'automatisation pour le traitement des conventions collectives officielles et l'optimisation des flux internes.",
                 highlights: [
-                    "Réduit le temps de traitement juridique d'environ 2 heures à 10 minutes dans plus de 70 régions grâce à l'automatisation à grande échelle.",
+                    "Réduit le temps de traitement des conventions collectives d'environ 2 heures à 10 minutes dans plus de 70 régions, en générant automatiquement des résumés et des tables salariales structurés.",
                     "Développé des chatbots d'IA avec FastAPI + Flutter (Gemini) et Flask + Streamlit (OpenAI), les deux Dockerisés.",
-                    "Conçu des architectures RAG avec l'API OpenAI et ChromaDB pour le traitement de documents juridiques.",
+                    "Réduit de 30% le temps de test des modèles d'IA en améliorant le flux de tests.",
+                    "Conçu des architectures RAG avec l'API OpenAI et ChromaDB pour le traitement documentaire.",
                     'Développé des pipelines de scraping avec Selenium et BeautifulSoup ; ingestion des données BOE/BOA avec PyPDF2, pdfplumber et pandas.',
-                    "Analysé le portail legacy PHP (CodeIgniter) et documenté l'architecture avec les outils MySQL (HeidiSQL, Workbench).",
+                    "Analysé le portail legacy PHP (CodeIgniter, MVC) et documenté la structure de la base de données avec HeidiSQL et Workbench.",
                 ],
-                tech: ['Python', 'FastAPI', 'Flask', 'Streamlit', 'Docker', 'OpenAI API', 'Ollama', 'ChromaDB', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'MySQL', 'PHP (CodeIgniter)', 'n8n', 'Flutter'],
+                tech: ['Python', 'FastAPI', 'Flask', 'Streamlit', 'Docker', 'OpenAI API', 'Gemini API', 'Ollama', 'Hugging Face', 'ChromaDB', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'MariaDB', 'PHP (CodeIgniter)', 'n8n', 'Flutter', 'Git/GitHub'],
                 details: [
-                    { label: "Vue d'ensemble", text: "J'ai développé des systèmes backend, des applications d'IA et des pipelines d'automatisation pour le traitement de documents juridiques, l'extraction de données structurées et l'optimisation des flux de travail internes." },
+                    { label: "Vue d'ensemble", text: "J'ai développé des systèmes backend, des applications d'IA et des pipelines d'automatisation pour le traitement des conventions collectives officielles, l'extraction de données structurées et l'optimisation des flux de travail internes." },
                     {
                         label: "Systèmes d'IA (RAG et Chatbots)",
                         items: [
                             "Conçu des architectures backend et des modèles de données pour des systèmes d'IA basés sur RAG avec les API OpenAI et ChromaDB.",
-                            "Développé des chatbots d'IA avec des API REST FastAPI et Flask : FastAPI + Flutter (intégration Gemini, déploiement HTTPS sécurisé, amélioration des flux de test) et Flask + Streamlit (intégration OpenAI, Dockerisé pour la reproductibilité et la stabilité).",
+                            "Développé des chatbots d'IA avec des API REST FastAPI et Flask : FastAPI + Flutter (intégration Gemini, déploiement HTTPS sécurisé) et Flask + Streamlit (intégration OpenAI, Dockerisé pour la reproductibilité et la stabilité).",
+                            "Réduit de 30% le temps de test des modèles d'IA en améliorant le flux de tests.",
                             "Évalué des pipelines d'OCR et des LLM locaux (Hugging Face, Ollama) pour l'extraction de documents et les tests de faisabilité.",
                             "Configuré des environnements Docker et Ollama pour l'expérimentation et les tests locaux avec des LLM.",
                         ],
                     },
                     {
-                        label: 'Automatisation des données juridiques',
+                        label: 'Automatisation des conventions collectives',
                         items: [
-                            "Réduit le temps de traitement juridique d'environ 2 heures à 10 minutes dans plus de 70 régions grâce à l'automatisation à grande échelle.",
-                            "Développé des pipelines d'automatisation en Python pour le traitement massif de boletins juridiques.",
-                            "Intégré les API BOE/BOA pour l'ingestion structurée de données juridiques.",
+                            "Réduit le temps de traitement d'environ 2 heures à 10 minutes dans plus de 70 régions en automatisant l'extraction des conventions collectives publiées dans les bulletins officiels.",
+                            "Généré automatiquement des résumés et des tables salariales structurés, remplaçant une relecture manuelle document par document.",
+                            "Développé des pipelines d'automatisation en Python pour le traitement massif de bulletins officiels.",
+                            "Intégré les API BOE/BOA pour l'ingestion structurée des données.",
                             'Traité et analysé de grands jeux de données PDF avec PyPDF2, pdfplumber et pandas.',
                             'Développé des systèmes de web scraping avec Selenium et BeautifulSoup.',
                         ],
@@ -312,8 +321,8 @@ const fr = {
                     {
                         label: 'Systèmes et architecture',
                         items: [
-                            "Analysé l'architecture du portail employé legacy en PHP (CodeIgniter) et ses flux de données.",
-                            'Documenté la structure du système avec les outils MySQL (HeidiSQL, Workbench).',
+                            "Analysé l'architecture du portail employé legacy en PHP (CodeIgniter, MVC) et ses flux de données.",
+                            'Documenté la structure de la base de données (MariaDB) avec HeidiSQL et Workbench.',
                             "Identifié des opportunités d'amélioration architecturale et de performance dans les systèmes existants.",
                         ],
                     },
@@ -332,25 +341,24 @@ const fr = {
         items: [
 
             {
-                id: 'rag-legal',
+                id: 'subtextai',
                 layout: 'image-right',
-                category: ['Backend', 'IA', 'Cloud'],
-                title: 'Assistant juridique RAG',
-                summary: 'Un chatbot qui lit des milliers de pages de jurisprudence et répond en citant la clause exacte, pas une supposition.',
-                problema: "Les équipes juridiques passaient des heures à retrouver des clauses précises dans de longs contrats, avec un risque réel de passer à côté d'informations critiques lors d'une relecture manuelle.",
-                solucion: "J'ai conçu un pipeline de génération augmentée par récupération (RAG) qui indexe les documents clause par clause, répond en streaming et cite la page exacte de chaque affirmation, éliminant la relecture répétitive.",
-                arquitectura: "FastAPI expose le pipeline au-dessus d'un vector store ChromaDB. LangChain orchestre la récupération et le modèle génère la réponse avec des citations vérifiables renvoyant au document d'origine.",
+                category: ['Backend', 'IA', 'En développement'],
+                title: 'SubtextAI',
+                summary: "Un moteur d'analyse de conversations qui interprète l'intention et le sous-texte, et ne répond que lorsqu'il trouve des preuves documentaires pour étayer son interprétation.",
+                problema: "Demandez à un LLM « qu'a vraiment voulu dire cette personne » et il répond toujours, avec la même assurance, qu'il ait des fondements ou non. Dans un domaine où la réponse influence de vraies décisions personnelles, cette confiance injustifiée est le problème — pas la capacité du modèle.",
+                solucion: "J'ai conçu un pipeline de gouvernance en cascade qui encadre le modèle : il valide les politiques avant de l'invoquer, exige des preuves récupérées pour pouvoir générer, et bloque la réponse lorsque ces preuves n'atteignent pas un seuil calibré. Chaque réponse est reconstructible par trace_id.",
+                arquitectura: "FastAPI orchestre avec LangGraph : validation des politiques → classificateur de crise en parallèle avec la recherche hybride (pgvector HNSW + tsvector/GIN fusionnés par RRF) → reranking cross-encoder servant de porte de confiance → analyse → traçabilité. Inférence et embeddings via OpenRouter (GPT-4.1 + text-embedding-3-large), déployé sur AWS (App Runner, RDS, ElastiCache, S3, IAM).",
                 resultados: [
-                    { value: '-30%', label: 'temps de relecture documentaire' },
-                    { value: '70+', label: 'provinces avec jurisprudence indexée' },
-                    { value: '<2s', label: 'latence moyenne de réponse' },
+                    { value: '~1,6-2,3s', label: 'génération via OpenRouter (GPT-4.1)' },
+                    { value: '1', label: "identifiant externe — OpenRouter, dans Secrets Manager ; le reste via IAM" },
+                    { value: '3072', label: "dimensions d'embedding (text-embedding-3-large)" },
                 ],
-                stack: ['Python', 'FastAPI', 'LangChain', 'OpenAI API', 'ChromaDB', 'Docker'],
-                imageCaption: "L'enregistrement d'une requête en temps réel à l'assistant viendra ici",
-                links: { demo: '#', code: '#' },
+                stack: ['Python', 'FastAPI', 'LangGraph', 'AWS', 'OpenRouter', 'PostgreSQL', 'pgvector', 'React 19', 'Docker'],
+                imageCaption: "Mockup de la vue d'analyse — projet en développement actif",
+                links: { demo: '#', code: 'https://github.com/HeilyMadelay-hub/SubtextAI' },
             }
-          
-         
+
         ],
     },
 
@@ -412,6 +420,9 @@ const fr = {
             rename: 'Renommer la conversation',
             pin: 'Épingler la conversation',
             unpin: 'Désépingler la conversation',
+            pinnedGroup: 'Épinglé',
+            pinnedCollapse: 'Replier les épinglées',
+            pinnedExpand: 'Déplier les épinglées',
             delete: 'Supprimer la conversation',
             emptyTitle: 'Pas encore de conversations',
             emptyHint: 'Écrivez un message ci-dessous pour en démarrer une.',
