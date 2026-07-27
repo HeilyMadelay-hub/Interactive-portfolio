@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Importa comp
 import './App.css';// Importa los estilos globales de la aplicación
 import { LanguageProvider } from './components/professional_page/i18n/LanguageContext.jsx'; // Idioma activo (ES/EN/FR) compartido por toda la app
 import { ThemeProvider } from './theme/ThemeContext.jsx'; // Tema claro/oscuro compartido por chat y portfolio
+import NotFound from './components/NotFound.jsx'; // Cualquier URL sin match — sin esto, <Routes> renderiza en blanco
 import './styles/animations.css';
 
 // Cada ruta viaja en su propio archivo en vez de en un único paquete: quien entra
@@ -58,6 +59,11 @@ function App() {// Componente principal de la aplicación que solo hace routing
                             </LanguageProvider>
                         }
                     />
+
+                    {/* Comodín: cualquier ruta que no coincida con las de arriba (typos,
+                        enlaces rotos, /portfolio/algo). Sin esto, Routes no renderiza
+                        nada y el visitante ve una página en blanco. */}
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Suspense>
         </BrowserRouter>
