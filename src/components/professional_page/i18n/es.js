@@ -337,7 +337,7 @@ const es = {
         heading: 'Proyectos',
         lede: 'Una selección de sistemas backend, soluciones de IA y arquitecturas cloud que he diseñado y llevado a producción.',
         labels: { challenge: 'El reto', approach: 'El enfoque', architecture: 'Arquitectura', stack: 'Stack' },
-        cta: { view: 'Ver proyecto', code: 'Ver código →' },
+        cta: { view: 'Ver proyecto', code: 'Ver código' },
         items: [
 
             {
@@ -348,7 +348,7 @@ const es = {
                 summary: 'Un motor de análisis de conversaciones que interpreta intención y subtexto, y que solo responde cuando encuentra evidencia documental que lo respalde.',
                 problema: 'Un LLM al que le preguntas "qué quiso decir esta persona" responde siempre, con la misma seguridad, tenga base o no. En un dominio donde la respuesta influye en decisiones personales reales, esa confianza injustificada es el problema, no la falta de capacidad del modelo.',
                 solucion: 'Diseñé un pipeline de gobernanza en cascada que envuelve al modelo: valida políticas antes de invocarlo, exige evidencia recuperada para poder generar, y bloquea la respuesta si la evidencia no supera un umbral calibrado. Cada respuesta queda reconstruible por trace_id.',
-                arquitectura: 'FastAPI orquesta con LangGraph: validación de políticas → clasificador de crisis en paralelo con búsqueda híbrida (pgvector HNSW + tsvector/GIN fusionados con RRF) → reranking cross-encoder que actúa como puerta de confianza → análisis → trazabilidad. Inferencia y embeddings vía OpenRouter (GPT-4.1 + text-embedding-3-large), desplegado en AWS (App Runner, RDS, ElastiCache, S3, IAM).',
+                arquitectura: 'FastAPI orquesta con LangGraph: validación de políticas → clasificador de crisis en paralelo con búsqueda híbrida (pgvector HNSW + tsvector/GIN fusionados con RRF) → reranking cross-encoder que actúa como puerta de confianza → análisis → trazabilidad. Inferencia y embeddings vía OpenRouter (GPT-4.1 + text-embedding-3-large), desplegado en AWS (EC2 t3.micro · Docker Compose: FastAPI + PostgreSQL/pgvector + Redis + Nginx · Amplify Hosting · S3 · Secrets Manager · IAM instance profile · Cognito).',
                 resultados: [
                     { value: '~1.6-2.3s', label: 'generación vía OpenRouter (GPT-4.1)' },
                     { value: '1', label: 'credencial externa — OpenRouter, en Secrets Manager; el resto vía IAM' },
