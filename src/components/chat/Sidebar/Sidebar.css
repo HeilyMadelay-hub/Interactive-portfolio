@@ -247,6 +247,96 @@
   background-color: rgba(255, 255, 255, 0.04);
 }
 
+/* ========================================
+   GRUPO "ANCLADO" (plegable)
+   ======================================== */
+
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* Separa el bloque fijado del resto del historial sin pintar una línea:
+     el hueco basta para leerlos como dos listas distintas. */
+  margin-bottom: 8px;
+}
+
+.sidebar-group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 12px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-body);
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-group-header:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+}
+
+.sidebar-group-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-group-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.sidebar-group-header.collapsed .sidebar-group-chevron {
+  transform: rotate(-90deg);
+}
+
+/* El contador solo tiene sentido cuando el grupo está plegado; abierto, las
+   filas ya están a la vista y el número sería ruido. */
+.sidebar-group-count {
+  margin-left: auto;
+  flex-shrink: 0;
+  min-width: 18px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.sidebar-group-header.collapsed .sidebar-group-count {
+  opacity: 1;
+}
+
+.sidebar-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: pinnedGroupIn 0.18s ease-out;
+}
+
+@keyframes pinnedGroupIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-group-items { animation: none; }
+  .sidebar-group-chevron { transition: none; }
+}
+
 .pinned-indicator {
   flex-shrink: 0;
   margin-right: 8px;
@@ -360,6 +450,7 @@
 /* --accent-text: sobre el sidebar oscuro, el índigo primario a pelo se queda
    corto de contraste; el acento de texto sube a #818CF8 en modo oscuro. */
 .sidebar-section:focus-visible,
+.sidebar-group-header:focus-visible,
 .menu-btn:focus-visible,
 .floating-menu-btn:focus-visible,
 .action-btn:focus-visible {
