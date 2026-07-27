@@ -7,6 +7,12 @@ const en = {
         message: 'An unexpected error occurred. Reloading the page usually fixes it.',
         retry: 'Reload the page',
     },
+    // Screen for any URL that doesn't exist (route not registered in App.jsx).
+    notFound: {
+        title: "This page doesn't exist",
+        message: "The URL you landed on doesn't match any section of this site.",
+        back: 'Back to home',
+    },
     // Header theme button (chat and portfolio). Icon-only on screen: these
     // strings are the aria-label/title for screen readers and the tooltip.
     themeToggle: {
@@ -123,10 +129,10 @@ const en = {
         categories: [
             { category: 'Backend', skills: ['C#', 'ASP.NET Core', 'Python', 'FastAPI', 'Java', 'Spring Boot', 'Node.js', 'REST APIs'] },
             { category: 'Frontend', skills: ['Angular', 'React', 'TypeScript', 'HTML/CSS', 'JavaScript'] },
-            { category: 'AI & Automation', skills: ['RAG Pipelines', 'LangChain', 'OpenAI API', 'Gemini API', 'ChromaDB', 'Ollama', 'OCR', 'MediaPipe', 'TensorFlow.js', 'Streamlit', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'n8n'] },
+            { category: 'AI & Automation', skills: ['RAG Pipelines', 'LangGraph', 'LangChain', 'OpenAI API', 'Gemini API', 'Hugging Face', 'ChromaDB', 'pgvector', 'Ollama', 'OCR', 'MediaPipe', 'TensorFlow.js', 'Streamlit', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'n8n'] },
             { category: 'Real-Time', skills: ['WebSockets', 'SignalR', 'Socket.io'] },
-            { category: 'Cloud & DevOps', skills: ['Azure', 'AWS', 'Docker'] },
-            { category: 'Databases', skills: ['PostgreSQL', 'MySQL', 'SQL Server', 'MongoDB', 'Supabase'] },
+            { category: 'Cloud & DevOps', skills: ['Azure', 'AWS', 'Docker', 'Git/GitHub'] },
+            { category: 'Databases', skills: ['PostgreSQL', 'pgvector', 'MySQL', 'MariaDB', 'SQL Server', 'MongoDB', 'Supabase'] },
         ],
     },
 
@@ -271,32 +277,35 @@ const en = {
                 environment: 'On-site',
                 team: '12 members',
                 methodology: 'Agile',
-                summary: 'I worked in a team of three interns building AI applications, backend services and automation solutions for legal-document processing and internal workflow optimisation.',
+                summary: 'I worked building AI applications, backend services and automation solutions for processing official collective labour agreements and optimising internal workflows.',
                 highlights: [
-                    'Cut legal processing time from ~2 hours to 10 minutes across 70+ regions through automation at scale.',
+                    'Cut collective agreement processing time from ~2 hours to 10 minutes across 70+ regions, automatically generating structured summaries and salary tables.',
                     'Built AI chatbots with FastAPI + Flutter (Gemini) and Flask + Streamlit (OpenAI), both Dockerised.',
-                    'Designed RAG architectures with OpenAI API and ChromaDB for legal document processing.',
+                    'Cut AI model testing time by 30% by improving the model testing workflow.',
+                    'Designed RAG architectures with OpenAI API and ChromaDB for document processing.',
                     'Developed scraping pipelines with Selenium and BeautifulSoup; ingested BOE/BOA data using PyPDF2, pdfplumber and pandas.',
-                    'Analysed the legacy PHP (CodeIgniter) portal and documented the architecture using MySQL tools (HeidiSQL, Workbench).',
+                    'Analysed the legacy PHP (CodeIgniter, MVC) portal and documented the database structure using HeidiSQL and Workbench.',
                 ],
-                tech: ['Python', 'FastAPI', 'Flask', 'Streamlit', 'Docker', 'OpenAI API', 'Ollama', 'ChromaDB', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'MySQL', 'PHP (CodeIgniter)', 'n8n', 'Flutter'],
+                tech: ['Python', 'FastAPI', 'Flask', 'Streamlit', 'Docker', 'OpenAI API', 'Gemini API', 'Ollama', 'Hugging Face', 'ChromaDB', 'Selenium', 'BeautifulSoup', 'pandas', 'PyPDF2', 'pdfplumber', 'MariaDB', 'PHP (CodeIgniter)', 'n8n', 'Flutter', 'Git/GitHub'],
                 details: [
-                    { label: 'Overview', text: 'Developed backend systems, AI applications and automation pipelines for legal document processing, structured data extraction and internal workflow optimisation.' },
+                    { label: 'Overview', text: 'Developed backend systems, AI applications and automation pipelines for processing official collective labour agreements, structured data extraction and internal workflow optimisation.' },
                     {
                         label: 'AI Systems (RAG & Chatbots)',
                         items: [
                             'Designed backend architecture and data models for RAG-based AI systems using OpenAI APIs and ChromaDB.',
-                            'Built AI chatbot systems with FastAPI and Flask REST APIs: FastAPI + Flutter (Gemini integration, secure HTTPS deployment, improved model testing workflows) and Flask + Streamlit (OpenAI integration, Dockerised for reproducibility and stability).',
+                            'Built AI chatbot systems with FastAPI and Flask REST APIs: FastAPI + Flutter (Gemini integration, secure HTTPS deployment) and Flask + Streamlit (OpenAI integration, Dockerised for reproducibility and stability).',
+                            'Cut AI model testing time by 30% by improving the model testing workflow.',
                             'Evaluated OCR pipelines and local LLMs (Hugging Face, Ollama) for document extraction and feasibility testing.',
                             'Configured Docker and Ollama environments for local LLM experimentation and testing.',
                         ],
                     },
                     {
-                        label: 'Legal Data Automation',
+                        label: 'Collective Agreement Automation',
                         items: [
-                            'Reduced legal processing time from ~2 hours to 10 minutes across 70+ regions through large-scale automation.',
-                            'Built Python automation pipelines for large-scale legal bulletin processing.',
-                            'Integrated BOE/BOA APIs for structured legal data ingestion.',
+                            'Reduced processing time from ~2 hours to 10 minutes across 70+ regions by automating the extraction of collective labour agreements published in official bulletins.',
+                            'Automatically generated structured summaries and salary tables, replacing a document-by-document manual review.',
+                            'Built Python automation pipelines for large-scale official bulletin processing.',
+                            'Integrated BOE/BOA APIs for structured data ingestion.',
                             'Processed and analysed large-scale PDF datasets using PyPDF2, pdfplumber and pandas.',
                             'Developed web scraping systems using Selenium and BeautifulSoup.',
                         ],
@@ -311,8 +320,8 @@ const en = {
                     {
                         label: 'Systems & Architecture',
                         items: [
-                            'Analysed legacy PHP (CodeIgniter) employee portal architecture and data flows.',
-                            'Documented system structure using MySQL tools (HeidiSQL, Workbench).',
+                            'Analysed legacy PHP (CodeIgniter, MVC) employee portal architecture and data flows.',
+                            'Documented the database structure (MariaDB) using HeidiSQL and Workbench.',
                             'Identified architectural and performance improvement opportunities in existing systems.',
                         ],
                     },
@@ -330,24 +339,24 @@ const en = {
         items: [
 
             {
-                id: 'rag-legal',
+                id: 'subtextai',
                 layout: 'image-right',
-                category: ['Backend', 'AI', 'Cloud'],
-                title: 'RAG legal assistant',
-                summary: 'A chatbot that reads thousands of pages of case law and answers by citing the exact clause, not a guess.',
-                problema: 'Legal teams spent hours locating specific clauses within lengthy contracts, with a real risk of missing critical information during manual review.',
-                solucion: 'I designed a retrieval-augmented generation (RAG) pipeline that indexes documents clause by clause, answers in streaming and cites the exact page for every statement, removing repetitive review.',
-                arquitectura: 'FastAPI exposes the pipeline over a ChromaDB vector store. LangChain orchestrates retrieval and the model generates the answer with verifiable citations back to the original document.',
+                category: ['Backend', 'AI', 'In development'],
+                title: 'SubtextAI',
+                summary: 'A conversation analysis engine that interprets intent and subtext, and only answers when it finds documentary evidence to support the interpretation.',
+                problema: 'Ask an LLM "what did this person really mean" and it always answers, with the same confidence, whether it has grounds or not. In a domain where the answer shapes real personal decisions, that unearned confidence is the problem — not the model\'s capability.',
+                solucion: 'I designed a cascading governance pipeline that wraps the model: it validates policies before invoking it, requires retrieved evidence in order to generate, and blocks the response when that evidence falls below a calibrated threshold. Every response is reconstructible by trace_id.',
+                arquitectura: 'FastAPI orchestrates with LangGraph: policy validation → crisis classifier running in parallel with hybrid search (pgvector HNSW + tsvector/GIN fused via RRF) → cross-encoder reranking acting as the confidence gate → analysis → traceability. Inference and embeddings run through OpenRouter (GPT-4.1 + text-embedding-3-large), deployed on AWS (App Runner, RDS, ElastiCache, S3, IAM).',
                 resultados: [
-                    { value: '-30%', label: 'document review time' },
-                    { value: '70+', label: 'provinces with indexed case law' },
-                    { value: '<2s', label: 'average response latency' },
+                    { value: '~1.6-2.3s', label: 'generation via OpenRouter (GPT-4.1)' },
+                    { value: '1', label: 'external credential — OpenRouter, in Secrets Manager; everything else via IAM' },
+                    { value: '3072', label: 'embedding dimensions (text-embedding-3-large)' },
                 ],
-                stack: ['Python', 'FastAPI', 'LangChain', 'OpenAI API', 'ChromaDB', 'Docker'],
-                imageCaption: 'A recording of a real-time query to the assistant will go here',
-                links: { demo: '#', code: '#' },
+                stack: ['Python', 'FastAPI', 'LangGraph', 'AWS', 'OpenRouter', 'PostgreSQL', 'pgvector', 'React 19', 'Docker'],
+                imageCaption: 'Mockup of the analysis view — project under active development',
+                links: { demo: '#', code: 'https://github.com/HeilyMadelay-hub/SubtextAI' },
             }
-           
+
         ],
     },
 
@@ -409,6 +418,9 @@ const en = {
             rename: 'Rename conversation',
             pin: 'Pin conversation',
             unpin: 'Unpin conversation',
+            pinnedGroup: 'Pinned',
+            pinnedCollapse: 'Collapse pinned',
+            pinnedExpand: 'Expand pinned',
             delete: 'Delete conversation',
             emptyTitle: 'No conversations yet',
             emptyHint: 'Ask something below to start one.',
