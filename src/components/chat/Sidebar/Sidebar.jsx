@@ -25,6 +25,12 @@ const Sidebar = React.memo(function Sidebar({
     const [selectedConvId, setSelectedConvId] = useState(null);
     const [newConvName, setNewConvName] = useState('');
 
+    // Pinned conversations get their own collapsible group at the top of the list,
+    // so a long history never buries the ones the visitor deliberately kept.
+    const [isPinnedGroupOpen, setIsPinnedGroupOpen] = useState(true);
+    const pinnedConversations = conversations.filter(c => c.pinned);
+    const otherConversations = conversations.filter(c => !c.pinned);
+
     // Scroll + highlight of the selected row, without touching the DOM via querySelector:
     // each row registers itself in itemRefs and the highlight is plain React state.
     const itemRefs = useRef({});
@@ -87,15 +93,33 @@ const Sidebar = React.memo(function Sidebar({
         setSelectedConvId(null);
     };
 
-    // Pin handler
+    // Pin handler. Pinning while the group is folded would look like the row
+    // vanished, so anchoring always reveals where the conversation landed.
     const handlePin = useCallback((e, convId) => {
         e.stopPropagation();
+        const conv = conversations.find(c => c.id === convId);
+        if (!conv?.pinned) setIsPinnedGroupOpen(true);
         onTogglePin?.(convId);
-    }, [onTogglePin]);
+    }, [conversations, onTogglePin]);
 
     const getConvName = (convId) => {
         return conversations.find(c => c.id === convId)?.nombre || '';
     };
+
+    const renderConversation = (conv) => (
+        <ConversationItem
+            key={conv.id}
+            conv={conv}
+            isActive={activeConversationId === conv.id}
+            isHighlighted={highlightId === conv.id}
+            itemRef={setItemRef}
+            labels={t.sidebar}
+            onSelect={handleSelect}
+            onRename={handleRename}
+            onPin={handlePin}
+            onDelete={handleDelete}
+        />
+    );
 
     return (
         <>
@@ -133,20 +157,34 @@ const Sidebar = React.memo(function Sidebar({
                             <p className="sidebar-empty-hint">{t.sidebar.emptyHint}</p>
                         </div>
                     ) : (
-                        conversations.map(conv => (
-                            <ConversationItem
-                                key={conv.id}
-                                conv={conv}
-                                isActive={activeConversationId === conv.id}
-                                isHighlighted={highlightId === conv.id}
-                                itemRef={setItemRef}
-                                labels={t.sidebar}
-                                onSelect={handleSelect}
-                                onRename={handleRename}
-                                onPin={handlePin}
-                                onDelete={handleDelete}
-                            />
-                        ))
+                        <>
+                            {pinnedConversations.length > 0 && (
+                                <div className="sidebar-group">
+                                    <button
+                                        type="button"
+                                        className={`sidebar-group-header ${isPinnedGroupOpen ? '' : 'collapsed'}`}
+                                        onClick={() => setIsPinnedGroupOpen(open => !open)}
+                                        aria-expanded={isPinnedGroupOpen}
+                                        aria-controls="pinned-group-items"
+                                        title={isPinnedGroupOpen ? t.sidebar.pinnedCollapse : t.sidebar.pinnedExpand}
+                                    >
+                                        <span className="sidebar-group-title">{t.sidebar.pinnedGroup}</span>
+                                        <svg className="sidebar-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                            <path d="M6 9l6 6 6-6" />
+                                        </svg>
+                                        <span className="sidebar-group-count">{pinnedConversations.length}</span>
+                                    </button>
+
+                                    {isPinnedGroupOpen && (
+                                        <div className="sidebar-group-items" id="pinned-group-items">
+                                            {pinnedConversations.map(renderConversation)}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {otherConversations.map(renderConversation)}
+                        </>
                     )}
                 </div>
             </div>
