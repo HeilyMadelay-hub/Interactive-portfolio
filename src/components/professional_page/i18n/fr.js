@@ -342,7 +342,7 @@ const fr = {
 
             {
                 id: 'subtextai',
-                layout: 'image-right',
+                layout: 'image-top',
                 category: ['Backend', 'IA', 'En développement'],
                 title: 'SubtextAI',
                 summary: "Un moteur d'analyse de conversations qui interprète l'intention et le sous-texte, et ne répond que lorsqu'il trouve des preuves documentaires pour étayer son interprétation.",
@@ -423,9 +423,26 @@ const fr = {
             pinnedGroup: 'Épinglé',
             pinnedCollapse: 'Replier les épinglées',
             pinnedExpand: 'Déplier les épinglées',
+            projectsGroup: 'Projets',
+            projectsCollapse: 'Replier les projets',
+            projectsExpand: 'Déplier les projets',
             delete: 'Supprimer la conversation',
             emptyTitle: 'Pas encore de conversations',
             emptyHint: 'Écrivez un message ci-dessous pour en démarrer une.',
+        },
+        projects: {
+            back: 'Retour au chat',
+            comingSoon: 'La documentation de ce projet arrive bientôt.',
+            inputPlaceholder: 'Pose-moi une question sur ce projet…',
+            suggestions: {
+                subtextai: [
+                    'Pourquoi le RAG ?',
+                    'Comment fonctionne la porte de confiance ?',
+                    "Qu'est-ce qui rend l'architecture intéressante ?",
+                    'Quel est l\'état actuel ?',
+                ],
+                narek: [],
+            },
         },
         modals: {
             renameTitle: 'Renommer la conversation',
@@ -457,7 +474,8 @@ const fr = {
             voiceDenied: "Impossible d'accéder au microphone. Vérifiez les autorisations du navigateur.",
             thinking: 'Heily réfléchit',
             listening: 'Écoute en cours',
-            disclaimer: 'Simulation avec des données réelles de mon portfolio',
+            disclaimer: 'Un CV a une limite de caractères. Ici, pas vraiment.',
+            projectDisclaimer: "Posez ici les questions qui n'ont pas leur place dans un CV.",
             dismissError: "Fermer l'avis",
             // Indexé par le `code` levé par chatServicio, pas par le texte de
             // l'erreur : le message technique n'atteint jamais le visiteur.

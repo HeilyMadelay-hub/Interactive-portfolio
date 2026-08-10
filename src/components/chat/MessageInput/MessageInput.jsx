@@ -13,8 +13,10 @@ const SPEECH_LANGS = { ES: 'es-ES', EN: 'en-US', FR: 'fr-FR' };
 const DEV = import.meta.env.DEV;
 
 // `isEmpty` (no messages yet) drives the quick-prompt chips: they only show
-// on a fresh conversation, like most chat UIs.
-const MessageInput = React.memo(function MessageInput({ onSendMessage, isEmpty = false }) {
+// on a fresh conversation, like most chat UIs. `placeholder` overrides the
+// default input hint — used when a "Proyectos" entry is open, so the input
+// invites questions about that project instead of the generic stack prompt.
+const MessageInput = React.memo(function MessageInput({ onSendMessage, isEmpty = false, placeholder, suggestions: propSuggestions, disclaimer: propDisclaimer }) {
     const t = useT().chat.input;
     const { lang } = useLanguage();
 
@@ -152,7 +154,7 @@ const MessageInput = React.memo(function MessageInput({ onSendMessage, isEmpty =
         sendText(message);
     };
 
-    const suggestions = t.suggestions || [];
+    const suggestions = propSuggestions || t.suggestions || [];
 
     return (
         <div className="message-input-container">
@@ -186,7 +188,7 @@ const MessageInput = React.memo(function MessageInput({ onSendMessage, isEmpty =
                             setMessage(e.target.value);
                             setErrorCode(null); // Empezar a reescribir descarta el aviso anterior
                         }}
-                        placeholder={t.placeholder}
+                        placeholder={placeholder || t.placeholder}
                         className="message-input"
                         disabled={isLoading}
                     />
@@ -274,7 +276,7 @@ const MessageInput = React.memo(function MessageInput({ onSendMessage, isEmpty =
 
             <div className="input-footer">
                 <p className="disclaimer">
-                    {t.disclaimer}
+                    {propDisclaimer || t.disclaimer}
                 </p>
             </div>
         </div>

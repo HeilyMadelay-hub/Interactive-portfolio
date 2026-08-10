@@ -1,4 +1,4 @@
-// 🔊 textToSpeech.js — La otra mitad del modo voz
+// textToSpeech.js — La otra mitad del modo voz
 //
 // MessageInput ya convierte voz → texto (SpeechRecognition). Esto hace el camino
 // contrario: lee las respuestas del bot en voz alta con SpeechSynthesis, en el
@@ -12,7 +12,7 @@ export const isSpeechSupported =
     typeof window !== 'undefined' && 'speechSynthesis' in window;
 
 /**
- * 🧹 Convierte el markdown del bot en algo que suene natural leído.
+ * Convierte el markdown del bot en algo que suene natural leído.
  * Sin esto la voz pronuncia los asteriscos, las almohadillas y las URLs enteras.
  */
 export function stripMarkdown(text) {
@@ -45,7 +45,7 @@ export function stripMarkdown(text) {
 }
 
 /**
- * 🗣️ Elige la mejor voz instalada para un locale.
+ *  Elige la mejor voz instalada para un locale.
  * getVoices() está vacío hasta que el motor carga, de ahí el hook de abajo.
  */
 function pickVoice(locale) {

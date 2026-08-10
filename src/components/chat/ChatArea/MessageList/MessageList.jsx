@@ -69,7 +69,7 @@ function TranslateIcon() {
     );
 }
 
-const MessageList = React.memo(function MessageList({ messages = [] }) {
+const MessageList = React.memo(function MessageList({ messages = [], topContent = null }) {
     const t = useT().chat;
     const { lang } = useLanguage();
     const locale = LOCALES[lang] || 'en-US';
@@ -78,8 +78,10 @@ const MessageList = React.memo(function MessageList({ messages = [] }) {
     // Ref for automatic scroll
     const messagesEndRef = useRef(null);
 
-    // Automatic scroll when messages change
+    // Scroll to the newest message when one arrives — but not on initial load
+    // with zero messages, which would jump past long topContent (case study).
     useEffect(() => {
+        if (messages.length === 0) return;
         const timer = setTimeout(() => {
             messagesEndRef.current?.scrollIntoView({
                 behavior: "smooth",
@@ -93,8 +95,11 @@ const MessageList = React.memo(function MessageList({ messages = [] }) {
     return (
         <div className="messages-container">
             <div className="messages-inner">
+                {/* Project mode: the project's README stands in for the welcome bubble. */}
+                {topContent}
+
                 {/* Contextual welcome message, styled as a regular bot chat bubble */}
-                {messages.length === 0 && (
+                {!topContent && messages.length === 0 && (
                     <div className="message-wrapper bot">
                         <div className="message bot">
                             <div className="message-content">

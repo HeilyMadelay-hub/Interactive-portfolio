@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Modal from '../Modal/Modal';
 import ConversationItem from './ConversationItem.jsx';
+import ProjectItem from './ProjectItem.jsx';
 import { useT } from '../../professional_page/i18n/LanguageContext.jsx';
 import './Sidebar.css';
 
@@ -9,6 +10,9 @@ import './Sidebar.css';
 const Sidebar = React.memo(function Sidebar({
     conversations = [],
     activeConversationId,
+    projects = [],
+    activeProjectId,
+    onSelectProject,
     collapsed = false,
     onToggleCollapse,
     onSelectConversation,
@@ -18,6 +22,10 @@ const Sidebar = React.memo(function Sidebar({
     onTogglePin
 }) {
     const t = useT().chat;
+
+    // "Proyectos" sits above the conversation history, same spot ChatGPT gives
+    // its Projects group — open by default since there are only ever a couple.
+    const [isProjectsGroupOpen, setIsProjectsGroupOpen] = useState(true);
 
     // Modal states
     const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
@@ -148,6 +156,41 @@ const Sidebar = React.memo(function Sidebar({
                 </div>
 
                 <div className="sidebar-sections">
+                    {projects.length > 0 && (
+                        <div className="sidebar-group projects-group">
+                            <button
+                                type="button"
+                                className={`sidebar-group-header ${isProjectsGroupOpen ? '' : 'collapsed'}`}
+                                onClick={() => setIsProjectsGroupOpen(open => !open)}
+                                aria-expanded={isProjectsGroupOpen}
+                                aria-controls="projects-group-items"
+                                title={isProjectsGroupOpen ? t.sidebar.projectsCollapse : t.sidebar.projectsExpand}
+                            >
+                                <svg className="sidebar-group-folder-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+                                </svg>
+                                <span className="sidebar-group-title">{t.sidebar.projectsGroup}</span>
+                                <svg className="sidebar-group-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                                <span className="sidebar-group-count">{projects.length}</span>
+                            </button>
+
+                            {isProjectsGroupOpen && (
+                                <div className="sidebar-group-items" id="projects-group-items">
+                                    {projects.map(project => (
+                                        <ProjectItem
+                                            key={project.id}
+                                            project={project}
+                                            isActive={activeProjectId === project.id}
+                                            onSelect={onSelectProject}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     {conversations.length === 0 ? (
                         <div className="sidebar-empty">
                             <svg className="sidebar-empty-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

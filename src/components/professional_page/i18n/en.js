@@ -340,7 +340,7 @@ const en = {
 
             {
                 id: 'subtextai',
-                layout: 'image-right',
+                layout: 'image-top',
                 category: ['Backend', 'AI', 'In development'],
                 title: 'SubtextAI',
                 summary: 'A conversation analysis engine that interprets intent and subtext, and only answers when it finds documentary evidence to support the interpretation.',
@@ -421,9 +421,26 @@ const en = {
             pinnedGroup: 'Pinned',
             pinnedCollapse: 'Collapse pinned',
             pinnedExpand: 'Expand pinned',
+            projectsGroup: 'Projects',
+            projectsCollapse: 'Collapse projects',
+            projectsExpand: 'Expand projects',
             delete: 'Delete conversation',
             emptyTitle: 'No conversations yet',
             emptyHint: 'Ask something below to start one.',
+        },
+        projects: {
+            back: 'Back to chat',
+            comingSoon: "This project's documentation is coming soon.",
+            inputPlaceholder: 'Ask me about this project…',
+            suggestions: {
+                subtextai: [
+                    'Why RAG?',
+                    'How does the confidence gate work?',
+                    'What makes the architecture interesting?',
+                    "What's the current status?",
+                ],
+                narek: [],
+            },
         },
         modals: {
             renameTitle: 'Rename conversation',
@@ -455,7 +472,8 @@ const en = {
             voiceDenied: "I can't reach the microphone. Check your browser permissions.",
             thinking: 'Heily is thinking',
             listening: 'Listening',
-            disclaimer: 'Simulation with real data from my portfolio',
+            disclaimer: "A CV has a character limit. This doesn't.",
+            projectDisclaimer: "Here you can ask the questions that don't fit in a CV.",
             dismissError: 'Dismiss',
             // Keyed by the `code` chatServicio throws, not by the error text, so
             // the technical message never reaches the visitor.

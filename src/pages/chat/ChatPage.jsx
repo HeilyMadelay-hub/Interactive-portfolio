@@ -9,9 +9,12 @@ import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import '../../App.css';
 import Sidebar from '../../components/chat/Sidebar/Sidebar.jsx';
 import ChatArea from '../../components/chat/ChatArea/ChatArea.jsx';
+import ProjectView from '../../components/chat/ChatArea/ProjectView/ProjectView.jsx';
 import MessageInput from '../../components/chat/MessageInput/MessageInput.jsx';
 import chatService from '../../services/chat/chatServicio';
 import { loadConversations, saveConversations } from '../../services/chat/conversationStorage';
+import { PROJECTS } from '../../components/chat/Sidebar/projectsData.js';
+import { useT } from '../../components/professional_page/i18n/LanguageContext.jsx';
 
 // Stable unique id for messages/conversations (safe key for lists that grow or reorder)
 const makeId = () =>
@@ -27,6 +30,7 @@ const isMobileViewport = () =>
     typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches;
 
 function ChatPage() {
+    const t = useT().chat;
 
     // One snapshot of localStorage per mount: the three states below have to come
     // from the same read or the sidebar list and the visible messages drift apart.
@@ -46,6 +50,9 @@ function ChatPage() {
     // under 272px of conversation list on a 375px screen.
     const [sidebarCollapsed, setSidebarCollapsed] = useState(isMobileViewport);
     const [isOffline, setIsOffline] = useState(false); // Backend/LLM down → pre-set (offline) answers. Drives the header status.
+    // Non-null while a "Proyectos" entry is open: swaps ChatArea for ProjectView
+    // (README where the hero header would be) while MessageInput stays put below.
+    const [activeProjectId, setActiveProjectId] = useState(null);
 
     // Sondeo del estado del backend: una vez al montar y luego cada 30s.
     // Antes solo se comprobaba al montar, así que si el backend caía (o
@@ -163,6 +170,7 @@ function ChatPage() {
     // Starts a fresh, empty conversation. Previous messages stay saved in the sidebar list.
     const handleNewConversation = useCallback(() => {
         setActiveConversationId(null);
+        setActiveProjectId(null);
         messagesRef.current = [];
         setMessages([]);
     }, []);
@@ -172,6 +180,7 @@ function ChatPage() {
         const conversation = conversations.find(c => c.id === conversationId);
         if (!conversation) return;
 
+        setActiveProjectId(null);
         setActiveConversationId(conversationId);
         messagesRef.current = conversation.messages;
         setMessages(conversation.messages);
@@ -180,6 +189,16 @@ function ChatPage() {
         // otherwise you tap a conversation and still can't see it.
         setSidebarCollapsed(isMobileViewport());
     }, [conversations]);
+
+    // Opens a "Proyectos" entry: same idea as starting a new conversation, but
+    // ProjectView (README) is shown in place of ChatArea until the visitor goes back.
+    const handleSelectProject = useCallback((projectId) => {
+        setActiveConversationId(null);
+        setActiveProjectId(projectId);
+        messagesRef.current = [];
+        setMessages([]);
+        setSidebarCollapsed(isMobileViewport());
+    }, []);
 
     const handleRenameConversation = useCallback((conversationId, newName) => {
         setConversations(prev =>
@@ -213,11 +232,16 @@ function ChatPage() {
         [conversations]
     );
 
+    const activeProject = activeProjectId ? PROJECTS.find(p => p.id === activeProjectId) : null;
+
     return (
         <div className={`app ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
             <Sidebar
                 conversations={orderedConversations}
                 activeConversationId={activeConversationId}
+                projects={PROJECTS}
+                activeProjectId={activeProjectId}
+                onSelectProject={handleSelectProject}
                 collapsed={sidebarCollapsed}
                 onToggleCollapse={handleToggleSidebar}
                 onSelectConversation={handleSelectConversation}
@@ -237,13 +261,24 @@ function ChatPage() {
 
             <div className="main-container">
                 <div className="chat-wrapper">
-                    <ChatArea
-                        messages={messages}
-                        isOffline={isOffline}
-                    />
+                    {activeProject ? (
+                        <ProjectView
+                            project={activeProject}
+                            messages={messages}
+                            onBack={handleNewConversation}
+                        />
+                    ) : (
+                        <ChatArea
+                            messages={messages}
+                            isOffline={isOffline}
+                        />
+                    )}
                     <MessageInput
                         onSendMessage={handleSendMessage}
                         isEmpty={messages.length === 0}
+                        placeholder={activeProject ? t.projects.inputPlaceholder : undefined}
+                        suggestions={activeProjectId ? t.projects.suggestions?.[activeProjectId] : undefined}
+                        disclaimer={activeProject ? t.input.projectDisclaimer : undefined}
                     />
                 </div>
             </div>

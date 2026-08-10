@@ -1,0 +1,95 @@
+{
+  "ui": {
+    "theProblem": "Le problème",
+    "theProduct": "Le produit",
+    "whatItDoes": "Ce qu'il fait",
+    "fromMessageToInsight": "Du message à l'insight",
+    "message": "Message",
+    "analysis": "Analyse",
+    "evidence": "Preuve",
+    "illustrativeNote": "Exemple illustratif — le format de sortie reflète le design du produit",
+    "whyIBuiltItThisWay": "Pourquoi je l'ai construit ainsi",
+    "engineeringDecisions": "Décisions d'ingénierie",
+    "why": "Pourquoi",
+    "underTheHood": "Sous le capot",
+    "viewArchitecture": "Voir l'architecture technique",
+    "hideArchitecture": "Masquer l'architecture technique",
+    "currentStatus": "État actuel",
+    "inActiveDevelopment": "En développement actif",
+    "wantToGoDeeper": "Envie d'aller plus loin ?",
+    "ctaBody": "Pose une question sur ce projet ci-dessous ou explore le code source.",
+    "viewSource": "Voir le code sur GitHub"
+  },
+  "projects": {
+    "subtextai": {
+      "tagline": "Intelligence communicationnelle pour les conversations ambiguës.",
+      "description": "Un moteur d'IA qui analyse les conversations pour faire émerger l'intention, les changements émotionnels et le sens caché — chaque interprétation étant fondée sur des preuves, notée avec une confiance calibrée et entièrement traçable.",
+      "problem": {
+        "headline": "Les conversations sont faciles à mal interpréter.",
+        "description": "Le problème n'est pas ce que quelqu'un dit — c'est ce qu'il veut vraiment dire. La plupart des outils d'IA répondent avec la même confiance qu'ils aient des preuves réelles ou non. Dans un domaine où la réponse influence des décisions personnelles, cette confiance injustifiée est le problème.",
+        "flow": ["Ce qui a été dit", "Ce que ça pourrait signifier", "Pourquoi"]
+      },
+      "capabilities": [
+        {
+          "title": "Analyse de conversations",
+          "description": "Colle n'importe quel message ambigu avec son contexte et obtiens une analyse pragmatique complète : ton général, signaux émotionnels, sens caché, indices comportementaux clés et une réponse suggérée — le tout fondé sur des preuves documentaires."
+        },
+        {
+          "title": "Mode Replay",
+          "description": "Transforme n'importe quelle conversation analysée en une timeline interactive d'émotion, d'intention et de tension — comme un replay des décisions humaines. Inclut la lecture automatique avec une heatmap de tension et des explications du sous-texte par message."
+        },
+        {
+          "title": "Télémétrie en temps réel",
+          "description": "Panneau en temps réel qui suit la vélocité émotionnelle, l'accélération du conflit et la friction conversationnelle au fur et à mesure que la conversation se déroule, message par message. Les métriques se mettent à jour en direct."
+        }
+      ],
+      "insight": {
+        "message": "\"Ouais, peu importe. Si tu veux.\"",
+        "analysis": {
+          "Intention": "Défensive / Retrait",
+          "Émotion": "Frustration",
+          "Sens caché": "Désengagement possible",
+          "Confiance": "82%"
+        },
+        "evidence": "L'expression « peu importe » combinée à la formulation laconique signale un retrait émotionnel. L'usage d'un accord minimal (« si tu veux ») sans enthousiasme indique de la frustration plutôt qu'un consentement sincère. Les marqueurs linguistiques suggèrent que le locuteur se sent ignoré."
+      },
+      "philosophy": {
+        "headline": "L'IA ne devrait pas être une boîte noire.",
+        "description": "SubtextAI est conçu pour que chaque interprétation soit défendable. Le système ne génère pas simplement des réponses — il explique pourquoi, montre ses sources et sait quand se taire.",
+        "pillars": [
+          { "label": "Fondé", "description": "Chaque interprétation appuyée par des preuves documentaires récupérées." },
+          { "label": "Noté", "description": "Confiance calculée objectivement par un cross-encoder, jamais présumée." },
+          { "label": "Traçable", "description": "Chaque réponse reconstructible par trace_id — documents, scores, modèle, version du prompt." }
+        ]
+      },
+      "decisions": [
+        {
+          "title": "Preuve avant génération",
+          "description": "Le modèle ne génère jamais à moins que des documents pertinents aient été récupérés au préalable. Pas de preuve, pas de réponse.",
+          "why": "Dans un domaine où les réponses influencent des décisions personnelles, une confiance sans fondement est pire que pas de réponse."
+        },
+        {
+          "title": "La confiance comme porte",
+          "description": "Un reranker cross-encoder note les preuves récupérées. Si le score tombe en dessous d'un seuil calibré, la génération est entièrement bloquée.",
+          "why": "Le système sait quand il ne sait pas — et le dit au lieu de deviner."
+        },
+        {
+          "title": "Réponses traçables",
+          "description": "Chaque réponse porte un trace_id reliant les documents récupérés, les scores du reranker, la version du prompt, le modèle utilisé et les politiques évaluées.",
+          "why": "Auditabilité complète — toute interprétation peut être reconstruite et vérifiée après coup."
+        },
+        {
+          "title": "Confidentialité dès la conception",
+          "description": "Le texte brut des conversations et les annotations d'audit sont stockés dans des référentiels séparés, de sorte que les demandes d'effacement et les limites de conservation ne brisent jamais la piste d'audit.",
+          "why": "La conformité comme architecture, pas comme correctif."
+        }
+      ],
+      "decisionsScreenshotCaption": "Audit complet des traces — documents, scores, détail de la latence et version du modèle, le tout lié par trace_id",
+      "architecture": {
+        "pipeline": ["Conversation", "Validation des politiques", "Détection de crise", "Recherche hybride", "Reranking cross-encoder", "Porte de confiance", "Analyse", "Réponse + Trace"],
+        "detail": "FastAPI orchestre le pipeline avec LangGraph. La validation des politiques et la classification de crise s'exécutent en premier (la détection de crise est bloquante mais parallèle à la recherche). La recherche hybride combine la similarité cosinus pgvector HNSW avec la recherche lexicale tsvector/GIN, fusionnées via Reciprocal Rank Fusion. Un reranker cross-encoder agit comme porte de confiance — si aucun fragment récupéré ne dépasse le seuil calibré, la génération est bloquée. L'inférence passe par OpenRouter (GPT-4.1 pour l'analyse, text-embedding-3-large pour les embeddings). La stack complète se déploie sur une seule instance AWS EC2 t3.micro via Docker Compose (FastAPI + PostgreSQL/pgvector + Redis + Nginx), avec Amplify Hosting pour le frontend et Secrets Manager pour l'unique identifiant externe."
+      },
+      "status": "L'architecture et le design produit sont terminés. En ce moment, je construis le backend : moteur de politiques, recherche, reranking et traçabilité — en visant un déploiement en production sur AWS."
+    }
+  }
+}

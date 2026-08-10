@@ -1,0 +1,123 @@
+.project-view-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--chat-border);
+  background-color: var(--chat-header-bg);
+  flex-shrink: 0;
+}
+
+.project-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--chat-border);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.project-back-btn:hover {
+  background-color: var(--surface-light);
+  color: var(--text);
+}
+
+.project-view-titles {
+  min-width: 0;
+}
+
+.project-view-title {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.project-view-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   README
+   ======================================== */
+
+.project-readme {
+  width: 100%;
+  max-width: 100%;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--chat-border);
+  margin-bottom: 4px;
+}
+
+.project-readme .markdown-body {
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+.project-readme-empty {
+  padding: 40px 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* ========================================
+   SCREENSHOT GALLERY (replaces the README's markdown table)
+   ======================================== */
+
+.project-gallery {
+  margin: 4px 0 20px;
+}
+
+.project-gallery-caption {
+  margin: 10px 0 0;
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Links stripped to plain text: no underline, no accent color, no pointer —
+   nothing here should read as clickable. */
+.readme-link-text {
+  color: inherit;
+  text-decoration: none;
+  cursor: text;
+}
+
+/* The README's "> Learn more in ..." lines no longer point anywhere now that
+   links are plain text, so the quote treatment (left border, muted italic-ish
+   color) just reads as clutter — flatten them back to normal paragraphs. */
+.project-readme .markdown-body blockquote {
+  margin: 0 0 8px;
+  padding: 0;
+  border-left: none;
+  color: inherit;
+}
+
+/* Case study mode: minimal header with just the back button */
+.project-view-header.cs-minimal {
+  border-bottom: none;
+  background: transparent;
+  padding: 14px 24px;
+}
+
+@media (max-width: 600px) {
+  .project-view-header {
+    padding: 14px 20px;
+  }
+
+  .project-view-header.cs-minimal {
+    padding: 12px 16px;
+  }
+}

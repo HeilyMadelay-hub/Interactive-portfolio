@@ -342,7 +342,7 @@ const es = {
 
             {
                 id: 'subtextai',
-                layout: 'image-right',
+                layout: 'image-top',
                 category: ['Backend', 'IA', 'En desarrollo'],
                 title: 'SubtextAI',
                 summary: 'Un motor de análisis de conversaciones que interpreta intención y subtexto, y que solo responde cuando encuentra evidencia documental que lo respalde.',
@@ -423,9 +423,26 @@ const es = {
             pinnedGroup: 'Anclado',
             pinnedCollapse: 'Plegar ancladas',
             pinnedExpand: 'Desplegar ancladas',
+            projectsGroup: 'Proyectos',
+            projectsCollapse: 'Plegar proyectos',
+            projectsExpand: 'Desplegar proyectos',
             delete: 'Eliminar conversación',
             emptyTitle: 'Aún no hay conversaciones',
             emptyHint: 'Escribe algo abajo para empezar una.',
+        },
+        projects: {
+            back: 'Volver al chat',
+            comingSoon: 'La documentación de este proyecto llegará pronto.',
+            inputPlaceholder: 'Pregúntame sobre este proyecto…',
+            suggestions: {
+                subtextai: [
+                    '¿Por qué RAG?',
+                    '¿Cómo funciona la puerta de confianza?',
+                    '¿Qué hace interesante la arquitectura?',
+                    '¿Cuál es el estado actual?',
+                ],
+                narek: [],
+            },
         },
         modals: {
             renameTitle: 'Renombrar conversación',
@@ -457,7 +474,8 @@ const es = {
             voiceDenied: 'No puedo acceder al micrófono. Revisa los permisos del navegador.',
             thinking: 'Heily está pensando',
             listening: 'Escuchando',
-            disclaimer: 'Simulación con datos reales de mi portfolio',
+            disclaimer: 'El CV tiene límite de caracteres. Aquí no tanto.',
+            projectDisclaimer: 'Aquí puedes hacer las preguntas que no caben en un CV.',
             dismissError: 'Cerrar aviso',
             // Se indexan por el `code` que lanza chatServicio, no por el texto
             // del error: así el mensaje técnico nunca llega al visitante.

@@ -343,6 +343,27 @@
   color: var(--primary-light);
 }
 
+/* ========================================
+   GRUPO "PROYECTOS"
+   ======================================== */
+
+.sidebar-group-folder-icon {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.project-item-icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.15s ease;
+}
+
+.sidebar-section.project-item:hover .project-item-icon,
+.sidebar-section.project-item.active .project-item-icon {
+  color: #FFFFFF;
+}
+
 .action-btn.pin-btn.pinned {
   color: var(--primary-light);
 }

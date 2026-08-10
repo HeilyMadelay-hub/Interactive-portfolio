@@ -1,0 +1,95 @@
+{
+  "ui": {
+    "theProblem": "The problem",
+    "theProduct": "The product",
+    "whatItDoes": "What it does",
+    "fromMessageToInsight": "From message to insight",
+    "message": "Message",
+    "analysis": "Analysis",
+    "evidence": "Evidence",
+    "illustrativeNote": "Illustrative example — output format reflects the product's design",
+    "whyIBuiltItThisWay": "Why I built it this way",
+    "engineeringDecisions": "Engineering decisions",
+    "why": "Why",
+    "underTheHood": "Under the hood",
+    "viewArchitecture": "View technical architecture",
+    "hideArchitecture": "Hide technical architecture",
+    "currentStatus": "Current status",
+    "inActiveDevelopment": "In active development",
+    "wantToGoDeeper": "Want to go deeper?",
+    "ctaBody": "Ask about this project below, or explore the source code.",
+    "viewSource": "View source on GitHub"
+  },
+  "projects": {
+    "subtextai": {
+      "tagline": "Communication intelligence for ambiguous conversations.",
+      "description": "An AI engine that analyzes conversations to surface intent, emotional shifts, and hidden meaning — with every interpretation grounded in evidence, scored with calibrated confidence, and fully traceable.",
+      "problem": {
+        "headline": "Conversations are easy to misread.",
+        "description": "The problem isn't what someone says — it's what they might actually mean. Most AI tools answer with the same confidence whether they have real evidence or not. In a domain where the answer shapes personal decisions, that unearned confidence is the problem.",
+        "flow": ["What was said", "What might be meant", "Why"]
+      },
+      "capabilities": [
+        {
+          "title": "Conversation Analysis",
+          "description": "Paste any ambiguous message with its context and get a complete pragmatic analysis: overall tone, emotional signals, hidden meaning, key behavioral insights, and a suggested response — all grounded in documentary evidence."
+        },
+        {
+          "title": "Replay Mode",
+          "description": "Transform any analyzed conversation into an interactive timeline of emotion, intent, and tension — like a replay of human decisions. Includes autoplay with a tension heatmap and per-message subtext explanations."
+        },
+        {
+          "title": "Live Session Telemetry",
+          "description": "Real-time panel tracking emotional velocity, conflict acceleration, and conversational friction as the conversation unfolds, message by message. Metrics update live as messages are exchanged."
+        }
+      ],
+      "insight": {
+        "message": "\"Yeah, whatever. If you want.\"",
+        "analysis": {
+          "Intent": "Defensive / Withdrawal",
+          "Emotion": "Frustration",
+          "Hidden meaning": "Possible disengagement",
+          "Confidence": "82%"
+        },
+        "evidence": "The phrase \"whatever\" combined with the curt phrasing signals emotional withdrawal. The use of minimal agreement (\"if you want\") without enthusiasm indicates frustration rather than genuine consent. Linguistic markers suggest the speaker feels unheard."
+      },
+      "philosophy": {
+        "headline": "AI shouldn't be a black box.",
+        "description": "SubtextAI is designed so that every interpretation is defensible. The system doesn't just generate answers — it explains why, shows its sources, and knows when to stay silent.",
+        "pillars": [
+          { "label": "Grounded", "description": "Every interpretation backed by retrieved documentary evidence." },
+          { "label": "Scored", "description": "Confidence calculated objectively by a cross-encoder, not assumed." },
+          { "label": "Traceable", "description": "Every response reconstructible by trace_id — documents, scores, model, prompt version." }
+        ]
+      },
+      "decisions": [
+        {
+          "title": "Evidence before generation",
+          "description": "The model never generates unless relevant documents were retrieved first. No evidence, no response.",
+          "why": "In a domain where answers shape personal decisions, ungrounded confidence is worse than no answer."
+        },
+        {
+          "title": "Confidence as a gate",
+          "description": "A cross-encoder reranker scores retrieved evidence. If the score falls below a calibrated threshold, generation is blocked entirely.",
+          "why": "The system knows when it doesn't know — and says so instead of guessing."
+        },
+        {
+          "title": "Traceable responses",
+          "description": "Every response carries a trace_id linking to the retrieved documents, reranker scores, prompt version, model used, and policies evaluated.",
+          "why": "Full auditability — any interpretation can be reconstructed and verified after the fact."
+        },
+        {
+          "title": "Privacy by design",
+          "description": "Raw conversation text and audit annotations are stored in separate data stores, so erasure requests and retention limits never break the audit trail.",
+          "why": "Compliance as architecture, not afterthought."
+        }
+      ],
+      "decisionsScreenshotCaption": "Full trace audit — documents, scores, latency breakdown, and model version, all linked by trace_id",
+      "architecture": {
+        "pipeline": ["Conversation", "Policy validation", "Crisis detection", "Hybrid retrieval", "Cross-encoder reranking", "Confidence gate", "Analysis", "Response + Trace"],
+        "detail": "FastAPI orchestrates the pipeline with LangGraph. Policy validation and crisis classification run first (crisis detection is blocking but parallel to retrieval). Hybrid search combines pgvector HNSW cosine similarity with tsvector/GIN lexical search, fused via Reciprocal Rank Fusion. A cross-encoder reranker acts as the confidence gate — if no retrieved fragment scores above the calibrated threshold, generation is blocked. Inference runs through OpenRouter (GPT-4.1 for analysis, text-embedding-3-large for embeddings). The full stack deploys on a single AWS EC2 t3.micro instance via Docker Compose (FastAPI + PostgreSQL/pgvector + Redis + Nginx), with Amplify Hosting for the frontend and Secrets Manager for the single external credential."
+      },
+      "status": "Architecture and product design are done. Right now I'm building the backend: policy engine, retrieval, reranking, and traceability — targeting a production AWS deployment."
+    }
+  }
+}
