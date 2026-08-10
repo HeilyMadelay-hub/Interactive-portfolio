@@ -7,7 +7,7 @@
     "message": "Message",
     "analysis": "Analysis",
     "evidence": "Evidence",
-    "illustrativeNote": "Illustrative example — output format reflects the product's design",
+    "illustrativeNote": "Illustrative example the output format reflects the product's design",
     "whyIBuiltItThisWay": "Why I built it this way",
     "engineeringDecisions": "Engineering decisions",
     "why": "Why",
@@ -23,20 +23,20 @@
   "projects": {
     "subtextai": {
       "tagline": "Communication intelligence for ambiguous conversations.",
-      "description": "An AI engine that analyzes conversations to surface intent, emotional shifts, and hidden meaning — with every interpretation grounded in evidence, scored with calibrated confidence, and fully traceable.",
+      "description": "An AI engine that analyzes conversations to surface intent, emotional shifts, and hidden meaning with every interpretation grounded in evidence, scored with calibrated confidence, and fully traceable.",
       "problem": {
         "headline": "Conversations are easy to misread.",
-        "description": "The problem isn't what someone says — it's what they might actually mean. Most AI tools answer with the same confidence whether they have real evidence or not. In a domain where the answer shapes personal decisions, that unearned confidence is the problem.",
+        "description": "The problem isn't what someone says it's what they might actually mean. Most AI tools answer with the same confidence whether they have real evidence or not. In a domain where the answer shapes personal decisions, that unearned confidence is the problem.",
         "flow": ["What was said", "What might be meant", "Why"]
       },
       "capabilities": [
         {
           "title": "Conversation Analysis",
-          "description": "Paste any ambiguous message with its context and get a complete pragmatic analysis: overall tone, emotional signals, hidden meaning, key behavioral insights, and a suggested response — all grounded in documentary evidence."
+          "description": "Paste any ambiguous message with its context and get a complete pragmatic analysis: overall tone, emotional signals, hidden meaning, key behavioral insights, and a suggested response all grounded in documentary evidence."
         },
         {
           "title": "Replay Mode",
-          "description": "Transform any analyzed conversation into an interactive timeline of emotion, intent, and tension — like a replay of human decisions. Includes autoplay with a tension heatmap and per-message subtext explanations."
+          "description": "Transform any analyzed conversation into an interactive timeline of emotion, intent, and tension like a replay of human decisions. Includes autoplay with a tension heatmap and per-message subtext explanations."
         },
         {
           "title": "Live Session Telemetry",
@@ -55,7 +55,7 @@
       },
       "philosophy": {
         "headline": "AI shouldn't be a black box.",
-        "description": "SubtextAI is designed so that every interpretation is defensible. The system doesn't just generate answers — it explains why, shows its sources, and knows when to stay silent.",
+        "description": "SubtextAI is designed so that every interpretation is defensible. The system doesn't just generate answers it explains why, shows its sources, and knows when to stay silent.",
         "pillars": [
           { "label": "Grounded", "description": "Every interpretation backed by retrieved documentary evidence." },
           { "label": "Scored", "description": "Confidence calculated objectively by a cross-encoder, not assumed." },

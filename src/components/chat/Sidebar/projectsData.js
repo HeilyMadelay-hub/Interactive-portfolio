@@ -244,10 +244,10 @@ Suggested response
  │  Hosting (Vite   │───▶│ ┌──────────┐  Governance Pipeline          │───▶│  gpt-4.1         │
  │  static build)   │REST│ │  Nginx   │  ┌──────────────────┐         │    │  text-embed-3-lg │
  │ TypeScript       │API │ │ (reverse │  │ 1. Policy        │         │    └──────────────────┘
- │ Tailwind CSS     │    │ │  proxy,  │──▶ 2. Crisis ‖ RAG  │         │
- │ shadcn/ui        │    │ │  TLS)    │  │ 3. Rerank + gate │         │
- │ Recharts         │    │ └──────────┘  │ 4. Analysis      │         │
- │ Framer Motion    │    │      │        │ 5. Trace         │         │
+ │ Tailwind CSS     │    │ │  proxy,  │──▶ 2. Crisis ‖ RAG  │         │    │
+ │ shadcn/ui        │    │ │  TLS)    │  │ 3. Rerank + gate │         │    │
+ │ Recharts         │    │ └──────────┘  │ 4. Analysis      │         │    │
+ │ Framer Motion    │    │      │        │ 5. Trace         │         │    │
  └──────────────────┘    │      ▼        └──────────────────┘         │
                          │ ┌──────────┐  LangGraph                    │
                          │ │ FastAPI  │  IAM instance profile +       │

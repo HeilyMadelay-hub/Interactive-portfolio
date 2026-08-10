@@ -7,7 +7,7 @@
     "message": "Mensaje",
     "analysis": "Análisis",
     "evidence": "Evidencia",
-    "illustrativeNote": "Ejemplo ilustrativo — el formato de salida refleja el diseño del producto",
+    "illustrativeNote": "Ejemplo ilustrativo el formato de salida refleja el diseño del producto",
     "whyIBuiltItThisWay": "Por qué lo construí así",
     "engineeringDecisions": "Decisiones de ingeniería",
     "why": "Por qué",
@@ -23,7 +23,7 @@
   "projects": {
     "subtextai": {
       "tagline": "Inteligencia comunicativa para conversaciones ambiguas.",
-      "description": "Un motor de IA que analiza conversaciones para sacar a la superficie la intención, los cambios emocionales y el significado oculto — con cada interpretación respaldada por evidencia, puntuada con confianza calibrada y completamente trazable.",
+      "description": "Un motor de IA que analiza conversaciones para sacar a la superficie la intención, los cambios emocionales y el significado oculto con cada interpretación respaldada por evidencia, puntuada con confianza calibrada y completamente trazable.",
       "problem": {
         "headline": "Las conversaciones son fáciles de malinterpretar.",
         "description": "El problema no es lo que alguien dice, sino lo que realmente quiere decir. La mayoría de herramientas de IA responden con la misma confianza tengan evidencia real o no. En un ámbito donde la respuesta influye en decisiones personales, esa confianza injustificada es el problema.",
@@ -32,11 +32,11 @@
       "capabilities": [
         {
           "title": "Análisis de conversaciones",
-          "description": "Pega cualquier mensaje ambiguo con su contexto y obtén un análisis pragmático completo: tono general, señales emocionales, significado oculto, claves de comportamiento y una respuesta sugerida — todo respaldado por evidencia documental."
+          "description": "Pega cualquier mensaje ambiguo con su contexto y obtén un análisis pragmático completo: tono general, señales emocionales, significado oculto, claves de comportamiento y una respuesta sugerida todo respaldado por evidencia documental."
         },
         {
           "title": "Modo Replay",
-          "description": "Transforma cualquier conversación analizada en una línea temporal interactiva de emoción, intención y tensión — como una repetición de las decisiones humanas. Incluye reproducción automática con mapa de calor de tensión y explicaciones del subtexto por mensaje."
+          "description": "Transforma cualquier conversación analizada en una línea temporal interactiva de emoción, intención y tensión como una repetición de las decisiones humanas. Incluye reproducción automática con mapa de calor de tensión y explicaciones del subtexto por mensaje."
         },
         {
           "title": "Telemetría en tiempo real",
@@ -55,11 +55,11 @@
       },
       "philosophy": {
         "headline": "La IA no debería ser una caja negra.",
-        "description": "SubtextAI está diseñado para que cada interpretación sea defendible. El sistema no solo genera respuestas — explica por qué, muestra sus fuentes y sabe cuándo guardar silencio.",
+        "description": "SubtextAI está diseñado para que cada interpretación sea defendible. El sistema no solo genera respuestas explica por qué, muestra sus fuentes y sabe cuándo guardar silencio.",
         "pillars": [
           { "label": "Fundamentado", "description": "Cada interpretación respaldada por evidencia documental recuperada." },
           { "label": "Puntuado", "description": "Confianza calculada objetivamente por un cross-encoder, no asumida." },
-          { "label": "Trazable", "description": "Cada respuesta reconstruible por trace_id — documentos, puntuaciones, modelo, versión del prompt." }
+          { "label": "Trazable", "description": "Cada respuesta reconstruible por trace_id documentos, puntuaciones, modelo, versión del prompt." }
         ]
       },
       "decisions": [
@@ -84,10 +84,10 @@
           "why": "Cumplimiento normativo como arquitectura, no como parche."
         }
       ],
-      "decisionsScreenshotCaption": "Auditoría completa de trazas — documentos, puntuaciones, desglose de latencia y versión del modelo, todo vinculado por trace_id",
+      "decisionsScreenshotCaption": "Auditoría completa de trazas documentos, puntuaciones, desglose de latencia y versión del modelo, todo vinculado por trace_id",
       "architecture": {
         "pipeline": ["Conversación", "Validación de políticas", "Detección de crisis", "Búsqueda híbrida", "Reranking cross-encoder", "Puerta de confianza", "Análisis", "Respuesta + Traza"],
-        "detail": "FastAPI orquesta el pipeline con LangGraph. La validación de políticas y la clasificación de crisis se ejecutan primero (la detección de crisis es bloqueante pero paralela a la recuperación). La búsqueda híbrida combina similitud coseno pgvector HNSW con búsqueda léxica tsvector/GIN, fusionadas mediante Reciprocal Rank Fusion. Un reranker cross-encoder actúa como puerta de confianza — si ningún fragmento recuperado supera el umbral calibrado, la generación se bloquea. La inferencia se ejecuta a través de OpenRouter (GPT-4.1 para análisis, text-embedding-3-large para embeddings). Todo el stack se despliega en una única instancia AWS EC2 t3.micro mediante Docker Compose (FastAPI + PostgreSQL/pgvector + Redis + Nginx), con Amplify Hosting para el frontend y Secrets Manager para la única credencial externa."
+        "detail": "FastAPI orquesta el pipeline con LangGraph. La validación de políticas y la clasificación de crisis se ejecutan primero (la detección de crisis es bloqueante pero paralela a la recuperación). La búsqueda híbrida combina similitud coseno pgvector HNSW con búsqueda léxica tsvector/GIN, fusionadas mediante Reciprocal Rank Fusion. Un reranker cross-encoder actúa como puerta de confianza si ningún fragmento recuperado supera el umbral calibrado, la generación se bloquea. La inferencia se ejecuta a través de OpenRouter (GPT-4.1 para análisis, text-embedding-3-large para embeddings). Todo el stack se despliega en una única instancia AWS EC2 t3.micro mediante Docker Compose (FastAPI + PostgreSQL/pgvector + Redis + Nginx), con Amplify Hosting para el frontend y Secrets Manager para la única credencial externa."
       },
       "status": "La arquitectura y el diseño de producto están terminados. Ahora mismo estoy construyendo el backend: motor de políticas, recuperación, reranking y trazabilidad — con el objetivo de un despliegue en producción en AWS."
     }
