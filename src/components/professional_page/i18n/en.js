@@ -333,10 +333,33 @@ const en = {
     projects: {
         eyebrow: 'Selected work',
         heading: 'Projects',
-        lede: "A selection of backend systems, AI solutions and cloud architectures I've designed and taken to production.",
-        labels: { challenge: 'The challenge', approach: 'The approach', architecture: 'Architecture', stack: 'Stack' },
+        lede: "A selection of backend systems, AI solutions and cloud architectures I'm designing and taking to production.",
+        labels: { challenge: 'The challenge', approach: 'The approach', architecture: 'Architecture', stack: 'Stack', prevImage: 'Previous image', nextImage: 'Next image', goToImage: 'Go to image', screenshot: 'Screenshot' },
         cta: { view: 'View project', code: 'View code' },
         items: [
+
+            {
+                id: 'narek',
+                layout: 'image-top',
+                category: ['Backend', 'AI', 'In development'],
+                title: 'Narek',
+                summary: 'An enterprise platform for running, orchestrating, and governing AI agents — with a dedicated runtime, retrieval, memory, tool execution, and policy-based governance.',
+                problema: 'Building an AI agent is easy. Operating one in production requires runtime orchestration, retrieval, prompt versioning, tool execution, memory, access control, and execution traceability — and most teams end up building fragile, one-off versions of each, tied to a single project and a single model provider.',
+                solucion: 'I designed a modular agent platform that provides the infrastructure layer underneath AI applications: an agent runtime, knowledge retrieval via pgvector, prompt management, memory, a tool registry, and a policy engine — all provider-agnostic through Spring AI\'s model abstraction.',
+                arquitectura: [
+                    { label: 'Orchestration', text: 'the Angular dashboard connects to a Spring Boot API that coordinates three core services: Agent Runtime, a Policy Engine for governance, and a Knowledge Service backed by pgvector for retrieval.' },
+                    { label: 'Agent & Model Layer', text: 'the Agent Runtime delegates to Memory and the Tool Registry, while a Model Router abstracts model access and dispatches inference to Ollama locally, with OpenRouter ready for multi-provider access.' },
+                    { label: 'Data & infrastructure', text: 'PostgreSQL + pgvector manage data and embeddings, Redis provides caching, and RabbitMQ enables asynchronous messaging. The whole stack runs via Docker Compose.' },
+                ],
+                resultados: [
+                    { value: 'Provider-agnostic', label: 'agents run on any LLM backend via Spring AI abstraction' },
+                    { value: 'Full trace', label: 'every agent execution recorded end to end for audit' },
+                    { value: 'Modular', label: 'runtime, memory, retrieval, and tools as separable services' },
+                ],
+                stack: ['Java 21', 'Spring Boot 3', 'Spring AI 1.0', 'Angular 20', 'PostgreSQL', 'pgvector', 'RabbitMQ', 'Docker'],
+                imageCaption: 'Dashboard view — agent management and execution monitoring',
+                links: { demo: '#', code: 'https://github.com/HeilyMadelay-hub/Narek' },
+            },
 
             {
                 id: 'subtextai',
@@ -346,7 +369,11 @@ const en = {
                 summary: 'A conversation analysis engine that interprets intent and subtext, and only answers when it finds documentary evidence to support the interpretation.',
                 problema: 'Ask an LLM "what did this person really mean" and it always answers, with the same confidence, whether it has grounds or not. In a domain where the answer shapes real personal decisions, that unearned confidence is the problem — not the model\'s capability.',
                 solucion: 'I designed a cascading governance pipeline that wraps the model: it validates policies before invoking it, requires retrieved evidence in order to generate, and blocks the response when that evidence falls below a calibrated threshold. Every response is reconstructible by trace_id.',
-                arquitectura: 'FastAPI orchestrates with LangGraph: policy validation → crisis classifier running in parallel with hybrid search (pgvector HNSW + tsvector/GIN fused via RRF) → cross-encoder reranking acting as the confidence gate → analysis → traceability. Inference and embeddings run through OpenRouter (GPT-4.1 + text-embedding-3-large), deployed on AWS (EC2 t3.micro · Docker Compose: FastAPI + PostgreSQL/pgvector + Redis + Nginx · Amplify Hosting · S3 · Secrets Manager · IAM instance profile · Cognito).',
+                arquitectura: [
+                    { label: 'Orchestration & inference', text: 'FastAPI + LangGraph coordinate the end-to-end pipeline: policy validation → crisis classification → hybrid retrieval → reranking → analysis → traceability.' },
+                    { label: 'RAG & trust', text: 'hybrid retrieval via pgvector (HNSW) + tsvector (GIN), fused with RRF, followed by a cross-encoder reranker that acts as a trust gate before the final analysis. Inference and embeddings via OpenRouter (GPT-4.1 + text-embedding-3-large).' },
+                    { label: 'Production & infrastructure', text: 'deployed on AWS with Docker Compose on EC2, integrating PostgreSQL/pgvector, Redis and Nginx, alongside S3, Secrets Manager, IAM Instance Profile and Cognito.' },
+                ],
                 resultados: [
                     { value: '~1.6-2.3s', label: 'generation via OpenRouter (GPT-4.1)' },
                     { value: '1', label: 'external credential — OpenRouter, in Secrets Manager; everything else via IAM' },
@@ -399,7 +426,13 @@ const en = {
         eyebrow: "Let's talk",
         heading: 'Contact',
         lede: "Have a project in mind or an open position? Tell me what it's about and I'll get back to you as soon as possible.",
-        form: { name: 'Name', email: 'Email', message: 'Message', submit: 'Send message' },
+        form: {
+            name: 'Name',
+            email: 'Email',
+            message: 'Message',
+            submit: 'Send message',
+            privacy: { before: 'I have read the ', link: 'Privacy Policy', after: '.' },
+        },
         panel: {
             label: 'Direct contact',
             location: 'Remote · Hybrid · On-site',
@@ -407,6 +440,15 @@ const en = {
             relocation: 'Relocation available',
         },
         mail: { subject: 'Contact from the portfolio', fallbackName: 'New message' },
+    },
+
+    footer: {
+        ariaLabel: 'Legal links',
+        links: [
+            { label: 'Legal Notice', to: '/legal' },
+            { label: 'Privacy Policy', to: '/privacy' },
+            { label: 'Cookie Policy', to: '/cookies' },
+        ],
     },
 
     chat: {
@@ -439,7 +481,12 @@ const en = {
                     'What makes the architecture interesting?',
                     "What's the current status?",
                 ],
-                narek: [],
+                narek: [
+                    'How does the agent runtime work?',
+                    'What makes Narek provider-agnostic?',
+                    'How does the policy engine govern agents?',
+                    "What's the current status?",
+                ],
             },
         },
         modals: {

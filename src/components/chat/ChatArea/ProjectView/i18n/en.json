@@ -21,6 +21,76 @@
     "viewSource": "View source on GitHub"
   },
   "projects": {
+    "narek": {
+      "tagline": "Infrastructure for building, orchestrating, and governing enterprise AI agents.",
+      "description": "A platform for running, orchestrating, and governing AI agents — built for engineering teams that need agent behavior backed by real infrastructure: a runtime, retrieval and memory layers, tool execution, and policy-based governance.",
+      "problem": {
+        "headline": "Building an AI agent is easy. Operating one is not.",
+        "description": "Runtime orchestration, retrieval, prompt versioning, tool execution, conversation memory, access control, and execution traceability are all required before an agent can be trusted with a real workload. Most teams end up building fragile, one-off versions of each, tied to a single project and a single model provider.",
+        "flow": ["Agent logic", "Infrastructure gap", "Fragile one-offs"]
+      },
+      "capabilities": [
+        {
+          "title": "Agent Runtime & Orchestration",
+          "description": "Executes AI agents and coordinates their workflows end to end — with retrieval, memory, tool access, and policy enforcement built into the execution layer."
+        },
+        {
+          "title": "RAG & Knowledge Management",
+          "description": "Document ingestion and vector search over PostgreSQL + pgvector to ground agent responses in retrieved knowledge. Agents retrieve from an organized knowledge base, not raw files."
+        },
+        {
+          "title": "Execution Traceability",
+          "description": "Every agent run is recorded end to end — from retrieval to response — for audit and debugging. Full traces, logs, and metrics for every execution."
+        }
+      ],
+      "insight": {
+        "message": "\"Configure an agent, trigger it, inspect the result.\"",
+        "analysis": {
+          "Runtime": "Spring AI + Ollama",
+          "Retrieval": "pgvector HNSW",
+          "Governance": "Policy Engine",
+          "Trace": "Full execution log"
+        },
+        "evidence": "The platform abstracts agent execution behind a runtime that handles retrieval, memory, tool access, and policy enforcement. Each run is fully traceable — the user configures an agent from the dashboard, triggers it, and inspects the complete execution trace afterward."
+      },
+      "philosophy": {
+        "headline": "Build AI agents, not chatbots.",
+        "description": "Narek provides the infrastructure layer underneath AI applications: agent execution, knowledge retrieval, prompt management, memory, tool access, and governance — so teams can build applications on top without reimplementing them for every project.",
+        "pillars": [
+          { "label": "Provider-agnostic", "description": "No hard dependency on a single model vendor — Spring AI decouples agent logic from the LLM backend." },
+          { "label": "Governed", "description": "Access control and observability are part of the platform, not an afterthought." },
+          { "label": "Modular", "description": "Runtime, memory, retrieval, and tools are separable services, not a monolith." }
+        ]
+      },
+      "decisions": [
+        {
+          "title": "Agent-first architecture",
+          "description": "Built to run and govern agents as first-class units, not to wrap a single conversational assistant.",
+          "why": "Enterprise AI needs orchestration, governance, and traceability — not just a chat interface."
+        },
+        {
+          "title": "Provider abstraction",
+          "description": "Agent logic sits behind Spring AI's model abstraction, not a specific vendor SDK, so the LLM backend can change without touching agent code.",
+          "why": "No vendor lock-in — agents run on Ollama locally today, with OpenRouter planned for multi-provider access."
+        },
+        {
+          "title": "Governance built in",
+          "description": "A dedicated policy engine controls agent access and actions, instead of relying on prompt-level rules.",
+          "why": "Policy enforcement belongs in the infrastructure, not in the prompt."
+        },
+        {
+          "title": "Full execution traceability",
+          "description": "Every agent run is recorded end to end, from retrieval to response, for audit and debugging.",
+          "why": "When an agent makes a decision, you need to know exactly how it got there."
+        }
+      ],
+      "decisionsScreenshotCaption": "Execution trace — full agent run recorded from retrieval to response, with timing and step details",
+      "architecture": {
+        "pipeline": ["Dashboard", "Spring Boot API", "Agent Runtime", "Policy Engine", "Knowledge Retrieval", "Model Router", "AI Provider", "Execution Trace"],
+        "detail": "The Angular dashboard talks to a Spring Boot API, which fans out to three core services: the Agent Runtime, the Policy Engine, and the Model Router. The Agent Runtime coordinates execution and delegates to the Memory Service and Tool Registry; the Knowledge Service handles retrieval against a pgvector-backed vector store. The Model Router dispatches requests to the configured AI Provider — Ollama for local execution today, with OpenRouter planned for multi-provider access."
+      },
+      "status": "Core stack is built: Spring Boot, Spring AI, Ollama, Angular dashboard, agent runtime, RAG with pgvector, memory, and observability basics. Currently building the policy engine, tool registry, and workflow engine."
+    },
     "subtextai": {
       "tagline": "Communication intelligence for ambiguous conversations.",
       "description": "An AI engine that analyzes conversations to surface intent, emotional shifts, and hidden meaning with every interpretation grounded in evidence, scored with calibrated confidence, and fully traceable.",

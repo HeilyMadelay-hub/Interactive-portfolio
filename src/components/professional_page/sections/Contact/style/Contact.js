@@ -77,6 +77,42 @@ export const textareaStyle = {
     fontFamily: fonts.sans,
 };
 
+// ---------- Consentimiento (casilla de política de privacidad) ----------
+
+export const consentRowStyle = {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '10px',
+    margin: '4px 0 18px',
+};
+
+export const consentCheckboxStyle = {
+    // Tamaño y color del check nativo: sin esto sale el azul del sistema
+    // operativo, que es el único acento ajeno a la paleta en toda la sección.
+    width: '15px',
+    height: '15px',
+    accentColor: colors.blue,
+    cursor: 'pointer',
+    flexShrink: 0,
+    // Alinea la casilla con la primera línea del texto, no con su caja.
+    marginTop: '2px',
+};
+
+export const consentLabelStyle = {
+    fontFamily: fonts.sans,
+    fontSize: '13.5px',
+    lineHeight: 1.55,
+    color: colors.body,
+    cursor: 'pointer',
+};
+
+export const consentLinkStyle = {
+    color: colors.teal,
+    textDecoration: 'none',
+    borderBottom: `1px solid ${colors.line}`,
+    transition: 'border-color 0.2s ease',
+};
+
 export const submitButtonStyle = {
     color: colors.ink,
     textDecoration: 'none',

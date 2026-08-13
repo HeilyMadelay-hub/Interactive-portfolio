@@ -56,8 +56,8 @@ export const caseStudyStyle = (w, isFirst) => ({
     borderTop: isFirst ? 'none' : `1px solid ${colors.line}`,
     paddingTop: isFirst ? 0 : (w <= MOBILE_BREAKPOINT ? '52px' : '96px'),
     paddingBottom: w <= MOBILE_BREAKPOINT ? (isFirst ? '36px' : '52px') : (isFirst ? '60px' : '96px'),
-    paddingLeft: w <= MOBILE_BREAKPOINT ? (isFirst ? '52px' : 0) : (isFirst ? '96px' : 0),
-    paddingRight: w <= MOBILE_BREAKPOINT ? (isFirst ? '52px' : 0) : (isFirst ? '96px' : 0),
+    paddingLeft: 0,
+    paddingRight: 0,
 });
 
 export const categoryStyle = {
@@ -97,6 +97,11 @@ export const specBlockStyle = {
     maxWidth: '440px',
 };
 
+export const architectureBlockStyle = {
+    marginBottom: '24px',
+    maxWidth: '620px',
+};
+
 export const specLabelStyle = {
     fontFamily: fonts.mono,
     fontSize: '10.5px',
@@ -105,6 +110,34 @@ export const specLabelStyle = {
     color: colors.body,
     fontWeight: 600,
     margin: '0 0 8px',
+};
+
+export const architectureListStyle = {
+    margin: 0,
+    padding: 0,
+    listStyle: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+};
+
+export const architectureItemStyle = {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '10px',
+    fontFamily: fonts.sans,
+    fontSize: '15px',
+    lineHeight: 1.6,
+    color: colors.body,
+};
+
+export const architectureDotStyle = {
+    flexShrink: 0,
+    width: '5px',
+    height: '5px',
+    borderRadius: '50%',
+    background: colors.teal,
+    marginTop: '9px',
 };
 
 export const specTextStyle = {

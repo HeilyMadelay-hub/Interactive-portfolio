@@ -6,8 +6,12 @@ import {
     titleStyle,
     summaryStyle,
     specBlockStyle,
+    architectureBlockStyle,
     specLabelStyle,
     specTextStyle,
+    architectureListStyle,
+    architectureItemStyle,
+    architectureDotStyle,
     metricsRowStyle,
     metricValueStyle,
     metricLabelStyle,
@@ -111,9 +115,16 @@ export function Specs({ problema, solucion, arquitectura, labels }) {
                 <p style={specLabelStyle}>{labels.approach}</p>
                 <p style={specTextStyle}>{solucion}</p>
             </div>
-            <div style={specBlockStyle}>
+            <div style={architectureBlockStyle}>
                 <p style={specLabelStyle}>{labels.architecture}</p>
-                <p style={specTextStyle}>{arquitectura}</p>
+                <ul style={architectureListStyle}>
+                    {arquitectura.map((item, i) => (
+                        <li key={i} style={architectureItemStyle}>
+                            <span style={architectureDotStyle} />
+                            <span><strong>{item.label}:</strong> {item.text}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     );
@@ -184,7 +195,7 @@ const carouselBtnStyle = (side) => ({
     flexShrink: 0,
 });
 
-export function ImageCarousel({ images, aspectRatio }) {
+export function ImageCarousel({ images, aspectRatio, labels }) {
     const [current, setCurrent] = useState(0);
     const [fading, setFading] = useState(false);
 
@@ -205,7 +216,7 @@ export function ImageCarousel({ images, aspectRatio }) {
             <div style={{ width: '100%', aspectRatio, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img
                     src={images[current]}
-                    alt={`Screenshot ${current + 1} of ${images.length}`}
+                    alt={`${labels.screenshot} ${current + 1}/${images.length}`}
                     style={{
                         width: '100%',
                         height: '100%',
@@ -219,7 +230,7 @@ export function ImageCarousel({ images, aspectRatio }) {
 
             <button
                 onClick={prev}
-                aria-label="Imagen anterior"
+                aria-label={labels.prevImage}
                 style={carouselBtnStyle('left')}
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.6)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.38)')}
@@ -231,7 +242,7 @@ export function ImageCarousel({ images, aspectRatio }) {
 
             <button
                 onClick={next}
-                aria-label="Imagen siguiente"
+                aria-label={labels.nextImage}
                 style={carouselBtnStyle('right')}
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.6)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.38)')}
@@ -246,7 +257,7 @@ export function ImageCarousel({ images, aspectRatio }) {
                     <button
                         key={i}
                         onClick={() => goTo(i)}
-                        aria-label={`Ir a imagen ${i + 1}`}
+                        aria-label={`${labels.goToImage} ${i + 1}`}
                         style={{
                             width: i === current ? '20px' : '7px',
                             height: '7px',

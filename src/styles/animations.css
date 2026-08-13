@@ -66,3 +66,28 @@
         left: 200%;
     }
 }
+
+/* Modal de los documentos legales. El velo solo funde: el `fadeIn` genérico de
+   App.css lleva un translateY que, sobre un elemento fixed a pantalla completa,
+   destaparía una franja por abajo durante la animación. */
+@keyframes legalOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes legalPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

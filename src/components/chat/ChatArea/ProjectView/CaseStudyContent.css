@@ -69,6 +69,8 @@
 .cs-img-wrap img {
     display: block;
     width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     border-radius: 12px;
     border: 1px solid var(--border);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);

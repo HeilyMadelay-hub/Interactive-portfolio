@@ -335,10 +335,33 @@ const fr = {
     projects: {
         eyebrow: 'Travaux sélectionnés',
         heading: 'Projets',
-        lede: "Une sélection de systèmes backend, de solutions d'IA et d'architectures cloud que j'ai conçus et mis en production.",
-        labels: { challenge: 'Le défi', approach: "L'approche", architecture: 'Architecture', stack: 'Stack' },
+        lede: "Une sélection de systèmes backend, de solutions d'IA et d'architectures cloud que je conçois et mets en production.",
+        labels: { challenge: 'Le défi', approach: "L'approche", architecture: 'Architecture', stack: 'Stack', prevImage: 'Image précédente', nextImage: 'Image suivante', goToImage: "Aller à l'image", screenshot: "Capture d'écran" },
         cta: { view: 'Voir le projet', code: 'Voir le code' },
         items: [
+
+            {
+                id: 'narek',
+                layout: 'image-top',
+                category: ['Backend', 'IA', 'En développement'],
+                title: 'Narek',
+                summary: "Une plateforme enterprise pour exécuter, orchestrer et gouverner des agents IA — avec un runtime dédié, récupération, mémoire, exécution d'outils et gouvernance par politiques.",
+                problema: "Construire un agent IA est facile. L'opérer en production nécessite l'orchestration du runtime, la récupération, le versionnage des prompts, l'exécution d'outils, la mémoire, le contrôle d'accès et la traçabilité — et la plupart des équipes finissent par construire des versions fragiles et ad hoc, liées à un seul projet et un seul fournisseur de modèles.",
+                solucion: "J'ai conçu une plateforme modulaire d'agents qui fournit la couche d'infrastructure sous les applications IA : un runtime d'agents, récupération de connaissances via pgvector, gestion des prompts, mémoire, un registre d'outils et un moteur de politiques — le tout agnostique au fournisseur grâce à l'abstraction de modèles de Spring AI.",
+                arquitectura: [
+                    { label: 'Orchestration', text: "le dashboard Angular se connecte à une API Spring Boot qui coordonne trois services principaux : Agent Runtime, un Policy Engine pour la gouvernance et un Knowledge Service adossé à pgvector pour la récupération." },
+                    { label: 'Agent & Model Layer', text: "l'Agent Runtime délègue à Memory et au Tool Registry, tandis qu'un Model Router abstrait l'accès aux modèles et envoie l'inférence à Ollama en local, avec OpenRouter prêt pour un accès multi-fournisseurs." },
+                    { label: 'Données et infrastructure', text: "PostgreSQL + pgvector gèrent les données et les embeddings, Redis assure le caching et RabbitMQ permet la messagerie asynchrone. L'ensemble de la stack fonctionne via Docker Compose." },
+                ],
+                resultados: [
+                    { value: 'Agnostique', label: "les agents s'exécutent sur n'importe quel LLM via l'abstraction Spring AI" },
+                    { value: 'Traçabilité', label: "chaque exécution d'agent enregistrée de bout en bout" },
+                    { value: 'Modulaire', label: 'runtime, mémoire, récupération et outils comme services séparables' },
+                ],
+                stack: ['Java 21', 'Spring Boot 3', 'Spring AI 1.0', 'Angular 20', 'PostgreSQL', 'pgvector', 'RabbitMQ', 'Docker'],
+                imageCaption: "Vue du dashboard — gestion des agents et monitoring des exécutions",
+                links: { demo: '#', code: 'https://github.com/HeilyMadelay-hub/Narek' },
+            },
 
             {
                 id: 'subtextai',
@@ -348,7 +371,11 @@ const fr = {
                 summary: "Un moteur d'analyse de conversations qui interprète l'intention et le sous-texte, et ne répond que lorsqu'il trouve des preuves documentaires pour étayer son interprétation.",
                 problema: "Demandez à un LLM « qu'a vraiment voulu dire cette personne » et il répond toujours, avec la même assurance, qu'il ait des fondements ou non. Dans un domaine où la réponse influence de vraies décisions personnelles, cette confiance injustifiée est le problème — pas la capacité du modèle.",
                 solucion: "J'ai conçu un pipeline de gouvernance en cascade qui encadre le modèle : il valide les politiques avant de l'invoquer, exige des preuves récupérées pour pouvoir générer, et bloque la réponse lorsque ces preuves n'atteignent pas un seuil calibré. Chaque réponse est reconstructible par trace_id.",
-                arquitectura: "FastAPI orchestre avec LangGraph : validation des politiques → classificateur de crise en parallèle avec la recherche hybride (pgvector HNSW + tsvector/GIN fusionnés par RRF) → reranking cross-encoder servant de porte de confiance → analyse → traçabilité. Inférence et embeddings via OpenRouter (GPT-4.1 + text-embedding-3-large), déployé sur AWS (EC2 t3.micro · Docker Compose : FastAPI + PostgreSQL/pgvector + Redis + Nginx · Amplify Hosting · S3 · Secrets Manager · profil d'instance IAM · Cognito).",
+                arquitectura: [
+                    { label: 'Orchestration et inférence', text: "FastAPI + LangGraph coordonnent le pipeline de bout en bout : validation des politiques → classification de crise → récupération hybride → reranking → analyse → traçabilité." },
+                    { label: 'RAG et confiance', text: "récupération hybride via pgvector (HNSW) + tsvector (GIN), fusionnée avec RRF, suivie d'un reranker cross-encoder qui fait office de porte de confiance avant l'analyse finale. Inférence et embeddings via OpenRouter (GPT-4.1 + text-embedding-3-large)." },
+                    { label: 'Production et infrastructure', text: "déployé sur AWS avec Docker Compose sur EC2, intégrant PostgreSQL/pgvector, Redis et Nginx, ainsi que S3, Secrets Manager, IAM Instance Profile et Cognito." },
+                ],
                 resultados: [
                     { value: '~1,6-2,3s', label: 'génération via OpenRouter (GPT-4.1)' },
                     { value: '1', label: "identifiant externe — OpenRouter, dans Secrets Manager ; le reste via IAM" },
@@ -401,7 +428,13 @@ const fr = {
         eyebrow: 'Discutons',
         heading: 'Contact',
         lede: "Vous avez un projet en tête ou un poste à pourvoir ? Dites-moi de quoi il s'agit et je vous réponds au plus vite.",
-        form: { name: 'Nom', email: 'E-mail', message: 'Message', submit: 'Envoyer le message' },
+        form: {
+            name: 'Nom',
+            email: 'E-mail',
+            message: 'Message',
+            submit: 'Envoyer le message',
+            privacy: { before: "J'ai lu la ", link: 'Politique de Confidentialité', after: '.' },
+        },
         panel: {
             label: 'Contact direct',
             location: 'Télétravail · Hybride · Présentiel',
@@ -409,6 +442,15 @@ const fr = {
             relocation: 'Disponible pour une relocalisation',
         },
         mail: { subject: 'Contact depuis le portfolio', fallbackName: 'Nouveau message' },
+    },
+
+    footer: {
+        ariaLabel: 'Liens légaux',
+        links: [
+            { label: 'Mentions légales', to: '/legal' },
+            { label: 'Politique de Confidentialité', to: '/privacy' },
+            { label: 'Politique de Cookies', to: '/cookies' },
+        ],
     },
 
     chat: {
@@ -441,7 +483,12 @@ const fr = {
                     "Qu'est-ce qui rend l'architecture intéressante ?",
                     'Quel est l\'état actuel ?',
                 ],
-                narek: [],
+                narek: [
+                    'Comment fonctionne le runtime des agents ?',
+                    "Qu'est-ce qui rend Narek agnostique au fournisseur ?",
+                    'Comment le moteur de politiques gouverne les agents ?',
+                    "Quel est l'état actuel ?",
+                ],
             },
         },
         modals: {

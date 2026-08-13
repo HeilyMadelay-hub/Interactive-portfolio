@@ -69,7 +69,7 @@ function Article({ article, image, w, isFirst, t }) {
         <div style={regularLayoutStyle(w)}>
             <div style={regularImageWrapStyle(w)}>
                 {image
-                    ? <img src={image} alt={article.title} style={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', borderRadius: '6px', display: 'block' }} />
+                    ? <img src={image} alt={article.title} style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '6px', display: 'block' }} />
                     : <ImagePlaceholder aspectRatio="4 / 3" caption={t.imageCaption} />
                 }
             </div>

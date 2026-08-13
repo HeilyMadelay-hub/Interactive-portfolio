@@ -335,10 +335,33 @@ const es = {
     projects: {
         eyebrow: 'Trabajo seleccionado',
         heading: 'Proyectos',
-        lede: 'Una selección de sistemas backend, soluciones de IA y arquitecturas cloud que he diseñado y llevado a producción.',
-        labels: { challenge: 'El reto', approach: 'El enfoque', architecture: 'Arquitectura', stack: 'Stack' },
+        lede: 'Una selección de sistemas backend, soluciones de IA y arquitecturas cloud que estoy diseñando y llevando a producción.',
+        labels: { challenge: 'El reto', approach: 'El enfoque', architecture: 'Arquitectura', stack: 'Stack', prevImage: 'Imagen anterior', nextImage: 'Imagen siguiente', goToImage: 'Ir a imagen', screenshot: 'Captura' },
         cta: { view: 'Ver proyecto', code: 'Ver código' },
         items: [
+
+            {
+                id: 'narek',
+                layout: 'image-top',
+                category: ['Backend', 'IA', 'En desarrollo'],
+                title: 'Narek',
+                summary: 'Una plataforma enterprise para ejecutar, orquestar y gobernar agentes de IA — con runtime dedicado, recuperación, memoria, ejecución de herramientas y gobernanza basada en políticas.',
+                problema: 'Construir un agente de IA es fácil. Operarlo en producción requiere orquestación del runtime, recuperación, versionado de prompts, ejecución de herramientas, memoria, control de acceso y trazabilidad — y la mayoría de equipos acaban construyendo versiones frágiles y ad hoc, atadas a un solo proyecto y un solo proveedor de modelos.',
+                solucion: 'Diseñé una plataforma modular de agentes que proporciona la capa de infraestructura bajo las aplicaciones de IA: un runtime de agentes, recuperación de conocimiento vía pgvector, gestión de prompts, memoria, un registro de herramientas y un motor de políticas — todo agnóstico al proveedor a través de la abstracción de modelos de Spring AI.',
+                arquitectura: [
+                    { label: 'Orquestación', text: 'el dashboard Angular se conecta a una API Spring Boot que coordina tres servicios core: Agent Runtime, Policy Engine para gobernanza y Knowledge Service respaldado por pgvector para recuperación.' },
+                    { label: 'Agent & Model Layer', text: 'el Agent Runtime delega en Memory y Tool Registry, mientras un Model Router abstrae el acceso a modelos y despacha la inferencia a Ollama en local, con OpenRouter preparado para acceso multi-proveedor.' },
+                    { label: 'Datos e infraestructura', text: 'PostgreSQL + pgvector gestionan datos y embeddings, Redis proporciona caching y RabbitMQ habilita mensajería asíncrona. Todo el stack se ejecuta mediante Docker Compose.' },
+                ],
+                resultados: [
+                    { value: 'Agnóstico', label: 'agentes ejecutan en cualquier LLM vía abstracción Spring AI' },
+                    { value: 'Trazabilidad', label: 'cada ejecución de agente registrada de principio a fin' },
+                    { value: 'Modular', label: 'runtime, memoria, recuperación y herramientas como servicios separables' },
+                ],
+                stack: ['Java 21', 'Spring Boot 3', 'Spring AI 1.0', 'Angular 20', 'PostgreSQL', 'pgvector', 'RabbitMQ', 'Docker'],
+                imageCaption: 'Vista del dashboard — gestión de agentes y monitorización de ejecuciones',
+                links: { demo: '#', code: 'https://github.com/HeilyMadelay-hub/Narek' },
+            },
 
             {
                 id: 'subtextai',
@@ -348,7 +371,11 @@ const es = {
                 summary: 'Un motor de análisis de conversaciones que interpreta intención y subtexto, y que solo responde cuando encuentra evidencia documental que lo respalde.',
                 problema: 'Un LLM al que le preguntas "qué quiso decir esta persona" responde siempre, con la misma seguridad, tenga base o no. En un dominio donde la respuesta influye en decisiones personales reales, esa confianza injustificada es el problema, no la falta de capacidad del modelo.',
                 solucion: 'Diseñé un pipeline de gobernanza en cascada que envuelve al modelo: valida políticas antes de invocarlo, exige evidencia recuperada para poder generar, y bloquea la respuesta si la evidencia no supera un umbral calibrado. Cada respuesta queda reconstruible por trace_id.',
-                arquitectura: 'FastAPI orquesta con LangGraph: validación de políticas → clasificador de crisis en paralelo con búsqueda híbrida (pgvector HNSW + tsvector/GIN fusionados con RRF) → reranking cross-encoder que actúa como puerta de confianza → análisis → trazabilidad. Inferencia y embeddings vía OpenRouter (GPT-4.1 + text-embedding-3-large), desplegado en AWS (EC2 t3.micro · Docker Compose: FastAPI + PostgreSQL/pgvector + Redis + Nginx · Amplify Hosting · S3 · Secrets Manager · IAM instance profile · Cognito).',
+                arquitectura: [
+                    { label: 'Orquestación e inferencia', text: 'FastAPI + LangGraph coordinan el pipeline end-to-end: validación de políticas → clasificación de crisis → recuperación híbrida → reranking → análisis → trazabilidad.' },
+                    { label: 'RAG y confianza', text: 'recuperación híbrida mediante pgvector (HNSW) + tsvector (GIN), fusionada con RRF, seguida de un cross-encoder reranker que actúa como puerta de confianza antes del análisis final. Inferencia y embeddings mediante OpenRouter (GPT-4.1 + text-embedding-3-large).' },
+                    { label: 'Producción e infraestructura', text: 'desplegado en AWS con Docker Compose sobre EC2, integrando PostgreSQL/pgvector, Redis y Nginx, junto con S3, Secrets Manager, IAM Instance Profile y Cognito.' },
+                ],
                 resultados: [
                     { value: '~1.6-2.3s', label: 'generación vía OpenRouter (GPT-4.1)' },
                     { value: '1', label: 'credencial externa — OpenRouter, en Secrets Manager; el resto vía IAM' },
@@ -401,7 +428,15 @@ const es = {
         eyebrow: 'Hablemos',
         heading: 'Contacto',
         lede: '¿Tienes un proyecto en mente o una posición abierta? Cuéntame de qué se trata y te respondo lo antes posible.',
-        form: { name: 'Nombre', email: 'Email', message: 'Mensaje', submit: 'Enviar mensaje' },
+        form: {
+            name: 'Nombre',
+            email: 'Email',
+            message: 'Mensaje',
+            submit: 'Enviar mensaje',
+            // Casilla de consentimiento: va sobre el tratamiento de los datos
+            // del formulario, no sobre cookies (que aquí no se instalan).
+            privacy: { before: 'He leído la ', link: 'Política de Privacidad', after: '.' },
+        },
         panel: {
             label: 'Contacto directo',
             location: 'Remoto · Híbrido · Presencial',
@@ -409,6 +444,17 @@ const es = {
             relocation: 'Recolocación disponible',
         },
         mail: { subject: 'Contacto desde el portfolio', fallbackName: 'Nuevo mensaje' },
+    },
+
+    // Pie del sitio: solo copyright y las tres páginas legales. Los datos de
+    // contacto NO se repiten aquí — ya están en el panel oscuro de Contacto.
+    footer: {
+        ariaLabel: 'Enlaces legales',
+        links: [
+            { label: 'Aviso Legal', to: '/legal' },
+            { label: 'Política de Privacidad', to: '/privacy' },
+            { label: 'Política de Cookies', to: '/cookies' },
+        ],
     },
 
     chat: {
@@ -441,7 +487,12 @@ const es = {
                     '¿Qué hace interesante la arquitectura?',
                     '¿Cuál es el estado actual?',
                 ],
-                narek: [],
+                narek: [
+                    '¿Cómo funciona el runtime de agentes?',
+                    '¿Qué hace a Narek agnóstico al proveedor?',
+                    '¿Cómo gobierna el motor de políticas a los agentes?',
+                    '¿Cuál es el estado actual?',
+                ],
             },
         },
         modals: {

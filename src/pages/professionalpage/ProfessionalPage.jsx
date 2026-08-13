@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Importar componentes
 import Header from "../../components/professional_page/layout/Header";
+import Footer from "../../components/professional_page/layout/Footer";
 import Hero from "../../components/professional_page/sections/Hero/Hero";
 import AboutMe from '../../components/professional_page/sections/About/AboutMe';
 import Projects from '../../components/professional_page/sections/Projects/Projects';
@@ -42,6 +43,11 @@ function ProfessionalPage() {
                 <section id="contact">
                     <Contact />
                 </section>
+
+                {/* Cierre del sitio: copyright + las tres páginas legales.
+                    Va fuera de <section> porque no es una sección navegable
+                    del portfolio, sino el pie de la página. */}
+                <Footer />
 
             </div>
     );

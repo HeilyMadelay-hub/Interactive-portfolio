@@ -21,9 +21,13 @@ import imgAnalysis from '../../../../assets/profesional_view/images/Subtextai/im
 import imgAudit from '../../../../assets/profesional_view/images/Subtextai/img/audit.png';
 import imgReplay from '../../../../assets/profesional_view/images/Subtextai/img/replay.png';
 import imgTelemetry from '../../../../assets/profesional_view/images/Subtextai/img/telemetry.png';
+import imgNarekDashboard from '../../../../assets/profesional_view/images/Narek/img/Dashboard.png';
+import imgNarekAgentConfig from '../../../../assets/profesional_view/images/Narek/img/AgentDetail_Configuration.png';
+import imgNarekExecTrace from '../../../../assets/profesional_view/images/Narek/img/RunDetails_ExecutionTrace.png';
 
 const PROJECT_IMAGES = {
     subtextai: [imgAnalysis, imgAudit, imgReplay, imgTelemetry],
+    narek: [imgNarekDashboard, imgNarekAgentConfig, imgNarekExecTrace],
 };
 
 export default function ProjectCaseStudy({ project, windowWidth, isFirst }) {
@@ -45,7 +49,7 @@ export default function ProjectCaseStudy({ project, windowWidth, isFirst }) {
                 >
                     <div style={{ width: isMobile ? '100%' : '260px', flexShrink: 0 }}>
                         {images
-                            ? <ImageCarousel images={images} aspectRatio="1 / 1" />
+                            ? <ImageCarousel images={images} aspectRatio="3 / 2" labels={labels} />
                             : <ImageSlot caption={project.imageCaption} aspectRatio="1 / 1" />
                         }
                     </div>
@@ -68,7 +72,7 @@ export default function ProjectCaseStudy({ project, windowWidth, isFirst }) {
             <div style={caseStudyStyle(w, isFirst)}>
                 <div style={{ marginBottom: isMobile ? '40px' : '56px' }}>
                     {images
-                        ? <ImageCarousel images={images} aspectRatio={isMobile ? '4 / 3' : '16 / 9'} />
+                        ? <ImageCarousel images={images} aspectRatio="3 / 2" labels={labels} />
                         : <ImageSlot caption={project.imageCaption} aspectRatio={isMobile ? '4 / 3' : '21 / 9'} />
                     }
                 </div>
@@ -113,7 +117,7 @@ export default function ProjectCaseStudy({ project, windowWidth, isFirst }) {
     const imageColumn = (
         <div style={{ marginTop: isMobile ? 0 : '56px' }}>
             {images
-                ? <ImageCarousel images={images} aspectRatio="4 / 3" />
+                ? <ImageCarousel images={images} aspectRatio="3 / 2" labels={labels} />
                 : <ImageSlot caption={project.imageCaption} aspectRatio="3 / 4" />
             }
         </div>

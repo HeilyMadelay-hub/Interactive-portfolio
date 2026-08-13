@@ -2,18 +2,291 @@ import imgAnalysis from '../../../assets/profesional_view/images/Subtextai/img/a
 import imgAudit from '../../../assets/profesional_view/images/Subtextai/img/audit.png';
 import imgReplay from '../../../assets/profesional_view/images/Subtextai/img/replay.png';
 import imgTelemetry from '../../../assets/profesional_view/images/Subtextai/img/telemetry.png';
+import imgNarekDashboard from '../../../assets/profesional_view/images/Narek/img/Dashboard.png';
+import imgNarekAgentConfig from '../../../assets/profesional_view/images/Narek/img/AgentDetail_Configuration.png';
+import imgNarekExecTrace from '../../../assets/profesional_view/images/Narek/img/RunDetails_ExecutionTrace.png';
 
-// Static catalog for the sidebar "Proyectos" group. Each entry that is opened
-// renders its README (if any) plus the regular chat input, the same way
-// ChatGPT's Projects show a project's docs above its own chat thread.
 export const PROJECTS = [
     {
         id: 'narek',
         title: 'Narek',
         subtitle: 'Enterprise AI Agent Platform',
-        // No README yet — ProjectView falls back to a "coming soon" placeholder.
-        readme: null,
-        links: { code: 'https://github.com/HeilyMadelay-hub' },
+        caseStudy: {
+            tagline: 'Infrastructure for building, orchestrating, and governing enterprise AI agents.',
+            description: 'A platform for running, orchestrating, and governing AI agents — built for engineering teams that need agent behavior backed by real infrastructure: a runtime, retrieval and memory layers, tool execution, and policy-based governance.',
+            tags: ['AI', 'Spring Boot', 'Full-stack', 'Docker'],
+            github: 'https://github.com/HeilyMadelay-hub/Narek',
+            heroScreenshotIndex: 0,
+
+            problem: {
+                headline: 'Building an AI agent is easy. Operating one is not.',
+                description: 'Runtime orchestration, retrieval, prompt versioning, tool execution, conversation memory, access control, and execution traceability are all required before an agent can be trusted with a real workload. Most teams end up building fragile, one-off versions of each, tied to a single project and a single model provider.',
+                flow: ['Agent logic', 'Infrastructure gap', 'Fragile one-offs'],
+            },
+
+            capabilities: [
+                {
+                    title: 'Agent Runtime & Orchestration',
+                    description: 'Executes AI agents and coordinates their workflows end to end — with retrieval, memory, tool access, and policy enforcement built into the execution layer.',
+                    screenshotIndex: 0,
+                },
+                {
+                    title: 'RAG & Knowledge Management',
+                    description: 'Document ingestion and vector search over PostgreSQL + pgvector to ground agent responses in retrieved knowledge. Agents retrieve from an organized knowledge base, not raw files.',
+                    screenshotIndex: 1,
+                },
+                {
+                    title: 'Execution Traceability',
+                    description: 'Every agent run is recorded end to end — from retrieval to response — for audit and debugging. Full traces, logs, and metrics for every execution.',
+                    screenshotIndex: 2,
+                },
+            ],
+
+            insight: {
+                message: '"Configure an agent, trigger it, inspect the result."',
+                analysis: {
+                    'Runtime': 'Spring AI + Ollama',
+                    'Retrieval': 'pgvector HNSW',
+                    'Governance': 'Policy Engine',
+                    'Trace': 'Full execution log',
+                },
+                evidence: 'The platform abstracts agent execution behind a runtime that handles retrieval, memory, tool access, and policy enforcement. Each run is fully traceable — the user configures an agent from the dashboard, triggers it, and inspects the complete execution trace afterward.',
+                isIllustrative: true,
+            },
+
+            philosophy: {
+                headline: 'Build AI agents, not chatbots.',
+                description: 'Narek provides the infrastructure layer underneath AI applications: agent execution, knowledge retrieval, prompt management, memory, tool access, and governance — so teams can build applications on top without reimplementing them for every project.',
+                pillars: [
+                    { label: 'Provider-agnostic', description: 'No hard dependency on a single model vendor — Spring AI decouples agent logic from the LLM backend.' },
+                    { label: 'Governed', description: 'Access control and observability are part of the platform, not an afterthought.' },
+                    { label: 'Modular', description: 'Runtime, memory, retrieval, and tools are separable services, not a monolith.' },
+                ],
+            },
+
+            decisions: [
+                {
+                    number: '01',
+                    title: 'Agent-first architecture',
+                    description: 'Built to run and govern agents as first-class units, not to wrap a single conversational assistant.',
+                    why: 'Enterprise AI needs orchestration, governance, and traceability — not just a chat interface.',
+                },
+                {
+                    number: '02',
+                    title: 'Provider abstraction',
+                    description: 'Agent logic sits behind Spring AI\'s model abstraction, not a specific vendor SDK, so the LLM backend can change without touching agent code.',
+                    why: 'No vendor lock-in — agents run on Ollama locally today, with OpenRouter planned for multi-provider access.',
+                },
+                {
+                    number: '03',
+                    title: 'Governance built in',
+                    description: 'A dedicated policy engine controls agent access and actions, instead of relying on prompt-level rules.',
+                    why: 'Policy enforcement belongs in the infrastructure, not in the prompt.',
+                },
+                {
+                    number: '04',
+                    title: 'Full execution traceability',
+                    description: 'Every agent run is recorded end to end, from retrieval to response, for audit and debugging.',
+                    why: 'When an agent makes a decision, you need to know exactly how it got there.',
+                },
+            ],
+            decisionsScreenshotIndex: 2,
+            decisionsScreenshotCaption: 'Execution trace — full agent run recorded from retrieval to response, with timing and step details',
+
+            architecture: {
+                pipeline: ['Dashboard', 'Spring Boot API', 'Agent Runtime', 'Policy Engine', 'Knowledge Retrieval', 'Model Router', 'AI Provider', 'Execution Trace'],
+                stack: [
+                    { name: 'Java 21' },
+                    { name: 'Spring Boot 3' },
+                    { name: 'Spring AI 1.0' },
+                    { name: 'Angular 20' },
+                    { name: 'PostgreSQL + pgvector' },
+                    { name: 'RabbitMQ' },
+                    { name: 'Docker' },
+                ],
+                detail: 'The Angular dashboard talks to a Spring Boot API, which fans out to three core services: the Agent Runtime, the Policy Engine, and the Model Router. The Agent Runtime coordinates execution and delegates to the Memory Service and Tool Registry; the Knowledge Service handles retrieval against a pgvector-backed vector store. The Model Router dispatches requests to the configured AI Provider — Ollama for local execution today, with OpenRouter planned for multi-provider access. All communication is asynchronous via RabbitMQ where appropriate.',
+            },
+
+            status: 'Core stack is built: Spring Boot, Spring AI, Ollama, Angular dashboard, agent runtime, RAG with pgvector, memory, and observability basics. Currently building the policy engine, tool registry, and workflow engine.',
+
+            suggestions: [
+                'How does the agent runtime work?',
+                'What makes Narek provider-agnostic?',
+                'How does the policy engine govern agents?',
+                'What\'s the current status?',
+            ],
+        },
+        readme: `# Narek
+
+> Infrastructure for building, orchestrating, and governing enterprise AI agents.
+
+Narek is a platform for running, orchestrating, and governing AI agents — built for engineering teams that need agent behavior backed by real infrastructure: a runtime, retrieval and memory layers, tool execution, and policy-based governance, rather than a single conversational assistant.
+
+\`Java 21\` · \`Spring Boot 3\` · \`Spring AI 1.0\` · \`Angular 20\` · \`PostgreSQL + pgvector\` · \`Redis\` · \`RabbitMQ\` · \`Docker\`
+
+---
+
+## Screenshots
+
+---
+
+## Overview
+
+Narek provides the infrastructure layer required to build and operate AI agents beyond a simple chat interface. It manages agent execution, knowledge retrieval, memory, tool access, and policy enforcement, while keeping each execution traceable and auditable.
+
+The platform is designed around a provider-agnostic architecture: agents can run locally with Docker and Ollama today, while the same core components can be extended to managed infrastructure and additional AI providers as the platform evolves.
+
+---
+
+## The Problem
+
+Building an AI agent is easy. Operating one in production is not.
+
+Runtime orchestration, retrieval, prompt versioning, tool execution, conversation memory, access control, and execution traceability are all required before an agent can be trusted with a real workload. Most teams end up building fragile, one-off versions of each, tied to a single project and a single model provider.
+
+---
+
+## Why Narek?
+
+Narek is not a chatbot or an LLM provider. It doesn't train models, and it isn't a general-purpose workflow automation platform.
+
+It provides the infrastructure layer underneath AI applications: agent execution, knowledge retrieval, prompt management, memory, tool access, and governance — so teams can build applications on top of these capabilities without reimplementing them for every project.
+
+---
+
+## Philosophy
+
+- Build AI agents, not chatbots.
+- Stay provider agnostic — no hard dependency on a single model vendor.
+- Keep the architecture cloud-agnostic — a local Docker/Ollama setup and a future cloud deployment share the same design.
+- Govern by default — access control and observability are part of the platform, not an afterthought.
+- Modular over monolithic — runtime, memory, retrieval, and tools are separable services.
+
+---
+
+## Key Features
+
+**Agent Runtime** — Executes AI agents and coordinates their workflows end to end.
+
+**Retrieval-Augmented Generation (RAG)** — Document ingestion and vector search over PostgreSQL + pgvector to ground agent responses in retrieved knowledge.
+
+**Prompt Management** — Stores and versions prompts used across agents.
+
+**Tool Registry** — Connects agents to external tools and APIs.
+
+**Memory** — Persists conversation and execution context across agent runs.
+
+**Knowledge Management** — Ingests and organizes the documents agents retrieve from.
+
+**Policy Engine** — Governs what agents are allowed to do and access.
+
+**Observability** — Traces, logs, and metrics for every agent execution.
+
+**Management Dashboard** — Angular UI for configuring agents, running them, and inspecting execution history.
+
+**Model Abstraction** — Spring AI decouples agent logic from the model layer; agents run locally via Ollama today, with OpenRouter integration planned for multi-provider access.
+
+---
+
+## How It Works
+
+\`\`\`
+User
+  |
+Dashboard
+  |
+Spring Boot API
+  |
+Agent Runtime
+  +-- Policy Engine
+  +-- Memory
+  +-- Knowledge Retrieval
+  +-- Tool Registry
+          |
+     Model Router
+          |
+     AI Provider
+          |
+   Execution Trace
+\`\`\`
+
+A user configures and triggers an agent from the dashboard. The runtime retrieves relevant knowledge from the vector store, builds the prompt, sends it to the configured AI provider — Ollama for local execution — and records the full execution for later inspection.
+
+---
+
+## Why Narek Is Different
+
+| Principle | What it means |
+|-|-|
+| **Agent-First Architecture** | Built to run and govern agents as first-class units, not to wrap a single conversational assistant. |
+| **Provider Abstraction** | Agent logic sits behind Spring AI's model abstraction, not a specific vendor SDK, so the LLM backend can change without touching agent code. |
+| **Governance Built In** | A dedicated policy engine controls agent access and actions, instead of relying on prompt-level rules. |
+| **Full Execution Traceability** | Every agent run is recorded end to end, from retrieval to response, for audit and debugging. |
+| **Cloud-Agnostic Architecture** | The same design runs on a local Docker Compose stack today and is built to extend onto managed cloud infrastructure. |
+
+---
+
+## Architecture
+
+The Angular dashboard talks to a Spring Boot API, which fans out to three core services: the **Agent Runtime**, the **Policy Engine**, and the **Model Router**. The Agent Runtime coordinates execution and delegates to the **Memory Service** and **Tool Registry**; the **Knowledge Service** handles retrieval against a **pgvector**-backed vector store. The Model Router dispatches requests to the configured **AI Provider** — **Ollama** for local execution today, with **OpenRouter** planned for multi-provider access.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-|-|
+| **Frontend** | Angular 20, TypeScript, Angular Material, Angular Signals, RxJS |
+| **Backend** | Java 21, Spring Boot 3, Spring Data JPA / Hibernate |
+| **AI** | Spring AI 1.0, Ollama (local execution) — OpenRouter *(planned)* |
+| **Data / RAG** | PostgreSQL + pgvector, document ingestion pipeline |
+| **Messaging** | RabbitMQ |
+| **Security** | Spring Security — Enterprise RBAC *(planned)* |
+| **Infrastructure** | Docker / Docker Compose |
+
+---
+
+## Quick Start
+
+\`\`\`bash
+git clone https://github.com/yourusername/narek.git
+cd narek
+docker compose up -d
+./mvnw spring-boot:run
+\`\`\`
+
+\`\`\`bash
+cd frontend
+npm install
+ng serve
+\`\`\`
+
+Open the dashboard at http://localhost:4200. The API runs on http://localhost:8080.
+
+On first run, pull a local model for Ollama:
+
+\`\`\`bash
+docker exec -it ollama ollama pull llama3.2
+\`\`\`
+
+**Requirements:** Java 21+, Node.js 20+, Docker and Docker Compose.
+
+---
+
+## Roadmap
+
+| Phase | Focus |
+|-|-|
+| **MVP** | Core stack (Spring Boot, Spring AI, Ollama, Angular), agent runtime, RAG with pgvector, memory, and observability basics |
+| **v0.5** | Policy engine, tool registry, workflow engine |
+| **v1.0** | Plugin SDK, multi-agent workflows, cost analytics |
+| **v2** | AWS deployment, OpenRouter integration, enterprise RBAC |
+
+
+`,
+        screenshots: [imgNarekDashboard, imgNarekAgentConfig, imgNarekExecTrace],
+        screenshotLabels: ['Dashboard', 'Agent Configuration', 'Execution Trace'],
+        links: { code: 'https://github.com/HeilyMadelay-hub/Narek' },
     },
     {
         id: 'subtextai',
@@ -134,21 +407,15 @@ AI-powered communication intelligence platform that helps people understand inte
 
 ---
 
-## Project Status
-
-🚧 **In active development** — architecture and design complete; backend implementation (policy engine, retrieval, reranking, traceability) in progress, targeting the production AWS deployment described below.
-
----
-
 ## Screenshots
 
 ---
 
 ## Overview
 
-SubtextAI is a communication intelligence engine that analyzes ambiguous conversations across real-world contexts — **relationships, work, social settings, and negotiation** — and turns them into structured, evidence-based insights.
+SubtextAI is a communication intelligence engine that analyzes ambiguous conversations across real-world contexts — **relationships, work, social settings, and negotiation** — and turns them into structured insights about what was said, what may have been intended, and what evidence supports that interpretation.
 
-It detects intent shifts, emotional intensity, and the gap between what's said and what's meant. Every interpretation is grounded in documentary sources, scored with an objective confidence level, and fully auditable by \`trace_id\`.
+It detects intent shifts and emotional intensity, retrieves the evidence supporting each interpretation, scores it with a confidence level, and keeps it fully auditable by \`trace_id\`.
 
 ---
 
@@ -156,15 +423,15 @@ It detects intent shifts, emotional intensity, and the gap between what's said a
 
 Most misunderstandings aren't about what's said — they're about what's meant.
 
-Unlike a conventional assistant, **SubtextAI is not a black box**: every interpretation is grounded in real documentary sources, calculated with an objective confidence level, and fully auditable. It's not an academic chatbot — it's a conversational behavior interpretation tool.
+Tone, intent, and emotional subtext get lost in text-based communication, and by the time a conflict escalates, it's hard to pinpoint where the interpretation diverged from the intention. Generic AI assistants don't help here: they generate plausible-sounding answers without explaining why, and without any way to verify the reasoning behind them.
+
+For high-stakes or emotionally sensitive conversations, plausibility is not enough — users need context, evidence, uncertainty, and a way to reconstruct how an interpretation was produced.
 
 ---
 
 ## Why SubtextAI?
 
-Unlike traditional AI assistants, SubtextAI doesn't just generate answers.
-
-It explains *why* a message may be interpreted in a certain way, grounds every conclusion on evidence, and helps users make better communication decisions.
+Unlike a general-purpose assistant, SubtextAI is not a black box. It doesn't just generate an answer — it explains why a message may be interpreted a certain way, points to the evidence behind that interpretation, and helps the user decide how to respond.
 
 ---
 
@@ -202,22 +469,28 @@ This system does not replace professional advice, therapy, or legal counsel.
 
 **Live Session Telemetry** — Real-time panel tracking emotional velocity, conflict acceleration, and accumulated tension as the conversation unfolds, message by message.
 
+**Evidence & Confidence Gate** — Every interpretation is evaluated against retrieved evidence and a confidence threshold; when the evidence is insufficient, generation is blocked rather than producing an unsupported interpretation.
+
 ---
 
 ## How It Works
 
 \`\`\`
-Paste a conversation
+Conversation Input
         ↓
-AI understands the context
+Context & Safety Analysis
         ↓
-Relevant evidence is retrieved
+Parallel Retrieval + Policy Checks
         ↓
-Conversation is analysed
+Hybrid Search + Reranking
         ↓
-Insights are generated
+Confidence Gate
         ↓
-Suggested response
+Structured Analysis
+        ↓
+Response Generation
+        ↓
+Trace & Audit
 \`\`\`
 
 ---
@@ -226,50 +499,18 @@ Suggested response
 
 | Principle | What it means |
 |-|-|
-| **Explainable AI** | Every interpretation is grounded in documentary sources. No evidence, no response. |
-| **Enterprise Governance** | Security rules live in the pipeline, not in the prompt — the model never executes if a critical policy is violated. |
+| **Explainable AI** | Every interpretation is grounded in documentary sources — the confidence gate is designed to block generation when no solid evidence is found. |
+| **Policy-Governed AI** | Security and safety policies are enforced in the execution pipeline rather than delegated to the model prompt. |
 | **Full Traceability** | Every response is reconstructible via \`trace_id\`: documents, scores, prompt version, model, and policies evaluated. |
 | **Privacy by Design** | Raw text and audit annotations are stored separately, so erasure requests and retention limits never break the audit trail. |
-
-> Learn more in [docs/design-principles.md](docs/design-principles.md)
 
 ---
 
 ## Architecture
 
-\`\`\`
-  Frontend (React 19)             Backend — Amazon EC2 (t3.micro, Free Tier)          AI
- ┌──────────────────┐    ┌────────────────────────────────────────────┐    ┌──────────────────┐
- │ AWS Amplify      │    │ Docker (docker compose)                    │    │ OpenRouter       │
- │  Hosting (Vite   │───▶│ ┌──────────┐  Governance Pipeline          │───▶│  gpt-4.1         │
- │  static build)   │REST│ │  Nginx   │  ┌──────────────────┐         │    │  text-embed-3-lg │
- │ TypeScript       │API │ │ (reverse │  │ 1. Policy        │         │    └──────────────────┘
- │ Tailwind CSS     │    │ │  proxy,  │──▶ 2. Crisis ‖ RAG  │         │    │
- │ shadcn/ui        │    │ │  TLS)    │  │ 3. Rerank + gate │         │    │
- │ Recharts         │    │ └──────────┘  │ 4. Analysis      │         │    │
- │ Framer Motion    │    │      │        │ 5. Trace         │         │    │
- └──────────────────┘    │      ▼        └──────────────────┘         │
-                         │ ┌──────────┐  LangGraph                    │
-                         │ │ FastAPI  │  IAM instance profile +       │
-                         │ │ (Docker  │  Secrets Manager (OpenRouter  │
-                         │ │ container│  key only)                    │
-                         │ │  )       │                               │
-                         │ └────┬─────┘                               │
-                         │      ├──────────────┐                      │
-                         │      ▼              ▼                      │
-                         │ ┌──────────┐   ┌──────────┐                │
-                         │ │PostgreSQL│   │  Redis   │                │
-                         │ │+ pgvector│   │ (Docker) │                │
-                         │ │ (Docker) │   │ cache/   │                │
-                         │ │HNSW+GIN  │   │ sessions │                │
-                         │ └──────────┘   └──────────┘                │
-                         └────────────────────────────────────────────┘
-                                   │
-                                   ▼
-                          CloudWatch + AWS X-Ray + OpenTelemetry
-\`\`\`
+A request enters through the API and is checked for crisis signals while relevant evidence is retrieved from the document corpus in parallel. The retrieved evidence is scored and evaluated against a confidence gate — if it doesn't clear the threshold, no response is generated. Applicable policies are checked alongside retrieval, and once a response is accepted for generation, it's produced and logged with full trace metadata (documents used, scores, prompt version, model, policies evaluated) for later audit.
 
-Everything above runs on AWS, sized to fit inside the Free Tier — a single EC2 instance runs the entire backend stack in Docker (FastAPI, PostgreSQL + pgvector, Redis, Nginx), with only the frontend, auth, storage, secrets, and observability handled by separate managed services. Steps 2a (crisis detection) and 2b (retrieval) run concurrently — crisis checking stays strictly blocking, but leaves the critical path of a successful request. The confidence gate at step 3 reads a calibrated cross-encoder score, so generation is blocked whenever no solid evidence was found.
+The current deployment is intentionally lightweight: a single EC2 instance runs the backend stack in Docker (FastAPI, PostgreSQL + pgvector, Redis, Nginx), with the frontend, auth, storage, secrets, and observability handled by separate managed services.
 
 ---
 
@@ -290,7 +531,15 @@ Everything above runs on AWS, sized to fit inside the Free Tier — a single EC2
 
 ## Deployment
 
-SubtextAI deploys to AWS, sized to run within the **Free Tier**: a single **Amazon EC2** \`t3.micro\` instance runs the whole backend stack in Docker — **FastAPI**, **PostgreSQL + pgvector**, **Redis**, and **Nginx** as the reverse proxy — fronted by **Amplify Hosting** (frontend), **S3** for the document corpus, and **OpenRouter** for generation (\`gpt-4.1\`) and embeddings (\`text-embedding-3-large\`).
+SubtextAI deploys to AWS with a lightweight architecture designed to fit within the **AWS Free Tier**: a single **Amazon EC2** \`t3.micro\` instance runs the whole backend stack in Docker — **FastAPI**, **PostgreSQL + pgvector**, **Redis**, and **Nginx** as the reverse proxy — fronted by **Amplify Hosting** (frontend), **S3** for the document corpus, and **OpenRouter** for generation (\`gpt-4.1\`) and embeddings (\`text-embedding-3-large\`).
+
+### Quick Start
+
+1. Build the backend image and push it to Amazon ECR.
+2. Store the OpenRouter API key in AWS Secrets Manager.
+3. Launch the EC2 instance and run \`docker compose up -d\` to start API + PostgreSQL + Redis + Nginx together.
+4. Run \`alembic upgrade head\` against the Postgres container to apply migrations.
+5. Build the frontend and deploy it to Amplify Hosting.
 
 ### Prerequisites
 
@@ -298,55 +547,7 @@ SubtextAI deploys to AWS, sized to run within the **Free Tier**: a single **Amaz
 * Node.js 18+ and npm
 * Docker (for building the backend image)
 * An AWS account with the AWS CLI configured, and an EC2 key pair
-* An [OpenRouter](https://openrouter.ai) API key
-
-### Build and push the backend image to ECR
-
-\`\`\`bash
-git clone https://github.com/<your-user>/subtextai.git
-cd subtextai
-
-docker build -f docker/Dockerfile.backend -t subtextai-api .
-aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
-docker tag subtextai-api <account-id>.dkr.ecr.<region>.amazonaws.com/subtextai-api
-docker push <account-id>.dkr.ecr.<region>.amazonaws.com/subtextai-api
-\`\`\`
-
-### Store the OpenRouter key
-
-\`\`\`bash
-aws secretsmanager create-secret \\
-  --name subtextai/openrouter-api-key \\
-  --secret-string '{"api_key":"<your-openrouter-key>"}'
-\`\`\`
-
-### Launch EC2 and run the stack with Docker Compose
-
-\`\`\`bash
-aws ec2 run-instances \\
-  --image-id ami-0abcdef1234567890 \\
-  --instance-type t3.micro \\
-  --key-name subtextai-key \\
-  --iam-instance-profile Name=subtextai-ec2-profile \\
-  --security-group-ids <sg-id>
-
-ssh -i subtextai-key.pem ec2-user@<instance-public-ip>
-sudo yum install -y docker && sudo systemctl enable --now docker
-aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
-docker pull <account-id>.dkr.ecr.<region>.amazonaws.com/subtextai-api
-
-# docker-compose.yml runs api + postgres (pgvector) + redis + nginx together
-docker compose up -d
-cd backend && alembic upgrade head   # run against the local Postgres container
-\`\`\`
-
-### Deploy the frontend
-
-\`\`\`bash
-cd frontend
-npm run build
-aws amplify start-deployment --app-id <app-id> --branch-name main
-\`\`\`
+* An OpenRouter API key
 
 ---
 
@@ -373,8 +574,8 @@ Become the communication intelligence platform for personal and enterprise conve
 
 | Phase | Description |
 |-|-|
-| **Current** | Architecture and governance pipeline fully designed; backend implementation (policy engine, retrieval, reranking, traceability) in progress, targeting production on AWS |
-| **Next** | Specialized crisis classifier, multilingual support, semantic cache, audit panel |
+| **Current** | Core analysis pipeline, retrieval, reranking, policy enforcement, and traceability. |
+| **Next** | Specialized crisis classifier, multilingual support, semantic caching, and expanded audit tooling. |
 | **Future** | Real-time streaming analysis, predictive trajectory engine |
 
 

@@ -21,6 +21,76 @@
     "viewSource": "Ver código en GitHub"
   },
   "projects": {
+    "narek": {
+      "tagline": "Infraestructura para construir, orquestar y gobernar agentes de IA empresariales.",
+      "description": "Una plataforma para ejecutar, orquestar y gobernar agentes de IA — diseñada para equipos de ingeniería que necesitan comportamiento de agentes respaldado por infraestructura real: un runtime, capas de recuperación y memoria, ejecución de herramientas y gobernanza basada en políticas.",
+      "problem": {
+        "headline": "Construir un agente de IA es fácil. Operarlo no.",
+        "description": "La orquestación del runtime, la recuperación, el versionado de prompts, la ejecución de herramientas, la memoria conversacional, el control de acceso y la trazabilidad de ejecución son necesarios antes de que un agente pueda funcionar en producción. La mayoría de equipos acaban construyendo versiones frágiles y ad hoc, atadas a un solo proyecto y un solo proveedor de modelos.",
+        "flow": ["Lógica del agente", "Brecha de infraestructura", "Soluciones frágiles"]
+      },
+      "capabilities": [
+        {
+          "title": "Runtime y orquestación de agentes",
+          "description": "Ejecuta agentes de IA y coordina sus flujos de trabajo de principio a fin — con recuperación, memoria, acceso a herramientas y aplicación de políticas integrados en la capa de ejecución."
+        },
+        {
+          "title": "RAG y gestión del conocimiento",
+          "description": "Ingesta de documentos y búsqueda vectorial sobre PostgreSQL + pgvector para fundamentar las respuestas de los agentes en conocimiento recuperado. Los agentes recuperan de una base de conocimiento organizada, no de archivos en bruto."
+        },
+        {
+          "title": "Trazabilidad de ejecución",
+          "description": "Cada ejecución de agente queda registrada de principio a fin — desde la recuperación hasta la respuesta — para auditoría y depuración. Trazas completas, logs y métricas para cada ejecución."
+        }
+      ],
+      "insight": {
+        "message": "\"Configura un agente, ejecútalo, inspecciona el resultado.\"",
+        "analysis": {
+          "Runtime": "Spring AI + Ollama",
+          "Recuperación": "pgvector HNSW",
+          "Gobernanza": "Motor de políticas",
+          "Traza": "Log completo de ejecución"
+        },
+        "evidence": "La plataforma abstrae la ejecución de agentes detrás de un runtime que gestiona la recuperación, memoria, acceso a herramientas y aplicación de políticas. Cada ejecución es completamente trazable — el usuario configura un agente desde el dashboard, lo ejecuta e inspecciona la traza de ejecución completa después."
+      },
+      "philosophy": {
+        "headline": "Construye agentes de IA, no chatbots.",
+        "description": "Narek proporciona la capa de infraestructura bajo las aplicaciones de IA: ejecución de agentes, recuperación de conocimiento, gestión de prompts, memoria, acceso a herramientas y gobernanza — para que los equipos construyan aplicaciones encima sin reimplementarlo todo en cada proyecto.",
+        "pillars": [
+          { "label": "Agnóstico al proveedor", "description": "Sin dependencia dura de un solo proveedor — Spring AI desacopla la lógica del agente del backend de LLM." },
+          { "label": "Gobernado", "description": "El control de acceso y la observabilidad son parte de la plataforma, no un parche." },
+          { "label": "Modular", "description": "Runtime, memoria, recuperación y herramientas como servicios separables, no un monolito." }
+        ]
+      },
+      "decisions": [
+        {
+          "title": "Arquitectura agent-first",
+          "description": "Diseñado para ejecutar y gobernar agentes como unidades de primera clase, no para envolver un asistente conversacional.",
+          "why": "La IA empresarial necesita orquestación, gobernanza y trazabilidad — no solo una interfaz de chat."
+        },
+        {
+          "title": "Abstracción del proveedor",
+          "description": "La lógica del agente está detrás de la abstracción de modelos de Spring AI, no de un SDK de un proveedor específico, para que el backend de LLM pueda cambiar sin tocar el código del agente.",
+          "why": "Sin vendor lock-in — los agentes ejecutan en Ollama localmente hoy, con OpenRouter planificado para acceso multi-proveedor."
+        },
+        {
+          "title": "Gobernanza integrada",
+          "description": "Un motor de políticas dedicado controla el acceso y las acciones de los agentes, en lugar de depender de reglas a nivel de prompt.",
+          "why": "La aplicación de políticas pertenece a la infraestructura, no al prompt."
+        },
+        {
+          "title": "Trazabilidad completa de ejecución",
+          "description": "Cada ejecución de agente queda registrada de principio a fin, desde la recuperación hasta la respuesta, para auditoría y depuración.",
+          "why": "Cuando un agente toma una decisión, necesitas saber exactamente cómo llegó a ella."
+        }
+      ],
+      "decisionsScreenshotCaption": "Traza de ejecución — ejecución completa del agente registrada desde la recuperación hasta la respuesta, con tiempos y detalles de cada paso",
+      "architecture": {
+        "pipeline": ["Dashboard", "Spring Boot API", "Agent Runtime", "Motor de políticas", "Recuperación de conocimiento", "Model Router", "Proveedor IA", "Traza de ejecución"],
+        "detail": "El dashboard Angular se comunica con una API Spring Boot, que distribuye a tres servicios core: el Agent Runtime, el Policy Engine y el Model Router. El Agent Runtime coordina la ejecución y delega en el Memory Service y el Tool Registry; el Knowledge Service gestiona la recuperación contra un vector store respaldado por pgvector. El Model Router despacha las peticiones al proveedor de IA configurado — Ollama para ejecución local hoy, con OpenRouter planificado para acceso multi-proveedor."
+      },
+      "status": "El stack core está construido: Spring Boot, Spring AI, Ollama, dashboard Angular, runtime de agentes, RAG con pgvector, memoria y observabilidad básica. Actualmente construyendo el motor de políticas, el registro de herramientas y el motor de workflows."
+    },
     "subtextai": {
       "tagline": "Inteligencia comunicativa para conversaciones ambiguas.",
       "description": "Un motor de IA que analiza conversaciones para sacar a la superficie la intención, los cambios emocionales y el significado oculto con cada interpretación respaldada por evidencia, puntuada con confianza calibrada y completamente trazable.",

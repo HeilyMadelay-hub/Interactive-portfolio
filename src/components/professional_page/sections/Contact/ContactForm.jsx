@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     formColumnStyle,
     formFieldsStyle,
@@ -7,6 +8,10 @@ import {
     labelStyle,
     inputStyle,
     textareaStyle,
+    consentRowStyle,
+    consentCheckboxStyle,
+    consentLabelStyle,
+    consentLinkStyle,
     submitButtonStyle,
     submitArrowStyle,
 } from './style/Contact.js';
@@ -83,6 +88,30 @@ function ContactForm({ w }) {
                         onFocus={(e) => focusStyle(e.currentTarget, true)}
                         onBlur={(e) => focusStyle(e.currentTarget, false)}
                     />
+                </div>
+
+                {/* Consentimiento del tratamiento de los datos del formulario.
+                    `required` deja que el navegador bloquee el envío y muestre
+                    su propio aviso: sin estado extra ni mensaje que traducir. */}
+                <div style={consentRowStyle}>
+                    <input
+                        id="contact-privacy"
+                        type="checkbox"
+                        required
+                        style={consentCheckboxStyle}
+                    />
+                    <label style={consentLabelStyle} htmlFor="contact-privacy">
+                        {t.form.privacy.before}
+                        <Link
+                            to="/privacy"
+                            style={consentLinkStyle}
+                            onMouseEnter={(e) => (e.currentTarget.style.borderBottomColor = colors.teal)}
+                            onMouseLeave={(e) => (e.currentTarget.style.borderBottomColor = colors.line)}
+                        >
+                            {t.form.privacy.link}
+                        </Link>
+                        {t.form.privacy.after}
+                    </label>
                 </div>
 
                 <button
